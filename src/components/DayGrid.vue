@@ -1,8 +1,6 @@
 <script lang="ts">
-import { defineComponent, h, InjectionKey, provide } from '@vue/runtime-core';
-
-export const dateKey: InjectionKey<Date> = Symbol('Date');
-export const activeItemKey: InjectionKey<number> = Symbol('ActiveItem');
+import { defineComponent, h, provide } from '@vue/runtime-core';
+import { dateKey, activeItemKey } from '@/symbols/day-grid';
 
 export default defineComponent({
   props: {

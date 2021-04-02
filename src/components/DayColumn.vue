@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, inject } from '@vue/runtime-core';
-import { activeItemKey, dateKey } from './DayGrid.vue';
+import { dateKey, activeItemKey } from '@/symbols/day-grid';
 
 export default defineComponent({
   props: {
