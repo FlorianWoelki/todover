@@ -1,13 +1,18 @@
 <template>
   <day-grid :current-date="new Date()">
-    <day-column v-for="i in 5" :key="i" :index="i - 1">
-      <todo-item></todo-item>
+    <day-column v-for="(day, i) in days" :key="i" :index="i">
+      <todo-item
+        v-for="(todo, j) in day.todos"
+        :key="j"
+        @keydown.enter="addNewTodo($event, i, j)"
+        :value="todo"
+      ></todo-item>
     </day-column>
   </day-grid>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent, ref } from '@vue/runtime-core';
 import DayGrid from '@/components/DayGrid.vue';
 import DayColumn from '@/components/DayColumn.vue';
 import TodoItem from '@/components/TodoItem.vue';
@@ -17,6 +22,40 @@ export default defineComponent({
     DayGrid,
     DayColumn,
     TodoItem,
+  },
+  setup() {
+    const days = ref<any>([
+      {
+        todos: ['Some test item', 'Hello World'],
+      },
+      {
+        todos: [''],
+      },
+      {
+        todos: [''],
+      },
+      {
+        todos: ['Some test item'],
+      },
+      {
+        todos: ['Hello World'],
+      },
+    ]);
+
+    const updateCurrentItem = (value: string, dayIndex: number, todoIndex: number): void => {
+      days.value[dayIndex].todos[todoIndex] = value;
+    };
+
+    const addNewTodo = (event: KeyboardEvent, dayIndex: number, todoIndex: number): void => {
+      const value = (event.target as HTMLInputElement).value;
+      updateCurrentItem(value, dayIndex, todoIndex);
+      days.value[dayIndex].todos.push('');
+    };
+
+    return {
+      days,
+      addNewTodo,
+    };
   },
 });
 </script>
