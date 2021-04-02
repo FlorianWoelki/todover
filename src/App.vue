@@ -1,11 +1,9 @@
 <template>
-  <div class="grid grid-cols-5">
-    <day-grid :current-date="new Date()">
-      <day-column>
-        <todo-item></todo-item>
-      </day-column>
-    </day-grid>
-  </div>
+  <day-grid :current-date="new Date()">
+    <day-column v-for="i in 5" :key="i" :index="i - 1">
+      <todo-item></todo-item>
+    </day-column>
+  </day-grid>
 </template>
 
 <script lang="ts">
