@@ -8,7 +8,7 @@
       }"
     >
       <h1 class="text-2xl font-bold tracking-wider uppercase">{{ currentDay }}</h1>
-      <p>1st of April 2021</p>
+      <p>{{ date }}</p>
     </div>
 
     <div class="w-full space-y-2">
@@ -38,10 +38,33 @@ export default defineComponent({
     const isActiveItem = computed(() => activeItem === props.index);
     const isPreviousDay = computed(() => activeItem - 1 === props.index);
 
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'Juli',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    const date = computed(() => {
+      const date = isPreviousDay.value
+        ? currentDate.getDate()
+        : currentDate.getDate() + props.index;
+      // TODO: Check for next and previous month
+      return `${date - 1}. ${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+    });
+
     return {
       currentDay,
       isActiveItem,
       isPreviousDay,
+      date,
     };
   },
 });
