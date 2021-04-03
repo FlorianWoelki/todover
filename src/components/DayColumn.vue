@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-8 border-l border-r border-gray-200">
+  <div class="space-y-8 border-l border-r border-gray-100">
     <div
       class="flex flex-col items-center justify-center"
       :class="{

@@ -1,5 +1,5 @@
 <template>
-  <day-grid :current-date="new Date()">
+  <day-grid :current-date="new Date()" class="h-screen">
     <day-column v-for="(day, i) in days" :key="i" :index="i">
       <todo-item
         v-for="(todo, j) in day.todos"
