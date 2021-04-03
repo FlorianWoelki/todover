@@ -4,8 +4,9 @@
       <todo-item
         v-for="(todo, j) in day.todos"
         :key="j"
-        @keydown.enter="addNewTodo($event, i, j)"
         :value="todo"
+        placeholder="Type your Todo here"
+        @keydown.enter="addNewTodo($event, i, j)"
       ></todo-item>
     </day-column>
   </day-grid>
