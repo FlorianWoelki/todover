@@ -11,19 +11,23 @@
       <p>{{ printedDate }}</p>
     </div>
 
-    <div class="w-full space-y-2">
+    <draggable v-bind="$attrs" class="w-full space-y-2">
       <slot></slot>
-    </div>
+    </draggable>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, inject } from '@vue/runtime-core';
+import { VueDraggableNext } from 'vue-draggable-next';
 import { dateKey, activeItemKey } from '@/symbols/day-grid';
 import { days, months } from '@/constants/date';
 import { mod } from '@/util/math';
 
 export default defineComponent({
+  components: {
+    draggable: VueDraggableNext,
+  },
   props: {
     index: {
       type: Number,
