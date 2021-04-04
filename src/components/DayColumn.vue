@@ -11,7 +11,7 @@
       <p>{{ printedDate }}</p>
     </div>
 
-    <draggable v-bind="$attrs" class="w-full space-y-2" :animation="150" group="todos">
+    <draggable v-bind="$attrs" class="w-full h-full space-y-2" :animation="150" group="todos">
       <slot></slot>
     </draggable>
   </div>
