@@ -1,6 +1,6 @@
 <template>
   <day-grid :current-date="new Date()" class="h-screen">
-    <day-column v-for="(day, i) in days" :key="i" :index="i" v-model="day.todos" :animation="150">
+    <day-column v-for="(day, i) in days" :key="i" :index="i" v-model="day.todos">
       <todo-item
         v-for="(todo, j) in day.todos"
         :key="j"

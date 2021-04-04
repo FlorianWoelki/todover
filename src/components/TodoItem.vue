@@ -7,7 +7,7 @@ export default defineComponent({
       'input',
       {
         class:
-          'w-full px-2 py-1 focus:outline-none hover:bg-gray-100 focus:bg-gray-100 placeholder-gray-300',
+          'w-full px-2 py-1 focus:outline-none hover:bg-gray-100 focus:bg-gray-100 placeholder-gray-300 cursor-pointer',
       },
       { props: this.$attrs }
     );
