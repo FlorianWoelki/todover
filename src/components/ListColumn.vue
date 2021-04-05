@@ -15,7 +15,7 @@
       <h1 class="text-2xl font-bold tracking-wider uppercase">
         {{ !isCustomTitle ? currentDay : customTitle }}
       </h1>
-      <p v-if="isCustomTitle" class="text-sm">{{ printedDate }}</p>
+      <p v-if="!isCustomTitle" class="text-sm">{{ printedDate }}</p>
     </div>
 
     <div class="w-full h-full space-y-2">
@@ -71,13 +71,15 @@ export default defineComponent({
       columnDate.value ? days[mod(columnDate.value.getDay() - 1, days.length)] : ''
     );
 
-    const printedDate = computed((): string =>
-      columnDate.value
-        ? `${columnDate.value.getDate() - 1}.
-        ${months[columnDate.value.getMonth()]}
-        ${columnDate.value.getFullYear()}`
-        : ''
-    );
+    const printedDate = computed((): string => {
+      if (columnDate.value) {
+        const day = columnDate.value.getDate() - 1;
+        return `${day < 10 ? `0${day}` : day}.
+          ${months[columnDate.value.getMonth()]}
+          ${columnDate.value.getFullYear()}`;
+      }
+      return '';
+    });
 
     const columnDate = computed((): Date | undefined => {
       if (currentDate) {
