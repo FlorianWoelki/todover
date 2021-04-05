@@ -1,24 +1,31 @@
 <template>
-  <div class="space-y-8 border-l border-r border-gray-100">
-    <div
-      class="flex flex-col items-center justify-center"
-      :class="{
-        'text-gray-300': isPreviousDay,
-        'text-red-400': isActiveItem,
-      }"
-    >
+  <div
+    class="space-y-8 border-l border-r border-gray-100"
+    :class="{
+      'text-gray-300': isPreviousDay,
+      'text-red-500': isActiveItem,
+      'text-gray-600': !isActiveItem && !isPreviousDay,
+    }"
+  >
+    <div class="flex flex-col items-center justify-center">
       <h1 class="text-2xl font-bold tracking-wider uppercase">{{ currentDay }}</h1>
-      <p>{{ printedDate }}</p>
+      <p class="text-sm">{{ printedDate }}</p>
     </div>
 
-    <draggable v-bind="$attrs" class="w-full h-full space-y-2" :animation="150" group="todos">
+    <draggable
+      v-bind="$attrs"
+      class="w-full h-full space-y-2"
+      :animation="150"
+      :move="checkMove"
+      group="todos"
+    >
       <slot></slot>
     </draggable>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from '@vue/runtime-core';
+import { computed, defineComponent, inject, ref } from '@vue/runtime-core';
 import { VueDraggableNext } from 'vue-draggable-next';
 import { dateKey, activeItemKey } from '@/symbols/day-grid';
 import { days, months } from '@/constants/date';
@@ -35,6 +42,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const draggableDisabled = ref(false);
     const currentDate = inject(dateKey, new Date());
     const activeItem = inject(activeItemKey, 1);
 
@@ -75,11 +83,19 @@ export default defineComponent({
       }
     );
 
+    const checkMove = (): boolean => {
+      const canMove = document.activeElement?.tagName === 'BODY';
+      draggableDisabled.value = !canMove;
+      return true;
+    };
+
     return {
       currentDay,
       isActiveItem,
       isPreviousDay,
       printedDate,
+      checkMove,
+      draggableDisabled,
     };
   },
 });

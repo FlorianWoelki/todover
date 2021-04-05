@@ -5,8 +5,8 @@
         v-for="(todo, j) in day.todos"
         :key="j"
         :value="todo"
-        placeholder="Type your Todo here"
-        @keydown.enter="addNewTodo($event, i, j)"
+        placeholder="Double click to edit todo"
+        @update-item="updateTodoItem($event, i, j)"
       ></todo-item>
     </day-column>
   </day-grid>
@@ -30,10 +30,10 @@ export default defineComponent({
         todos: ['Some test item', 'Hello World'],
       },
       {
-        todos: [''],
+        todos: [],
       },
       {
-        todos: [''],
+        todos: [],
       },
       {
         todos: ['Some test item'],
@@ -43,19 +43,20 @@ export default defineComponent({
       },
     ]);
 
-    const updateCurrentItem = (value: string, dayIndex: number, todoIndex: number): void => {
+    const updateTodoItem = (value: string, dayIndex: number, todoIndex: number): void => {
       days.value[dayIndex].todos[todoIndex] = value;
     };
 
     const addNewTodo = (event: KeyboardEvent, dayIndex: number, todoIndex: number): void => {
       const value = (event.target as HTMLInputElement).value;
-      updateCurrentItem(value, dayIndex, todoIndex);
+      updateTodoItem(value, dayIndex, todoIndex);
       days.value[dayIndex].todos.push('');
     };
 
     return {
       days,
       addNewTodo,
+      updateTodoItem,
     };
   },
 });
