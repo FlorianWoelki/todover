@@ -10,7 +10,11 @@
           @update-item="updateTodoItem($event, i, j)"
         ></todo-item>
       </template>
-      <todo-item :value="newTodoItemInputField" @update-item="insertNewTodo($event, i)"></todo-item>
+      <todo-item
+        no-dbl-click
+        :value="newTodoItemInputField"
+        @update-item="insertNewTodo($event, i)"
+      ></todo-item>
     </day-column>
   </day-grid>
 </template>

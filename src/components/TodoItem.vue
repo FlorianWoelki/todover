@@ -1,10 +1,17 @@
 <template>
-  <div @dblclick="focusInputField" class="px-4">
+  <div
+    @click="noDblClick ? focusInputField() : () => {}"
+    @dblclick="!noDblClick ? focusInputField() : () => {}"
+    class="px-4"
+  >
     <input
       v-bind="$attrs"
       ref="inputField"
       class="w-full px-2 py-1 placeholder-gray-300 bg-white border-b border-gray-200 border-dashed rounded cursor-pointer focus:outline-none hover:bg-gray-100 focus:bg-gray-100"
-      :class="disabled ? 'cursor-pointer' : 'cursor-text'"
+      :class="{
+        'cursor-pointer': disabled,
+        'cursor-text': !disabled || noDblClick,
+      }"
       @keydown.enter="blurInputField"
       @blur="blurInputField"
       :disabled="disabled"
@@ -17,6 +24,12 @@ import { defineComponent, nextTick, ref } from '@vue/runtime-core';
 
 export default defineComponent({
   emits: ['updateItem'],
+  props: {
+    noDblClick: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup(_, { emit }) {
     const disabled = ref(true);
     const inputField = ref<HTMLInputElement | null>(null);
