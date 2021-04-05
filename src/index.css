@@ -1,5 +1,9 @@
 @tailwind base;
 
+#app {
+  height: calc(100% - 12rem);
+}
+
 @tailwind components;
 
 @tailwind utilities;

@@ -1,23 +1,46 @@
 <template>
   <navbar />
-  <day-grid :current-date="new Date()" class="h-screen">
-    <day-column v-for="(day, i) in days" :key="i" :index="i" v-model="day.todos">
-      <template #draggable>
+  <div class="flex flex-col h-full space-y-4">
+    <day-grid :current-date="new Date()" class="h-1/2">
+      <day-column v-for="(day, i) in days" :key="i" :index="i" v-model="day.todos">
+        <template #draggable>
+          <todo-item
+            v-for="(todo, j) in day.todos"
+            :key="j"
+            :value="todo"
+            placeholder="Double click to edit todo"
+            @update-item="updateTodoItem($event, i, j)"
+          ></todo-item>
+        </template>
         <todo-item
-          v-for="(todo, j) in day.todos"
-          :key="j"
-          :value="todo"
-          placeholder="Double click to edit todo"
-          @update-item="updateTodoItem($event, i, j)"
+          no-dbl-click
+          :value="newTodoItemInputField"
+          @update-item="insertNewTodo($event, i)"
         ></todo-item>
-      </template>
-      <todo-item
-        no-dbl-click
-        :value="newTodoItemInputField"
-        @update-item="insertNewTodo($event, i)"
-      ></todo-item>
-    </day-column>
-  </day-grid>
+      </day-column>
+    </day-grid>
+
+    <div class="p-4 bg-gray-500"></div>
+
+    <day-grid :current-date="new Date()" class="h-1/2">
+      <day-column v-for="(day, i) in days" :key="i" :index="i" v-model="day.todos">
+        <template #draggable>
+          <todo-item
+            v-for="(todo, j) in day.todos"
+            :key="j"
+            :value="todo"
+            placeholder="Double click to edit todo"
+            @update-item="updateTodoItem($event, i, j)"
+          ></todo-item>
+        </template>
+        <todo-item
+          no-dbl-click
+          :value="newTodoItemInputField"
+          @update-item="insertNewTodo($event, i)"
+        ></todo-item>
+      </day-column>
+    </day-grid>
+  </div>
 </template>
 
 <script lang="ts">
