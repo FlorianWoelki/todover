@@ -1,15 +1,21 @@
 <template>
   <div
     class="space-y-8 border-l border-r border-gray-100"
-    :class="{
-      'text-gray-300': isPreviousDay,
-      'text-red-500': isActiveItem,
-      'text-gray-600': !isActiveItem && !isPreviousDay,
-    }"
+    :class="
+      isCustomTitle
+        ? 'text-gray-600'
+        : {
+            'text-gray-300': isPreviousDay,
+            'text-red-500': isActiveItem,
+            'text-gray-600': !isActiveItem && !isPreviousDay,
+          }
+    "
   >
     <div class="flex flex-col items-center justify-center">
-      <h1 class="text-2xl font-bold tracking-wider uppercase">{{ currentDay }}</h1>
-      <p class="text-sm">{{ printedDate }}</p>
+      <h1 class="text-2xl font-bold tracking-wider uppercase">
+        {{ !isCustomTitle ? currentDay : customTitle }}
+      </h1>
+      <p v-if="isCustomTitle" class="text-sm">{{ printedDate }}</p>
     </div>
 
     <div class="w-full space-y-2">
@@ -38,11 +44,16 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    customTitle: {
+      type: String,
+      default: '',
+    },
   },
   setup(props) {
     const draggableDisabled = ref(false);
-    const currentDate = inject(dateKey, new Date());
+    const currentDate = inject(dateKey);
     const activeItem = inject(activeItemKey, 1);
+    const isCustomTitle = currentDate === undefined;
 
     const isActiveItem = computed((): boolean => activeItem === props.index);
     const isPreviousDay = computed((): boolean => activeItem - 1 === props.index);
@@ -50,19 +61,20 @@ export default defineComponent({
     const getLastDateInMonth = (date: Date): Date =>
       new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-    const currentDay = computed(
-      (): string => days[mod(columnDate.value.getDay() - 1, days.length)]
+    const currentDay = computed((): string =>
+      columnDate.value ? days[mod(columnDate.value.getDay() - 1, days.length)] : ''
     );
 
-    const printedDate = computed(
-      (): string =>
-        `${columnDate.value.getDate() - 1}.
+    const printedDate = computed((): string =>
+      columnDate.value
+        ? `${columnDate.value.getDate() - 1}.
         ${months[columnDate.value.getMonth()]}
         ${columnDate.value.getFullYear()}`
+        : ''
     );
 
-    const columnDate = computed(
-      (): Date => {
+    const columnDate = computed((): Date | undefined => {
+      if (currentDate) {
         const date = isPreviousDay.value
           ? currentDate.getDate()
           : currentDate.getDate() + props.index;
@@ -79,7 +91,9 @@ export default defineComponent({
 
         return new Date(currentDate.getFullYear(), currentDate.getMonth(), date);
       }
-    );
+
+      return undefined;
+    });
 
     const checkMove = (): boolean => {
       const canMove = document.activeElement?.tagName === 'BODY';
@@ -94,6 +108,7 @@ export default defineComponent({
       printedDate,
       checkMove,
       draggableDisabled,
+      isCustomTitle,
     };
   },
 });

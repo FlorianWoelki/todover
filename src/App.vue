@@ -1,8 +1,8 @@
 <template>
   <navbar />
   <div class="flex flex-col h-full space-y-4">
-    <day-grid :current-date="new Date()" class="h-1/2">
-      <day-column v-for="(day, i) in days" :key="i" :index="i" v-model="day.todos">
+    <list-grid :current-date="new Date()" class="h-1/2">
+      <list-column v-for="(day, i) in days" :key="i" :index="i" v-model="day.todos">
         <template #draggable>
           <todo-item
             v-for="(todo, j) in day.todos"
@@ -17,13 +17,19 @@
           :value="newTodoItemInputField"
           @update-item="insertNewTodo($event, i)"
         ></todo-item>
-      </day-column>
-    </day-grid>
+      </list-column>
+    </list-grid>
 
     <div class="p-4 bg-gray-500"></div>
 
-    <day-grid :current-date="new Date()" class="h-1/2">
-      <day-column v-for="(day, i) in days" :key="i" :index="i" v-model="day.todos">
+    <list-grid class="h-1/2">
+      <list-column
+        v-for="(day, i) in days"
+        :key="i"
+        :index="i"
+        v-model="day.todos"
+        customTitle="Test"
+      >
         <template #draggable>
           <todo-item
             v-for="(todo, j) in day.todos"
@@ -38,22 +44,22 @@
           :value="newTodoItemInputField"
           @update-item="insertNewTodo($event, i)"
         ></todo-item>
-      </day-column>
-    </day-grid>
+      </list-column>
+    </list-grid>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/runtime-core';
-import DayGrid from '@/components/DayGrid.vue';
-import DayColumn from '@/components/DayColumn.vue';
+import ListGrid from '@/components/ListGrid.vue';
+import ListColumn from '@/components/ListColumn.vue';
 import TodoItem from '@/components/TodoItem.vue';
 import Navbar from '@/components/Navbar.vue';
 
 export default defineComponent({
   components: {
-    DayGrid,
-    DayColumn,
+    ListGrid,
+    ListColumn,
     TodoItem,
     Navbar,
   },

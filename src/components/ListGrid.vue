@@ -6,7 +6,7 @@ export default defineComponent({
   props: {
     currentDate: {
       type: Date,
-      required: true,
+      required: false,
     },
     activeItem: {
       type: Number,
