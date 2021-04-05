@@ -51,18 +51,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/runtime-core';
-import ListGrid from '@/components/ListGrid.vue';
-import ListColumn from '@/components/ListColumn.vue';
-import TodoItem from '@/components/TodoItem.vue';
-import Navbar from '@/components/Navbar.vue';
 
 export default defineComponent({
-  components: {
-    ListGrid,
-    ListColumn,
-    TodoItem,
-    Navbar,
-  },
   setup() {
     const newTodoItemInputField = ref('');
     const days = ref<any>([

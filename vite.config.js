@@ -1,10 +1,11 @@
 import * as path from 'path';
 import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
+import Vue from '@vitejs/plugin-vue';
+import ViteComponents from 'vite-plugin-components';
 import pkg from './package.json';
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [Vue(), ViteComponents()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
