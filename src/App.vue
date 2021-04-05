@@ -1,13 +1,16 @@
 <template>
   <day-grid :current-date="new Date()" class="h-screen">
     <day-column v-for="(day, i) in days" :key="i" :index="i" v-model="day.todos">
-      <todo-item
-        v-for="(todo, j) in day.todos"
-        :key="j"
-        :value="todo"
-        placeholder="Double click to edit todo"
-        @update-item="updateTodoItem($event, i, j)"
-      ></todo-item>
+      <template #draggable>
+        <todo-item
+          v-for="(todo, j) in day.todos"
+          :key="j"
+          :value="todo"
+          placeholder="Double click to edit todo"
+          @update-item="updateTodoItem($event, i, j)"
+        ></todo-item>
+      </template>
+      <todo-item :value="newTodoItemInputField" @update-item="insertNewTodo($event, i)"></todo-item>
     </day-column>
   </day-grid>
 </template>
@@ -25,6 +28,7 @@ export default defineComponent({
     TodoItem,
   },
   setup() {
+    const newTodoItemInputField = ref('');
     const days = ref<any>([
       {
         todos: ['Some test item', 'Hello World'],
@@ -47,16 +51,16 @@ export default defineComponent({
       days.value[dayIndex].todos[todoIndex] = value;
     };
 
-    const addNewTodo = (event: KeyboardEvent, dayIndex: number, todoIndex: number): void => {
-      const value = (event.target as HTMLInputElement).value;
-      updateTodoItem(value, dayIndex, todoIndex);
-      days.value[dayIndex].todos.push('');
+    const insertNewTodo = (value: string, dayIndex: number): void => {
+      newTodoItemInputField.value = '';
+      days.value[dayIndex].todos.push(value);
     };
 
     return {
       days,
-      addNewTodo,
+      insertNewTodo,
       updateTodoItem,
+      newTodoItemInputField,
     };
   },
 });

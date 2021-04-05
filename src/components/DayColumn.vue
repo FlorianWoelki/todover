@@ -12,15 +12,13 @@
       <p class="text-sm">{{ printedDate }}</p>
     </div>
 
-    <draggable
-      v-bind="$attrs"
-      class="w-full h-full space-y-2"
-      :animation="150"
-      :move="checkMove"
-      group="todos"
-    >
+    <div class="w-full space-y-2">
+      <draggable v-bind="$attrs" :animation="150" :move="checkMove" group="todos" class="space-y-2">
+        <slot name="draggable"></slot>
+      </draggable>
+
       <slot></slot>
-    </draggable>
+    </div>
   </div>
 </template>
 

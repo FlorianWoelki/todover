@@ -1,9 +1,9 @@
 <template>
-  <div @dblclick="focusInputField">
+  <div @dblclick="focusInputField" class="px-4">
     <input
       v-bind="$attrs"
       ref="inputField"
-      class="w-full px-2 py-1 placeholder-gray-300 bg-white cursor-pointer focus:outline-none hover:bg-gray-100 focus:bg-gray-100"
+      class="w-full px-2 py-1 placeholder-gray-300 bg-white border-b border-gray-200 border-dashed rounded cursor-pointer focus:outline-none hover:bg-gray-100 focus:bg-gray-100"
       :class="disabled ? 'cursor-pointer' : 'cursor-text'"
       @keydown.enter="blurInputField"
       @blur="blurInputField"
@@ -33,11 +33,13 @@ export default defineComponent({
     };
 
     const blurInputField = (): void => {
-      if (!inputField.value) {
+      if (!inputField.value || disabled.value) {
         return;
       }
 
-      emit('updateItem', inputField.value.value);
+      if (inputField.value.value.length > 0) {
+        emit('updateItem', inputField.value.value);
+      }
 
       disabled.value = true;
       nextTick(() => {
