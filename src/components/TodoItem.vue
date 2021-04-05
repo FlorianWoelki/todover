@@ -3,6 +3,7 @@
     @click="noDblClick ? focusInputField() : () => {}"
     @dblclick="!noDblClick ? focusInputField() : () => {}"
     class="px-4"
+    :class="{ [staticItemClass]: noDblClick }"
   >
     <input
       v-bind="$attrs"
@@ -21,6 +22,7 @@
 
 <script lang="ts">
 import { defineComponent, nextTick, ref } from '@vue/runtime-core';
+import { staticItemClass } from '@/util/constants';
 
 export default defineComponent({
   emits: ['updateItem'],
@@ -65,6 +67,7 @@ export default defineComponent({
       focusInputField,
       blurInputField,
       inputField,
+      staticItemClass,
     };
   },
 });

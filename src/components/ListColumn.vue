@@ -18,12 +18,18 @@
       <p v-if="isCustomTitle" class="text-sm">{{ printedDate }}</p>
     </div>
 
-    <div class="w-full space-y-2">
-      <draggable v-bind="$attrs" :animation="150" :move="checkMove" group="todos" class="space-y-2">
+    <div class="w-full h-full space-y-2">
+      <draggable
+        v-bind="$attrs"
+        :animation="150"
+        :move="checkMove"
+        :filter="`.${[staticItemClass]}`"
+        group="todos"
+        class="h-full space-y-2"
+      >
         <slot name="draggable"></slot>
+        <slot></slot>
       </draggable>
-
-      <slot></slot>
     </div>
   </div>
 </template>
@@ -34,6 +40,7 @@ import { VueDraggableNext } from 'vue-draggable-next';
 import { dateKey, activeItemKey } from '@/symbols/day-grid';
 import { days, months } from '@/constants/date';
 import { mod } from '@/util/math';
+import { staticItemClass } from '@/util/constants';
 
 export default defineComponent({
   components: {
@@ -95,10 +102,8 @@ export default defineComponent({
       return undefined;
     });
 
-    const checkMove = (): boolean => {
-      const canMove = document.activeElement?.tagName === 'BODY';
-      draggableDisabled.value = !canMove;
-      return true;
+    const checkMove = (e: any): boolean => {
+      return e.related.className.indexOf(staticItemClass) === -1;
     };
 
     return {
@@ -109,6 +114,7 @@ export default defineComponent({
       checkMove,
       draggableDisabled,
       isCustomTitle,
+      staticItemClass,
     };
   },
 });
