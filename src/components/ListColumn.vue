@@ -18,7 +18,7 @@
       <p v-if="!isCustomTitle" class="text-sm">{{ printedDate }}</p>
     </div>
 
-    <div class="w-full h-full space-y-2">
+    <div class="relative w-full space-y-2" style="height: calc(100% - 6rem)">
       <draggable
         v-bind="$attrs"
         :animation="150"
@@ -29,6 +29,13 @@
         <slot name="draggable"></slot>
         <slot></slot>
       </draggable>
+
+      <div
+        v-if="!isCustomTitle"
+        class="absolute bottom-0 right-0 mr-8 font-bold tracking-tighter text-gray-100 text-7xl"
+      >
+        {{ printedDay }}
+      </div>
     </div>
   </div>
 </template>
@@ -71,12 +78,18 @@ export default defineComponent({
       columnDate.value ? days[mod(columnDate.value.getDay() - 1, days.length)] : ''
     );
 
-    const printedDate = computed((): string => {
+    const printedDate = computed((): string =>
+      columnDate.value
+        ? `${printedDay.value}.
+          ${months[columnDate.value.getMonth()]}
+          ${columnDate.value.getFullYear()}`
+        : ''
+    );
+
+    const printedDay = computed((): string => {
       if (columnDate.value) {
         const day = columnDate.value.getDate() - 1;
-        return `${day < 10 ? `0${day}` : day}.
-          ${months[columnDate.value.getMonth()]}
-          ${columnDate.value.getFullYear()}`;
+        return day < 10 ? `0${day}` : `${day}`;
       }
       return '';
     });
@@ -111,6 +124,7 @@ export default defineComponent({
       draggableDisabled,
       isCustomTitle,
       staticItemClass,
+      printedDay,
     };
   },
 });
