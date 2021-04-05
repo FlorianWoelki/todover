@@ -22,7 +22,6 @@
       <draggable
         v-bind="$attrs"
         :animation="150"
-        :move="checkMove"
         :filter="`.${[staticItemClass]}`"
         group="todos"
         class="h-full space-y-2"
@@ -102,16 +101,11 @@ export default defineComponent({
       return undefined;
     });
 
-    const checkMove = (e: any): boolean => {
-      return e.related.className.indexOf(staticItemClass) === -1;
-    };
-
     return {
       currentDay,
       isActiveItem,
       isPreviousDay,
       printedDate,
-      checkMove,
       draggableDisabled,
       isCustomTitle,
       staticItemClass,
