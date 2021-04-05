@@ -1,4 +1,5 @@
 <template>
+  <navbar />
   <day-grid :current-date="new Date()" class="h-screen">
     <day-column v-for="(day, i) in days" :key="i" :index="i" v-model="day.todos">
       <template #draggable>
@@ -24,12 +25,14 @@ import { defineComponent, ref } from '@vue/runtime-core';
 import DayGrid from '@/components/DayGrid.vue';
 import DayColumn from '@/components/DayColumn.vue';
 import TodoItem from '@/components/TodoItem.vue';
+import Navbar from '@/components/Navbar.vue';
 
 export default defineComponent({
   components: {
     DayGrid,
     DayColumn,
     TodoItem,
+    Navbar,
   },
   setup() {
     const newTodoItemInputField = ref('');
