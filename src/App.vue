@@ -9,13 +9,13 @@
             :key="j"
             :value="todo"
             placeholder="Double click to edit todo"
-            @update-item="updateTodoItem($event, i, j)"
+            @update-item="updateTodoItem('day', $event, i, j)"
           ></todo-item>
         </template>
         <todo-item
           no-dbl-click
           :value="newTodoItemInputField"
-          @update-item="insertNewTodo($event, i)"
+          @update-item="insertNewTodo('day', $event, i)"
         ></todo-item>
       </list-column>
     </list-grid>
@@ -24,25 +24,25 @@
 
     <list-grid class="h-1/2">
       <list-column
-        v-for="(day, i) in days"
+        v-for="(list, i) in lists"
         :key="i"
         :index="i"
-        v-model="day.todos"
-        customTitle="Test"
+        v-model="list.todos"
+        :customTitle="list.name"
       >
         <template #draggable>
           <todo-item
-            v-for="(todo, j) in day.todos"
+            v-for="(todo, j) in list.todos"
             :key="j"
             :value="todo"
             placeholder="Double click to edit todo"
-            @update-item="updateTodoItem($event, i, j)"
+            @update-item="updateTodoItem('list', $event, i, j)"
           ></todo-item>
         </template>
         <todo-item
           no-dbl-click
           :value="newTodoItemInputField"
-          @update-item="insertNewTodo($event, i)"
+          @update-item="insertNewTodo('list', $event, i)"
         ></todo-item>
       </list-column>
     </list-grid>
@@ -51,6 +51,11 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/runtime-core';
+
+enum ListType {
+  DAY = 'day',
+  LIST = 'list',
+}
 
 export default defineComponent({
   setup() {
@@ -72,14 +77,42 @@ export default defineComponent({
         todos: ['Hello World'],
       },
     ]);
+    const lists = ref<any>([
+      {
+        name: 'List One',
+        todos: ['My list one item'],
+      },
+      {
+        name: 'Things',
+        todos: ['Buy some milk'],
+      },
+      {
+        name: 'Watchlist',
+        todos: ['Harry Potter'],
+      },
+    ]);
 
-    const updateTodoItem = (value: string, dayIndex: number, todoIndex: number): void => {
-      days.value[dayIndex].todos[todoIndex] = value;
+    const updateTodoItem = (
+      type: ListType,
+      value: string,
+      dayIndex: number,
+      todoIndex: number
+    ): void => {
+      if (type === ListType.DAY) {
+        days.value[dayIndex].todos[todoIndex] = value;
+      } else {
+        lists.value[dayIndex].todos[todoIndex] = value;
+      }
     };
 
-    const insertNewTodo = (value: string, dayIndex: number): void => {
+    const insertNewTodo = (type: ListType, value: string, dayIndex: number): void => {
       newTodoItemInputField.value = '';
-      days.value[dayIndex].todos.push(value);
+
+      if (type === ListType.DAY) {
+        days.value[dayIndex].todos.push(value);
+      } else {
+        lists.value[dayIndex].todos.push(value);
+      }
     };
 
     return {
@@ -87,6 +120,7 @@ export default defineComponent({
       insertNewTodo,
       updateTodoItem,
       newTodoItemInputField,
+      lists,
     };
   },
 });
