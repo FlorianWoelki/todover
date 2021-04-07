@@ -2,7 +2,7 @@
   <navbar />
   <div class="flex flex-col h-full space-y-4">
     <list-grid :current-date="new Date()" class="h-1/2">
-      <list-column v-for="(day, i) in days" :key="i" :index="i" v-model="day.todos">
+      <list-column v-for="(day, i) in days" :key="i" :index="i">
         <template #draggable>
           <todo-item
             v-for="(todo, j) in day.todos"
@@ -23,13 +23,7 @@
     <div class="p-4 bg-gray-500"></div>
 
     <list-grid class="h-1/2">
-      <list-column
-        v-for="(list, i) in lists"
-        :key="i"
-        :index="i"
-        v-model="list.todos"
-        :customTitle="list.name"
-      >
+      <list-column v-for="(list, i) in lists" :key="i" :index="i" :customTitle="list.name">
         <template #draggable>
           <todo-item
             v-for="(todo, j) in list.todos"
