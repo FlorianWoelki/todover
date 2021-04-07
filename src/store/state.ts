@@ -1,10 +1,15 @@
+export interface Todo {
+  name: string;
+  done?: boolean;
+}
+
 export interface DayList {
-  todos: string[];
+  todos: Todo[];
 }
 
 export interface List {
   name: string;
-  todos: string[];
+  todos: Todo[];
 }
 
 export interface State {
@@ -15,19 +20,19 @@ export interface State {
 export const state: State = {
   days: [
     {
-      todos: ['First day todo'],
+      todos: [{ name: 'First day todo' }],
     },
     {
-      todos: ['Second day todo'],
+      todos: [{ name: 'Second day todo' }],
     },
     {
-      todos: ['Third day todo'],
+      todos: [{ name: 'Third day todo' }],
     },
     {
-      todos: ['Fourth day todo'],
+      todos: [{ name: 'Fourth day todo' }],
     },
     {
-      todos: ['Fifth day todo'],
+      todos: [{ name: 'Fifth day todo' }],
     },
   ],
   lists: [
@@ -37,7 +42,7 @@ export const state: State = {
     },
     {
       name: 'Watchlist',
-      todos: ['Harry Potter'],
+      todos: [{ name: 'Harry Potter' }],
     },
   ],
 };

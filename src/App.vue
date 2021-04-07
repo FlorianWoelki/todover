@@ -14,9 +14,11 @@
             <todo-item
               v-for="(todo, j) in day.todos"
               :key="j"
-              :value="todo"
+              :value="todo.name"
+              :done="todo.done"
               placeholder="Double click to edit todo"
               @update-item="updateTodoItem('day', $event, i, j)"
+              @click="toggleTodoStatus('day', i, j)"
             ></todo-item>
           </template>
           <todo-item
@@ -42,9 +44,11 @@
           <todo-item
             v-for="(todo, j) in list.todos"
             :key="j"
-            :value="todo"
+            :value="todo.name"
+            :done="todo.done"
             placeholder="Double click to edit todo"
             @update-item="updateTodoItem('list', $event, i, j)"
+            @click="toggleTodoStatus('list', i, j)"
           ></todo-item>
         </template>
         <todo-item
@@ -94,9 +98,13 @@ export default defineComponent({
       todoIndex: number
     ): void => {
       if (type === ListType.DAY) {
-        store.commit(Mutation.UPDATE_DAY_TODO, { value, dayIndex, todoIndex });
+        store.commit(Mutation.UPDATE_DAY_TODO, { value: { name: value }, dayIndex, todoIndex });
       } else {
-        store.commit(Mutation.UPDATE_LIST_TODO, { value, listIndex: dayIndex, todoIndex });
+        store.commit(Mutation.UPDATE_LIST_TODO, {
+          value: { name: value },
+          listIndex: dayIndex,
+          todoIndex,
+        });
       }
     };
 
@@ -113,12 +121,17 @@ export default defineComponent({
     const days = computed(() => store.state.days);
     const lists = computed(() => store.state.lists);
 
+    const toggleTodoStatus = (listType: ListType, listIndex: number, todoIndex: number): void => {
+      store.commit(Mutation.TOGGLE_TODO_STATUS, { listType, listIndex, todoIndex });
+    };
+
     return {
       insertNewTodo,
       updateTodoItem,
       newTodoItemInputField,
       days,
       lists,
+      toggleTodoStatus,
     };
   },
 });

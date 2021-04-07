@@ -1,6 +1,6 @@
 <template>
   <div
-    @click="noDblClick ? focusInputField() : () => {}"
+    @click="noDblClick ? focusInputField() : $emit('click')"
     @dblclick="!noDblClick ? focusInputField() : () => {}"
     class="px-4"
     :class="{ [staticItemClass]: noDblClick }"
@@ -12,6 +12,7 @@
       :class="{
         'cursor-pointer': disabled,
         'cursor-text': !disabled || noDblClick,
+        'line-through text-gray-300': done,
       }"
       @keydown.enter="blurInputField"
       @blur="blurInputField"
@@ -25,9 +26,13 @@ import { defineComponent, nextTick, ref } from '@vue/runtime-core';
 import { staticItemClass } from '@/util/constants';
 
 export default defineComponent({
-  emits: ['updateItem'],
+  emits: ['updateItem', 'click'],
   props: {
     noDblClick: {
+      type: Boolean,
+      default: false,
+    },
+    done: {
       type: Boolean,
       default: false,
     },
