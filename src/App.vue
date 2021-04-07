@@ -50,7 +50,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/runtime-core';
+import { computed, defineComponent, ref } from '@vue/runtime-core';
+import { useStore } from 'vuex';
+import { Mutation } from './store';
 
 enum ListType {
   DAY = 'day',
@@ -59,38 +61,9 @@ enum ListType {
 
 export default defineComponent({
   setup() {
+    const store = useStore();
+
     const newTodoItemInputField = ref('');
-    const days = ref<any>([
-      {
-        todos: ['Some test item', 'Hello World'],
-      },
-      {
-        todos: [],
-      },
-      {
-        todos: [],
-      },
-      {
-        todos: ['Some test item'],
-      },
-      {
-        todos: ['Hello World'],
-      },
-    ]);
-    const lists = ref<any>([
-      {
-        name: 'List One',
-        todos: ['My list one item'],
-      },
-      {
-        name: 'Things',
-        todos: ['Buy some milk'],
-      },
-      {
-        name: 'Watchlist',
-        todos: ['Harry Potter'],
-      },
-    ]);
 
     const updateTodoItem = (
       type: ListType,
@@ -99,9 +72,9 @@ export default defineComponent({
       todoIndex: number
     ): void => {
       if (type === ListType.DAY) {
-        days.value[dayIndex].todos[todoIndex] = value;
+        store.commit(Mutation.UPDATE_DAY_TODO, { value, dayIndex, todoIndex });
       } else {
-        lists.value[dayIndex].todos[todoIndex] = value;
+        store.commit(Mutation.UPDATE_LIST_TODO, { value, listIndex: dayIndex, todoIndex });
       }
     };
 
@@ -109,17 +82,20 @@ export default defineComponent({
       newTodoItemInputField.value = '';
 
       if (type === ListType.DAY) {
-        days.value[dayIndex].todos.push(value);
+        store.commit(Mutation.ADD_DAY_TODO, { value, dayIndex });
       } else {
-        lists.value[dayIndex].todos.push(value);
+        store.commit(Mutation.ADD_LIST_TODO, { value, listIndex: dayIndex });
       }
     };
 
+    const days = computed(() => store.state.days);
+    const lists = computed(() => store.state.lists);
+
     return {
-      days,
       insertNewTodo,
       updateTodoItem,
       newTodoItemInputField,
+      days,
       lists,
     };
   },

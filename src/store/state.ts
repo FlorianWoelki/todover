@@ -1,15 +1,43 @@
-export interface State {
-  debug: boolean;
-  version: string;
-  isInitialized: boolean;
-  count: number;
+export interface DayList {
+  todos: string[];
 }
 
-const versionString = import.meta.env.MODE === 'development' ? _APP_VERSION + '-dev' : _APP_VERSION;
+export interface List {
+  name: string;
+  todos: string[];
+}
+
+export interface State {
+  days: DayList[];
+  lists: List[];
+}
 
 export const state: State = {
-  debug: import.meta.env.MODE === 'development',
-  version: versionString,
-  isInitialized: false,
-  count: 0,
+  days: [
+    {
+      todos: ['First day todo'],
+    },
+    {
+      todos: ['Second day todo'],
+    },
+    {
+      todos: ['Third day todo'],
+    },
+    {
+      todos: ['Fourth day todo'],
+    },
+    {
+      todos: ['Fifth day todo'],
+    },
+  ],
+  lists: [
+    {
+      name: 'List One',
+      todos: [],
+    },
+    {
+      name: 'Watchlist',
+      todos: ['Harry Potter'],
+    },
+  ],
 };

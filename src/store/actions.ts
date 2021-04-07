@@ -1,11 +1,9 @@
 import { ActionTree, ActionContext } from 'vuex';
 
 import { State } from './state';
-import { Mutations, Mutation } from './mutations';
+import { Mutations } from './mutations';
 
-export enum Action {
-  initApp = 'initApp',
-}
+export enum Action {}
 
 type AugmentedActionContext = {
   commit<K extends keyof Mutations>(
@@ -14,12 +12,6 @@ type AugmentedActionContext = {
   ): ReturnType<Mutations[K]>;
 } & Omit<ActionContext<State, State>, 'commit'>;
 
-export interface Actions {
-  [Action.initApp]({ state, commit, dispatch }: AugmentedActionContext): void;
-}
+export interface Actions {}
 
-export const actions: ActionTree<State, State> & Actions = {
-  [Action.initApp]({ state, commit, dispatch }) {
-    console.log('app inited!');
-  },
-};
+export const actions: ActionTree<State, State> & Actions = {};
