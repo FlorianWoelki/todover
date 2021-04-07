@@ -1,24 +1,38 @@
 <template>
   <navbar />
   <div class="flex flex-col h-full space-y-4">
-    <list-grid :current-date="new Date()" class="h-1/2">
-      <list-column v-for="(day, i) in days" :key="i" :index="i">
-        <template #draggable>
+    <div class="flex h-1/2">
+      <div class="flex flex-col items-center space-y-4 text-red-400">
+        <chevron-left class="w-10 h-10 text-red-500" />
+        <chevron-double-left class="w-6 h-6" />
+        <cog class="w-6 h-6" />
+      </div>
+
+      <list-grid :current-date="new Date()" class="w-full h-full">
+        <list-column v-for="(day, i) in days" :key="i" :index="i">
+          <template #draggable>
+            <todo-item
+              v-for="(todo, j) in day.todos"
+              :key="j"
+              :value="todo"
+              placeholder="Double click to edit todo"
+              @update-item="updateTodoItem('day', $event, i, j)"
+            ></todo-item>
+          </template>
           <todo-item
-            v-for="(todo, j) in day.todos"
-            :key="j"
-            :value="todo"
-            placeholder="Double click to edit todo"
-            @update-item="updateTodoItem('day', $event, i, j)"
+            no-dbl-click
+            :value="newTodoItemInputField"
+            @update-item="insertNewTodo('day', $event, i)"
           ></todo-item>
-        </template>
-        <todo-item
-          no-dbl-click
-          :value="newTodoItemInputField"
-          @update-item="insertNewTodo('day', $event, i)"
-        ></todo-item>
-      </list-column>
-    </list-grid>
+        </list-column>
+      </list-grid>
+
+      <div class="flex flex-col items-center space-y-4 text-red-400">
+        <chevron-right class="w-10 h-10 text-red-500" />
+        <chevron-double-right class="w-6 h-6" />
+        <calendar class="w-6 h-6" />
+      </div>
+    </div>
 
     <div class="p-4 bg-gray-500"></div>
 
@@ -46,6 +60,12 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/runtime-core';
 import { useStore } from 'vuex';
+import ChevronLeft from './assets/icons/chevron-left.svg';
+import ChevronDoubleLeft from './assets/icons/chevron-double-left.svg';
+import ChevronRight from './assets/icons/chevron-right.svg';
+import ChevronDoubleRight from './assets/icons/chevron-double-right.svg';
+import Cog from './assets/icons/cog.svg';
+import Calendar from './assets/icons/calendar.svg';
 import { Mutation } from './store';
 
 enum ListType {
@@ -54,6 +74,14 @@ enum ListType {
 }
 
 export default defineComponent({
+  components: {
+    ChevronLeft,
+    ChevronRight,
+    ChevronDoubleLeft,
+    ChevronDoubleRight,
+    Cog,
+    Calendar,
+  },
   setup() {
     const store = useStore();
 
