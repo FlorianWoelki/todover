@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!hide"
     class="space-y-8 border-l border-r border-gray-100"
     :class="
       isCustomTitle
@@ -60,6 +61,10 @@ export default defineComponent({
     customTitle: {
       type: String,
       default: '',
+    },
+    hide: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {

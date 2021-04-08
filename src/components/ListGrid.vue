@@ -18,7 +18,7 @@ export default defineComponent({
     provide(activeItemKey, props.activeItem);
   },
   render() {
-    return h('div', { class: 'grid grid-cols-5' }, this.$slots);
+    return h('div', { class: 'grid grid-cols-1 lg:grid-cols-5' }, this.$slots);
   },
 });
 </script>

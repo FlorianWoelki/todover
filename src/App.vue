@@ -9,7 +9,12 @@
       </div>
 
       <list-grid :current-date="new Date()" class="w-full h-full">
-        <list-column v-for="(day, i) in days" :key="i" :index="i">
+        <list-column
+          v-for="(day, i) in days"
+          :key="i"
+          :index="i"
+          :hide="i !== 1 && isSmallDevice()"
+        >
           <template #draggable>
             <todo-item
               v-for="(todo, j) in day.todos"
@@ -71,6 +76,7 @@ import ChevronDoubleRight from './assets/icons/chevron-double-right.svg';
 import Cog from './assets/icons/cog.svg';
 import Calendar from './assets/icons/calendar.svg';
 import { Mutation } from './store';
+import { isSmallDevice } from './util/screen';
 
 enum ListType {
   DAY = 'day',
@@ -132,6 +138,7 @@ export default defineComponent({
       days,
       lists,
       toggleTodoStatus,
+      isSmallDevice,
     };
   },
 });
