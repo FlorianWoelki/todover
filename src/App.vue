@@ -38,26 +38,44 @@
 
     <div class="p-4 bg-gray-500"></div>
 
-    <list-grid class="h-1/2">
-      <list-column v-for="(list, i) in lists" :key="i" :index="i" :customTitle="list.name">
-        <template #draggable>
+    <div class="flex h-1/2">
+      <div class="flex flex-col items-center space-y-4 text-red-400 lg:hidden">
+        <chevron-left class="w-10 h-10 text-red-500" />
+        <chevron-double-left class="w-6 h-6" />
+      </div>
+
+      <list-grid class="w-full h-full">
+        <list-column
+          v-for="(list, i) in lists"
+          :key="i"
+          :index="i"
+          :customTitle="list.name"
+          :hide="i === 0 && isSmallDevice"
+        >
+          <template #draggable>
+            <todo-item
+              v-for="(todo, j) in list.todos"
+              :key="j"
+              :value="todo.name"
+              :done="todo.done"
+              placeholder="Double click to edit todo"
+              @update-item="updateTodoItem('list', $event, i, j)"
+              @click="toggleTodoStatus('list', i, j)"
+            ></todo-item>
+          </template>
           <todo-item
-            v-for="(todo, j) in list.todos"
-            :key="j"
-            :value="todo.name"
-            :done="todo.done"
-            placeholder="Double click to edit todo"
-            @update-item="updateTodoItem('list', $event, i, j)"
-            @click="toggleTodoStatus('list', i, j)"
+            no-dbl-click
+            :value="newTodoItemInputField"
+            @update-item="insertNewTodo('list', $event, i)"
           ></todo-item>
-        </template>
-        <todo-item
-          no-dbl-click
-          :value="newTodoItemInputField"
-          @update-item="insertNewTodo('list', $event, i)"
-        ></todo-item>
-      </list-column>
-    </list-grid>
+        </list-column>
+      </list-grid>
+
+      <div class="flex flex-col items-center space-y-4 text-red-400 lg:hidden">
+        <chevron-right class="w-10 h-10 text-red-500" />
+        <chevron-double-right class="w-6 h-6" />
+      </div>
+    </div>
   </div>
 </template>
 
