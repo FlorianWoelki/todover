@@ -39,9 +39,15 @@
     <div class="p-4 bg-gray-500"></div>
 
     <div class="flex h-1/2">
-      <div class="flex flex-col items-center space-y-4 text-red-400 lg:hidden">
-        <chevron-left class="w-10 h-10 text-red-500" />
-        <chevron-double-left class="w-6 h-6" />
+      <div class="flex flex-col items-center space-y-4 lg:hidden">
+        <chevron-left
+          class="w-10 h-10"
+          @click="goToPrevListItem"
+          :class="{
+            'text-red-500': currentListItem > 0,
+            'text-gray-400': currentListItem <= 0,
+          }"
+        />
       </div>
 
       <list-grid class="w-full h-full">
@@ -50,7 +56,7 @@
           :key="i"
           :index="i"
           :customTitle="list.name"
-          :hide="i === 0 && isSmallDevice"
+          :hide="i !== currentListItem && isSmallDevice"
         >
           <template #draggable>
             <todo-item
@@ -71,16 +77,22 @@
         </list-column>
       </list-grid>
 
-      <div class="flex flex-col items-center space-y-4 text-red-400 lg:hidden">
-        <chevron-right class="w-10 h-10 text-red-500" />
-        <chevron-double-right class="w-6 h-6" />
+      <div class="flex flex-col items-center space-y-4 lg:hidden">
+        <chevron-right
+          class="w-10 h-10"
+          @click="goToNextListItem"
+          :class="{
+            'text-red-500': currentListItem + 1 < lists.length,
+            'text-gray-400': currentListItem + 1 >= lists.length,
+          }"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from '@vue/runtime-core';
+import { computed, defineComponent, ref } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 import ChevronLeft from './assets/icons/chevron-left.svg';
 import ChevronDoubleLeft from './assets/icons/chevron-double-left.svg';
@@ -90,6 +102,7 @@ import Cog from './assets/icons/cog.svg';
 import Calendar from './assets/icons/calendar.svg';
 import { Mutation } from './store';
 import { isSmallDevice, setupEventListener } from './util/screen';
+import { DayList, List } from './store/state';
 
 enum ListType {
   DAY = 'day',
@@ -111,6 +124,23 @@ export default defineComponent({
     const store = useStore();
 
     const newTodoItemInputField = ref('');
+    const currentListItem = ref(0);
+
+    const goToNextListItem = () => {
+      if (currentListItem.value + 1 >= lists.value.length) {
+        return;
+      }
+
+      currentListItem.value += 1;
+    };
+
+    const goToPrevListItem = () => {
+      if (currentListItem.value - 1 < 0) {
+        return;
+      }
+
+      currentListItem.value -= 1;
+    };
 
     const updateTodoItem = (
       type: ListType,
@@ -139,8 +169,8 @@ export default defineComponent({
       }
     };
 
-    const days = computed(() => store.state.days);
-    const lists = computed(() => store.state.lists);
+    const days = computed((): DayList[] => store.state.days);
+    const lists = computed((): List[] => store.state.lists);
 
     const toggleTodoStatus = (listType: ListType, listIndex: number, todoIndex: number): void => {
       store.commit(Mutation.TOGGLE_TODO_STATUS, { listType, listIndex, todoIndex });
@@ -154,6 +184,9 @@ export default defineComponent({
       lists,
       toggleTodoStatus,
       isSmallDevice,
+      currentListItem,
+      goToNextListItem,
+      goToPrevListItem,
     };
   },
 });
