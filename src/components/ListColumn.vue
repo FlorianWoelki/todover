@@ -86,7 +86,7 @@ export default defineComponent({
       new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
     const currentDay = computed((): string =>
-      columnDate.value ? days[mod(columnDate.value.getDay() - 1, days.length)] : ''
+      columnDate.value ? days[mod(columnDate.value.getDay(), days.length)] : ''
     );
 
     const printedDate = computed((): string =>
@@ -99,7 +99,7 @@ export default defineComponent({
 
     const printedDay = computed((): string => {
       if (columnDate.value) {
-        const day = columnDate.value.getDate() - 1;
+        const day = columnDate.value.getDate();
         return day < 10 ? `0${day}` : `${day}`;
       }
       return '';
@@ -111,17 +111,7 @@ export default defineComponent({
           ? currentDate.getDate()
           : currentDate.getDate() + props.index + props.extraDayIndex;
 
-        if (date - 1 === 0) {
-          return getLastDateInMonth(
-            new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
-          );
-        }
-
-        if (date + 1 === getLastDateInMonth(currentDate).getDate()) {
-          return new Date(currentDate.getFullYear(), currentDate.getMonth() + 1);
-        }
-
-        return new Date(currentDate.getFullYear(), currentDate.getMonth(), date);
+        return new Date(currentDate.getFullYear(), currentDate.getMonth(), date - 1);
       }
 
       return undefined;
