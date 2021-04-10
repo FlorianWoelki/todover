@@ -1,48 +1,35 @@
+export interface ListType {
+  [key: string]: Todo[];
+}
+
 export interface Todo {
   name: string;
+  date?: Date;
+  list?: string;
   done?: boolean;
 }
 
-export interface DayList {
-  todos: Todo[];
-}
-
-export interface List {
-  name: string;
-  todos: Todo[];
-}
-
 export interface State {
-  days: DayList[];
-  lists: List[];
+  todos: Todo[];
 }
 
 export const state: State = {
-  days: [
+  todos: [
     {
-      todos: [{ name: 'First day todo' }],
+      name: 'First todo item',
+      date: new Date(2021, 3, 9),
     },
     {
-      todos: [{ name: 'Second day todo' }],
+      name: 'Second today item',
+      date: new Date(),
     },
     {
-      todos: [{ name: 'Third day todo' }],
+      name: 'Third today item',
+      date: new Date(),
     },
     {
-      todos: [{ name: 'Fourth day todo' }],
-    },
-    {
-      todos: [{ name: 'Fifth day todo' }],
-    },
-  ],
-  lists: [
-    {
-      name: 'List One',
-      todos: [],
-    },
-    {
-      name: 'Watchlist',
-      todos: [{ name: 'Harry Potter' }],
+      name: 'Todo item in a other list',
+      list: 'Things',
     },
   ],
 };

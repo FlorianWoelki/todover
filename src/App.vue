@@ -18,7 +18,7 @@
         >
           <template #draggable>
             <todo-item
-              v-for="(todo, j) in day.todos"
+              v-for="(todo, j) in todosAtDate(day)"
               :key="j"
               :value="todo.name"
               :done="todo.done"
@@ -58,15 +58,15 @@
 
       <list-grid class="w-full h-full">
         <list-column
-          v-for="(list, i) in lists"
+          v-for="(todos, list, i) in lists"
           :key="i"
           :index="i"
-          :customTitle="list.name"
+          :customTitle="list"
           :hide="i !== currentListItem && isSmallDevice"
         >
           <template #draggable>
             <todo-item
-              v-for="(todo, j) in list.todos"
+              v-for="(todo, j) in todos"
               :key="j"
               :value="todo.name"
               :done="todo.done"
@@ -88,8 +88,8 @@
           class="w-10 h-10"
           @click="goToNextListItem"
           :class="{
-            'text-red-500': currentListItem + 1 < lists.length,
-            'text-gray-400': currentListItem + 1 >= lists.length,
+            'text-red-500': currentListItem + 1 < sizeOfLists,
+            'text-gray-400': currentListItem + 1 >= sizeOfLists,
           }"
         />
       </div>
@@ -108,12 +108,7 @@ import Cog from './assets/icons/cog.svg';
 import Calendar from './assets/icons/calendar.svg';
 import { Mutation } from './store';
 import { isSmallDevice, setupEventListener } from './util/screen';
-import { DayList, List } from './store/state';
-
-enum ListType {
-  DAY = 'day',
-  LIST = 'list',
-}
+import { ListType, Todo } from './store/state';
 
 export default defineComponent({
   components: {
@@ -142,7 +137,7 @@ export default defineComponent({
     };
 
     const goToNextListItem = () => {
-      if (currentListItem.value + 1 >= lists.value.length) {
+      if (currentListItem.value + 1 >= sizeOfLists.value) {
         return;
       }
 
@@ -157,35 +152,81 @@ export default defineComponent({
       currentListItem.value -= 1;
     };
 
-    const updateTodoItem = (
-      type: ListType,
-      value: string,
-      dayIndex: number,
-      todoIndex: number
-    ): void => {
-      if (type === ListType.DAY) {
-        store.commit(Mutation.UPDATE_DAY_TODO, { value: { name: value }, dayIndex, todoIndex });
-      } else {
-        store.commit(Mutation.UPDATE_LIST_TODO, {
-          value: { name: value },
-          listIndex: dayIndex,
-          todoIndex,
-        });
-      }
+    const updateTodoItem = (value: Todo, todoIndex: number): void => {
+      store.commit(Mutation.UPDATE_TODO, { value, todoIndex } as {
+        value: Todo;
+        todoIndex: number;
+      });
     };
 
-    const insertNewTodo = (type: ListType, value: string, dayIndex: number): void => {
+    const insertNewTodo = (value: Todo): void => {
       newTodoItemInputField.value = '';
 
-      if (type === ListType.DAY) {
-        store.commit(Mutation.ADD_DAY_TODO, { value, dayIndex });
-      } else {
-        store.commit(Mutation.ADD_LIST_TODO, { value, listIndex: dayIndex });
-      }
+      store.commit(Mutation.ADD_TODO, { value });
     };
 
-    const days = computed((): DayList[] => store.state.days);
-    const lists = computed((): List[] => store.state.lists);
+    const days = computed((): any[] => {
+      const currentDate = new Date();
+      const previousDate = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate() - 1
+      );
+      const maxDate = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate() + 4
+      );
+      let days: Date[] = [previousDate];
+      for (let day = new Date(); day < maxDate; day.setDate(day.getDate() + 1)) {
+        days.push(new Date(day));
+      }
+
+      console.log(days);
+      return days;
+    });
+
+    const filteredTodos = computed(
+      (): Map<String, Todo[]> => {
+        const map = new Map<String, Todo[]>();
+        const todos = store.state.todos as Todo[];
+        todos
+          .filter((todo) => todo.date)
+          .forEach((todo) => {
+            const dateStr = todo.date!.toString();
+            if (map.has(dateStr)) {
+              map.get(dateStr)!.push(todo);
+            } else {
+              map.set(dateStr, [todo]);
+            }
+          });
+
+        return map;
+      }
+    );
+
+    const todosAtDate = (date: Date): Todo[] | undefined => {
+      return filteredTodos.value.get(date.toString());
+    };
+
+    const lists = computed(
+      (): ListType => {
+        const todos = store.state.todos as Todo[];
+        const lists: ListType = {};
+        todos
+          .filter((todo) => todo.list)
+          .forEach((todo) => {
+            if (lists[todo.list!]) {
+              lists[todo.list!].push(todo);
+            } else {
+              lists[todo.list!] = [todo];
+            }
+          });
+        return lists;
+      }
+    );
+
+    const sizeOfLists = computed((): number => Object.keys(lists.value).length);
 
     const toggleTodoStatus = (listType: ListType, listIndex: number, todoIndex: number): void => {
       store.commit(Mutation.TOGGLE_TODO_STATUS, { listType, listIndex, todoIndex });
@@ -205,6 +246,8 @@ export default defineComponent({
       goToNextDayItem,
       goToPrevDayItem,
       extraDayIndex,
+      sizeOfLists,
+      todosAtDate,
     };
   },
 });
