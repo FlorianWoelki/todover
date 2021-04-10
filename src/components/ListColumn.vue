@@ -66,6 +66,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    extraDayIndex: {
+      type: Number,
+      default: 0,
+    },
   },
   setup(props) {
     const draggableDisabled = ref(false);
@@ -73,8 +77,10 @@ export default defineComponent({
     const activeItem = inject(activeItemKey, 1);
     const isCustomTitle = currentDate === undefined;
 
-    const isActiveItem = computed((): boolean => activeItem === props.index);
-    const isPreviousDay = computed((): boolean => activeItem - 1 === props.index);
+    const isActiveItem = computed((): boolean => activeItem - props.extraDayIndex === props.index);
+    const isPreviousDay = computed(
+      (): boolean => activeItem - 1 - props.extraDayIndex === props.index
+    );
 
     const getLastDateInMonth = (date: Date): Date =>
       new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -103,7 +109,7 @@ export default defineComponent({
       if (currentDate) {
         const date = isPreviousDay.value
           ? currentDate.getDate()
-          : currentDate.getDate() + props.index;
+          : currentDate.getDate() + props.index + props.extraDayIndex;
 
         if (date - 1 === 0) {
           return getLastDateInMonth(

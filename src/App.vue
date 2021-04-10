@@ -3,13 +3,19 @@
   <div class="flex flex-col h-full space-y-4">
     <div class="flex h-1/2">
       <div class="flex flex-col items-center space-y-4 text-red-400">
-        <chevron-left class="w-10 h-10 text-red-500" />
+        <chevron-left class="w-10 h-10 text-red-500" @click="goToPrevDayItem" />
         <chevron-double-left class="w-6 h-6" />
         <cog class="w-6 h-6" />
       </div>
 
       <list-grid :current-date="new Date()" class="w-full h-full">
-        <list-column v-for="(day, i) in days" :key="i" :index="i" :hide="i !== 1 && isSmallDevice">
+        <list-column
+          v-for="(day, i) in days"
+          :key="i"
+          :index="i"
+          :hide="i !== 1 && isSmallDevice"
+          :extra-day-index="extraDayIndex"
+        >
           <template #draggable>
             <todo-item
               v-for="(todo, j) in day.todos"
@@ -30,7 +36,7 @@
       </list-grid>
 
       <div class="flex flex-col items-center space-y-4 text-red-400">
-        <chevron-right class="w-10 h-10 text-red-500" />
+        <chevron-right class="w-10 h-10 text-red-500" @click="goToNextDayItem" />
         <chevron-double-right class="w-6 h-6" />
         <calendar class="w-6 h-6" />
       </div>
@@ -125,6 +131,15 @@ export default defineComponent({
 
     const newTodoItemInputField = ref('');
     const currentListItem = ref(0);
+    const extraDayIndex = ref(0);
+
+    const goToNextDayItem = () => {
+      extraDayIndex.value += 1;
+    };
+
+    const goToPrevDayItem = () => {
+      extraDayIndex.value -= 1;
+    };
 
     const goToNextListItem = () => {
       if (currentListItem.value + 1 >= lists.value.length) {
@@ -187,6 +202,9 @@ export default defineComponent({
       currentListItem,
       goToNextListItem,
       goToPrevListItem,
+      goToNextDayItem,
+      goToPrevDayItem,
+      extraDayIndex,
     };
   },
 });
