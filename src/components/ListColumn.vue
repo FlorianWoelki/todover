@@ -82,9 +82,6 @@ export default defineComponent({
       (): boolean => activeItem - 1 - props.extraDayIndex === props.index
     );
 
-    const getLastDateInMonth = (date: Date): Date =>
-      new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
     const currentDay = computed((): string =>
       columnDate.value ? days[mod(columnDate.value.getDay(), days.length)] : ''
     );
