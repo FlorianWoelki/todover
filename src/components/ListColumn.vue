@@ -6,9 +6,9 @@
       isCustomTitle
         ? 'text-gray-600'
         : {
-            'text-gray-300': isPreviousDays,
+            'text-gray-300': isOldDay,
             'text-red-500': isActiveItem,
-            'text-gray-600': !isActiveItem && !isPreviousDays,
+            'text-gray-600': !isActiveItem && !isOldDay,
           }
     "
   >
@@ -78,9 +78,7 @@ export default defineComponent({
     const isCustomTitle = currentDate === undefined;
 
     const isActiveItem = computed((): boolean => activeItem - props.extraDayIndex === props.index);
-    const isPreviousDays = computed(
-      (): boolean => activeItem - 1 - props.extraDayIndex >= props.index
-    );
+    const isOldDay = computed((): boolean => activeItem - 1 - props.extraDayIndex >= props.index);
 
     const currentDay = computed((): string =>
       columnDate.value ? days[mod(columnDate.value.getDay(), days.length)] : ''
@@ -104,7 +102,7 @@ export default defineComponent({
 
     const columnDate = computed((): Date | undefined => {
       if (currentDate) {
-        const date = isPreviousDays.value
+        const date = isOldDay.value
           ? currentDate.getDate()
           : currentDate.getDate() + props.index + props.extraDayIndex;
 
@@ -117,7 +115,7 @@ export default defineComponent({
     return {
       currentDay,
       isActiveItem,
-      isPreviousDays,
+      isOldDay,
       printedDate,
       draggableDisabled,
       isCustomTitle,
