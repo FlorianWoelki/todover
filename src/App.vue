@@ -126,14 +126,25 @@ export default defineComponent({
 
     const newTodoItemInputField = ref('');
     const currentListItem = ref(0);
+    const currentDate = ref(new Date());
     const extraDayIndex = ref(0);
 
     const goToNextDayItem = () => {
       extraDayIndex.value += 1;
+      currentDate.value = new Date(
+        currentDate.value.getFullYear(),
+        currentDate.value.getMonth(),
+        currentDate.value.getDate() + 1
+      );
     };
 
     const goToPrevDayItem = () => {
       extraDayIndex.value -= 1;
+      currentDate.value = new Date(
+        currentDate.value.getFullYear(),
+        currentDate.value.getMonth(),
+        currentDate.value.getDate() - 1
+      );
     };
 
     const goToNextListItem = () => {
@@ -166,23 +177,23 @@ export default defineComponent({
     };
 
     const days = computed((): any[] => {
-      const currentDate = new Date();
       const previousDate = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        currentDate.getDate() - 1
+        currentDate.value.getFullYear(),
+        currentDate.value.getMonth(),
+        currentDate.value.getDate() - 1
       );
       const maxDate = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        currentDate.getDate() + 4
+        currentDate.value.getFullYear(),
+        currentDate.value.getMonth(),
+        currentDate.value.getDate() + 4
       );
+      const clonedDate = new Date(currentDate.value.getTime());
+
       let days: Date[] = [previousDate];
-      for (let day = new Date(); day < maxDate; day.setDate(day.getDate() + 1)) {
+      for (let day = clonedDate; day < maxDate; day.setDate(day.getDate() + 1)) {
         days.push(new Date(day));
       }
 
-      console.log(days);
       return days;
     });
 
@@ -193,7 +204,7 @@ export default defineComponent({
         todos
           .filter((todo) => todo.date)
           .forEach((todo) => {
-            const dateStr = todo.date!.toString();
+            const dateStr = todo.date!.toDateString();
             if (map.has(dateStr)) {
               map.get(dateStr)!.push(todo);
             } else {
@@ -206,7 +217,7 @@ export default defineComponent({
     );
 
     const todosAtDate = (date: Date): Todo[] | undefined => {
-      return filteredTodos.value.get(date.toString());
+      return filteredTodos.value.get(date.toDateString());
     };
 
     const lists = computed(

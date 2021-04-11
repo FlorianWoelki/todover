@@ -21,11 +21,11 @@ export const state: State = {
     },
     {
       name: 'Second today item',
-      date: new Date(),
+      date: new Date(2021, 3, 11),
     },
     {
       name: 'Third today item',
-      date: new Date(),
+      date: new Date(2021, 3, 11),
     },
     {
       name: 'Todo item in a other list',
