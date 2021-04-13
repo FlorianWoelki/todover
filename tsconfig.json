@@ -7,7 +7,7 @@
     "jsx": "preserve",
     "sourceMap": false,
     "lib": ["esnext", "dom"],
-    "types": ["vite-svg-loader", "vite/client"],
+    "types": ["vite-svg-loader", "vite/client", "jest"],
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
     "paths": {
       "@/*": ["./src/*"]
