@@ -1,10 +1,10 @@
 module.exports = {
   moduleFileExtensions: ['js', 'ts', 'json', 'vue'],
   transform: {
-    '.*\\.(vue)$': 'vue-jest',
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.js$': 'babel-jest',
+    '^.+\\.ts$': 'ts-jest',
+    '^.+\\.vue$': 'vue-jest',
   },
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+  // testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
   testPathIgnorePatterns: ['e2e'],
-  testURL: 'http://localhost/',
 };
