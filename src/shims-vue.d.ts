@@ -1,7 +1,8 @@
 declare module '*.vue' {
-  import { Component } from 'vue';
-  const _default: Component;
-  export default _default;
+  import { defineComponent } from 'vue';
+
+  const component: ReturnType<typeof defineComponent>;
+  export default component;
 }
 
 declare const _APP_VERSION: string;

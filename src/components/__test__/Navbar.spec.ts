@@ -3,7 +3,7 @@ import Navbar from '../Navbar.vue';
 
 describe('Navbar.vue', () => {
   test('component is rendering', () => {
-    const wrapper = mount(Navbar);
+    const wrapper = mount<any>(Navbar);
     expect(wrapper.html()).toBeTruthy();
   });
 });
