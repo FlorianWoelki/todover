@@ -1,19 +1,27 @@
+import { User } from '.prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 
 (() => {
+  const prisma = new PrismaClient();
   const app = express();
 
   const apolloServer = new ApolloServer({
     typeDefs: `
       type Query {
-        hello: String
+        users: User
+      }
+
+      type User {
+        id: Int
+        email: String
       }
     `,
     resolvers: {
       Query: {
-        hello: (): string => {
-          return 'Hello GraphQL';
+        users: (): Promise<User[]> => {
+          return prisma.user.findMany();
         },
       },
     },
