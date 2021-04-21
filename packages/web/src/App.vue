@@ -23,7 +23,7 @@
               :value="todo.name"
               :done="todo.done"
               placeholder="Double click to edit todo"
-              @update-item="updateTodoItem($event, j)"
+              @update-item="updateTodoItem(todo.id, { name: $event })"
               @click="toggleTodoStatus(todo.id)"
             ></todo-item>
           </template>
@@ -73,7 +73,7 @@
               :value="todo.name"
               :done="todo.done"
               placeholder="Double click to edit todo"
-              @update-item="updateTodoItem($event, j)"
+              @update-item="updateTodoItem(todo.id, { value: $event })"
               @click="toggleTodoStatus(todo.id)"
             ></todo-item>
           </template>
@@ -167,10 +167,10 @@ export default defineComponent({
       currentListItem.value -= 1;
     };
 
-    const updateTodoItem = (value: Todo, todoIndex: number): void => {
-      store.commit(Mutation.UPDATE_TODO, { value, todoIndex } as {
+    const updateTodoItem = (todoId: string, value: Partial<Todo>): void => {
+      store.commit(Mutation.UPDATE_TODO, { id: todoId, value } as {
+        id: string;
         value: Todo;
-        todoIndex: number;
       });
     };
 
