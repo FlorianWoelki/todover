@@ -5,6 +5,10 @@
       "packages/*"
     ]
   },
+  "scripts": {
+    "dev": "lerna run dev",
+    "dev:web": "lerna run dev --scope={@clean-todo-app/web}"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   }
