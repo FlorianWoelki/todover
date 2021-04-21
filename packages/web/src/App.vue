@@ -23,15 +23,17 @@
               :value="todo.name"
               :done="todo.done"
               placeholder="Double click to edit todo"
-              @update-item="updateTodoItem('day', $event, i, j)"
+              @update-item="updateTodoItem($event, j)"
               @click="toggleTodoStatus('day', i, j)"
             ></todo-item>
           </template>
-          <todo-item
-            no-dbl-click
-            :value="newTodoItemInputField"
-            @update-item="insertNewTodo('day', $event, i)"
-          ></todo-item>
+          <template #default="{ date }">
+            <todo-item
+              no-dbl-click
+              :value="newTodoItemInputField"
+              @update-item="insertNewTodo($event, date)"
+            ></todo-item>
+          </template>
         </list-column>
       </list-grid>
 
@@ -71,15 +73,17 @@
               :value="todo.name"
               :done="todo.done"
               placeholder="Double click to edit todo"
-              @update-item="updateTodoItem('list', $event, i, j)"
+              @update-item="updateTodoItem($event, j)"
               @click="toggleTodoStatus('list', i, j)"
             ></todo-item>
           </template>
-          <todo-item
-            no-dbl-click
-            :value="newTodoItemInputField"
-            @update-item="insertNewTodo('list', $event, i)"
-          ></todo-item>
+          <template #default="{ date }">
+            <todo-item
+              no-dbl-click
+              :value="newTodoItemInputField"
+              @update-item="insertNewTodo($event, date, list)"
+            ></todo-item>
+          </template>
         </list-column>
       </list-grid>
 
@@ -170,10 +174,16 @@ export default defineComponent({
       });
     };
 
-    const insertNewTodo = (value: Todo): void => {
+    const insertNewTodo = (value: string, date: Date, listName?: string): void => {
       newTodoItemInputField.value = '';
 
-      store.commit(Mutation.ADD_TODO, { value });
+      store.commit(Mutation.ADD_TODO, {
+        value: {
+          name: value,
+          date: !listName ? date : undefined,
+          list: listName,
+        } as Todo,
+      });
     };
 
     const days = computed((): any[] => {

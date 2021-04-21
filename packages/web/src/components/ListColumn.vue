@@ -28,7 +28,7 @@
         class="h-full space-y-2"
       >
         <slot name="draggable"></slot>
-        <slot></slot>
+        <slot :date="columnDate"></slot>
       </draggable>
 
       <div
@@ -121,6 +121,7 @@ export default defineComponent({
       isCustomTitle,
       staticItemClass,
       printedDay,
+      columnDate,
     };
   },
 });
