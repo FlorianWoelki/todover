@@ -3,6 +3,7 @@ export interface ListType {
 }
 
 export interface Todo {
+  id: string;
   name: string;
   date?: Date;
   list?: string;
@@ -16,18 +17,22 @@ export interface State {
 export const state: State = {
   todos: [
     {
+      id: 'specific_id',
       name: 'First todo item',
       date: new Date(2021, 3, 9),
     },
     {
+      id: 'specific_id_123',
       name: 'Second today item',
       date: new Date(2021, 3, 11),
     },
     {
+      id: 'specific_id_123_345',
       name: 'Third today item',
       date: new Date(2021, 3, 11),
     },
     {
+      id: '1234',
       name: 'Todo item in a other list',
       list: 'Things',
     },

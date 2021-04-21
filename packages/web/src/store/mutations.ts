@@ -10,7 +10,7 @@ export enum Mutation {
 export type Mutations<S = State> = {
   [Mutation.ADD_TODO](state: S, { value }: { value: Todo }): void;
   [Mutation.UPDATE_TODO](state: S, { value, todoIndex }: { value: Todo; todoIndex: number }): void;
-  [Mutation.TOGGLE_TODO_STATUS](state: S, { todoIndex }: { todoIndex: number }): void;
+  [Mutation.TOGGLE_TODO_STATUS](state: S, { id }: { id: string }): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -20,7 +20,10 @@ export const mutations: MutationTree<State> & Mutations = {
   [Mutation.UPDATE_TODO](state: State, { value, todoIndex }) {
     state.todos[todoIndex] = value;
   },
-  [Mutation.TOGGLE_TODO_STATUS](state: State, { todoIndex }) {
-    state.todos[todoIndex].done = !state.todos[todoIndex].done;
+  [Mutation.TOGGLE_TODO_STATUS](state: State, { id }) {
+    const filteredTodosWithId = state.todos.filter((todo) => todo.id === id);
+    if (filteredTodosWithId.length === 1) {
+      filteredTodosWithId[0].done = !filteredTodosWithId[0].done;
+    }
   },
 };

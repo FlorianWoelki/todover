@@ -24,7 +24,7 @@
               :done="todo.done"
               placeholder="Double click to edit todo"
               @update-item="updateTodoItem($event, j)"
-              @click="toggleTodoStatus('day', i, j)"
+              @click="toggleTodoStatus(todo.id)"
             ></todo-item>
           </template>
           <template #default="{ date }">
@@ -74,7 +74,7 @@
               :done="todo.done"
               placeholder="Double click to edit todo"
               @update-item="updateTodoItem($event, j)"
-              @click="toggleTodoStatus('list', i, j)"
+              @click="toggleTodoStatus(todo.id)"
             ></todo-item>
           </template>
           <template #default="{ date }">
@@ -179,6 +179,7 @@ export default defineComponent({
 
       store.commit(Mutation.ADD_TODO, {
         value: {
+          id: 'someunqiueid' + value,
           name: value,
           date: !listName ? date : undefined,
           list: listName,
@@ -249,8 +250,8 @@ export default defineComponent({
 
     const sizeOfLists = computed((): number => Object.keys(lists.value).length);
 
-    const toggleTodoStatus = (listType: ListType, listIndex: number, todoIndex: number): void => {
-      store.commit(Mutation.TOGGLE_TODO_STATUS, { listType, listIndex, todoIndex });
+    const toggleTodoStatus = (todoId: string): void => {
+      store.commit(Mutation.TOGGLE_TODO_STATUS, { id: todoId });
     };
 
     return {
