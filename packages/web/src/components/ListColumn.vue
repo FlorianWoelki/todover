@@ -102,9 +102,7 @@ export default defineComponent({
 
     const columnDate = computed((): Date | undefined => {
       if (currentDate) {
-        const date = isOldDay.value
-          ? currentDate.getDate()
-          : currentDate.getDate() + props.index + props.extraDayIndex;
+        const date = currentDate.getDate() + props.index + props.extraDayIndex;
 
         return new Date(currentDate.getFullYear(), currentDate.getMonth(), date - 1);
       }

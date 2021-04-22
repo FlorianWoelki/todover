@@ -1,9 +1,9 @@
 <template>
   <div
-    @click="noDblClick ? focusInputField() : $emit('click')"
-    @dblclick="!noDblClick ? focusInputField() : () => {}"
     class="px-4"
     :class="{ [staticItemClass]: noDblClick }"
+    @click="noDblClick ? focusInputField() : $emit('click')"
+    @dblclick="!noDblClick ? focusInputField() : () => {}"
   >
     <input
       v-bind="$attrs"
