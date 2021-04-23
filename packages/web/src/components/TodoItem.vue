@@ -2,8 +2,7 @@
   <div
     class="px-4"
     :class="{ [staticItemClass]: noDblClick }"
-    @click="noDblClick ? focusInputField() : $emit('click')"
-    @dblclick="!noDblClick ? focusInputField() : () => {}"
+    @click="noDblClick ? focusInputField() : handleOnClick($event)"
   >
     <input
       v-bind="$attrs"
@@ -40,6 +39,8 @@ export default defineComponent({
   setup(_, { emit }) {
     const disabled = ref(true);
     const inputField = ref<HTMLInputElement | null>(null);
+    const timeoutId = ref<null | NodeJS.Timeout>(null);
+    const clicks = ref(0);
 
     const focusInputField = (): void => {
       if (!inputField.value) {
@@ -67,7 +68,30 @@ export default defineComponent({
       });
     };
 
+    const handleOnClick = (e: MouseEvent): void => {
+      e.preventDefault();
+
+      if (!disabled.value) {
+        return;
+      }
+
+      clicks.value += 1;
+      if (clicks.value === 1) {
+        timeoutId.value = setTimeout(() => {
+          console.log('single click');
+          emit('click');
+          clicks.value = 0;
+        }, 200);
+      } else if (clicks.value === 2) {
+        if (timeoutId.value) clearTimeout(timeoutId.value);
+        clicks.value = 0;
+        console.log('double click');
+        focusInputField();
+      }
+    };
+
     return {
+      handleOnClick,
       disabled,
       focusInputField,
       blurInputField,
