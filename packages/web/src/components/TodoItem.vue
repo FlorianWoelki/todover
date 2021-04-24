@@ -21,8 +21,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, ref } from '@vue/runtime-core';
+import { defineComponent, nextTick, PropType, ref } from '@vue/runtime-core';
 import { staticItemClass } from '@/util/constants';
+import { Todo } from '../store/state';
 
 export default defineComponent({
   emits: ['updateItem', 'click'],

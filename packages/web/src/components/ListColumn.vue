@@ -22,6 +22,7 @@
     <div class="relative w-full space-y-2" style="height: calc(100% - 6rem)">
       <draggable
         v-bind="$attrs"
+        :id="columnDate"
         :animation="150"
         :filter="`.${[staticItemClass]}`"
         group="todos"
@@ -42,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, ref } from '@vue/runtime-core';
+import { computed, defineComponent, inject } from '@vue/runtime-core';
 import { VueDraggableNext } from 'vue-draggable-next';
 import { dateKey, activeItemKey } from '@/symbols/day-grid';
 import { days, months } from '@/constants/date';
@@ -72,7 +73,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const draggableDisabled = ref(false);
     const currentDate = inject(dateKey);
     const activeItem = inject(activeItemKey, 1);
     const isCustomTitle = currentDate === undefined;
@@ -115,7 +115,6 @@ export default defineComponent({
       isActiveItem,
       isOldDay,
       printedDate,
-      draggableDisabled,
       isCustomTitle,
       staticItemClass,
       printedDay,

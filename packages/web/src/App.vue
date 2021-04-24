@@ -15,10 +15,12 @@
           :index="i"
           :hide="i !== 1 && isSmallDevice"
           :extra-day-index="extraDayIndex"
+          @end="updateListOfTodoItem"
         >
           <template #draggable>
             <todo-item
               v-for="(todo, j) in todosAtDate(day)"
+              :id="todo.id"
               :key="j"
               :value="todo.name"
               :done="todo.done"
@@ -254,7 +256,15 @@ export default defineComponent({
       store.commit(Mutation.TOGGLE_TODO_STATUS, { id: todoId });
     };
 
+    const updateListOfTodoItem = (e: any) => {
+      store.commit(Mutation.UPDATE_TODO, {
+        id: e.item.id,
+        value: { updatedDate: new Date(e.to.id) },
+      });
+    };
+
     return {
+      updateListOfTodoItem,
       insertNewTodo,
       updateTodoItem,
       newTodoItemInputField,
