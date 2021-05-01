@@ -154,12 +154,28 @@ export default defineComponent({
     const currentDate = ref(new Date());
     const extraDayIndex = ref(0);
 
+    const setCurrentDate = (date: Date) => {
+      currentDate.value = date;
+    };
+
+    const addCurrentDate = (add: number) => {
+      setCurrentDate(
+        new Date(
+          currentDate.value.getFullYear(),
+          currentDate.value.getMonth(),
+          currentDate.value.getDate() + add
+        )
+      );
+    };
+
     const goToNextDayItem = (): void => {
       extraDayIndex.value += 1;
+      addCurrentDate(1);
     };
 
     const goToPrevDayItem = (): void => {
       extraDayIndex.value -= 1;
+      addCurrentDate(-1);
     };
 
     const goToNextListItem = () => {
@@ -274,10 +290,12 @@ export default defineComponent({
 
     const goWeekForward = (): void => {
       extraDayIndex.value += 7;
+      addCurrentDate(7);
     };
 
     const goWeekBack = (): void => {
       extraDayIndex.value -= 7;
+      addCurrentDate(-7);
     };
 
     const isCalendarVisible = ref(false);
@@ -296,9 +314,13 @@ export default defineComponent({
       );
 
     const goToDate = (dateStr: string): void => {
-      const currentDayOfYear = dayOfYear(new Date());
+      const today = new Date();
+      const currentDayOfYear = dayOfYear(today);
       const clickedDayOfYear = dayOfYear(new Date(dateStr));
       extraDayIndex.value = clickedDayOfYear - currentDayOfYear;
+      setCurrentDate(
+        new Date(today.getFullYear(), today.getMonth(), today.getDate() + extraDayIndex.value)
+      );
     };
 
     return {
