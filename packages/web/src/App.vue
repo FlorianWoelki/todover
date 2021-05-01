@@ -143,9 +143,13 @@ export default defineComponent({
     const currentDate = ref(new Date());
     const extraDayIndex = ref(0);
 
-    const goToNextDayItem = () => (extraDayIndex.value += 1);
+    const goToNextDayItem = (): void => {
+      extraDayIndex.value += 1;
+    };
 
-    const goToPrevDayItem = () => (extraDayIndex.value -= 1);
+    const goToPrevDayItem = (): void => {
+      extraDayIndex.value -= 1;
+    };
 
     const goToNextListItem = () => {
       if (currentListItem.value + 1 >= sizeOfLists.value) {
@@ -257,9 +261,13 @@ export default defineComponent({
       });
     };
 
-    const goWeekForward = (): void => {};
+    const goWeekForward = (): void => {
+      extraDayIndex.value += 7;
+    };
 
-    const goWeekBack = (): void => {};
+    const goWeekBack = (): void => {
+      extraDayIndex.value -= 7;
+    };
 
     return {
       goWeekForward,
