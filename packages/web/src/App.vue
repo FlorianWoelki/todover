@@ -3,8 +3,12 @@
   <div class="flex flex-col h-full space-y-4">
     <div class="flex h-1/2">
       <div class="flex flex-col items-center space-y-4 text-red-400">
-        <chevron-left class="w-10 h-10 text-red-500" @click="goToPrevDayItem" />
-        <chevron-double-left class="w-6 h-6" />
+        <button class="focus:outline-none" @click="goToPrevDayItem">
+          <chevron-left class="w-10 h-10 text-red-500" />
+        </button>
+        <button class="focus:outline-none" @click="goWeekBack">
+          <chevron-double-left class="w-6 h-6" />
+        </button>
         <cog class="w-6 h-6" />
       </div>
 
@@ -40,8 +44,12 @@
       </list-grid>
 
       <div class="flex flex-col items-center space-y-4 text-red-400">
-        <chevron-right class="w-10 h-10 text-red-500" @click="goToNextDayItem" />
-        <chevron-double-right class="w-6 h-6" />
+        <button class="focus:outline-none" @click="goToNextDayItem">
+          <chevron-right class="w-10 h-10 text-red-500" />
+        </button>
+        <button class="focus:outline-none" @click="goWeekForward">
+          <chevron-double-right class="w-6 h-6" />
+        </button>
         <calendar class="w-6 h-6" />
       </div>
     </div>
@@ -135,23 +143,9 @@ export default defineComponent({
     const currentDate = ref(new Date());
     const extraDayIndex = ref(0);
 
-    const goToNextDayItem = () => {
-      extraDayIndex.value += 1;
-      currentDate.value = new Date(
-        currentDate.value.getFullYear(),
-        currentDate.value.getMonth(),
-        currentDate.value.getDate() + 1
-      );
-    };
+    const goToNextDayItem = () => (extraDayIndex.value += 1);
 
-    const goToPrevDayItem = () => {
-      extraDayIndex.value -= 1;
-      currentDate.value = new Date(
-        currentDate.value.getFullYear(),
-        currentDate.value.getMonth(),
-        currentDate.value.getDate() - 1
-      );
-    };
+    const goToPrevDayItem = () => (extraDayIndex.value -= 1);
 
     const goToNextListItem = () => {
       if (currentListItem.value + 1 >= sizeOfLists.value) {
@@ -263,7 +257,13 @@ export default defineComponent({
       });
     };
 
+    const goWeekForward = (): void => {};
+
+    const goWeekBack = (): void => {};
+
     return {
+      goWeekForward,
+      goWeekBack,
       updateListOfTodoItem,
       insertNewTodo,
       updateTodoItem,
