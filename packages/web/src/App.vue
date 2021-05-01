@@ -50,7 +50,10 @@
         <button class="focus:outline-none" @click="goWeekForward">
           <chevron-double-right class="w-6 h-6" />
         </button>
-        <calendar class="w-6 h-6" />
+        <button class="relative focus:outline-none" @click="toggleCalendar">
+          <calendar class="w-6 h-6" />
+          <date-picker v-if="isCalendarVisible" class="right-0" @select-date="goToDate" />
+        </button>
       </div>
     </div>
 
@@ -109,6 +112,14 @@
       </div>
     </div>
   </div>
+
+  <button
+    v-if="isCalendarVisible"
+    type="button"
+    tabindex="-1"
+    @click="hideCalendar"
+    class="absolute inset-0 w-full h-full bg-black focus:outline-none opacity-10"
+  ></button>
 </template>
 
 <script lang="ts">
@@ -269,7 +280,25 @@ export default defineComponent({
       extraDayIndex.value -= 7;
     };
 
+    const isCalendarVisible = ref(false);
+
+    const toggleCalendar = (): void => {
+      isCalendarVisible.value = !isCalendarVisible.value;
+    };
+
+    const hideCalendar = (): void => {
+      isCalendarVisible.value = false;
+    };
+
+    const goToDate = (date: any): void => {
+      console.log(date);
+    };
+
     return {
+      goToDate,
+      isCalendarVisible,
+      hideCalendar,
+      toggleCalendar,
       goWeekForward,
       goWeekBack,
       updateListOfTodoItem,
