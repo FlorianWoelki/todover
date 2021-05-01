@@ -122,7 +122,6 @@ export default defineComponent({
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     const datepickerValue = ref('');
-    const dateFormat = 'DD-MM-YYYY';
     const month = ref(0);
     const year = ref(0);
     const blankdays = ref<any[]>([]);
@@ -194,22 +193,10 @@ export default defineComponent({
     };
 
     const formatDateForDisplay = (date: any) => {
-      const formattedDay = days[date.getDay()];
       const formattedDate = ('0' + date.getDate()).slice(-2); // appends 0 (zero) in single digit date
-      const formattedMonth = monthNames[date.getMonth()];
-      const formattedMonthShortName = monthShortNames[date.getMonth()];
       const formattedMonthInNumber = ('0' + (parseInt(date.getMonth()) + 1)).slice(-2);
       const formattedYear = date.getFullYear();
-      if (dateFormat === 'DD-MM-YYYY') {
-        return `${formattedDate}-${formattedMonthInNumber}-${formattedYear}`; // 02-04-2021
-      }
-      if (dateFormat === 'YYYY-MM-DD') {
-        return `${formattedYear}-${formattedMonthInNumber}-${formattedDate}`; // 2021-04-02
-      }
-      if (dateFormat === 'D d M, Y') {
-        return `${formattedDay} ${formattedDate} ${formattedMonthShortName} ${formattedYear}`; // Tue 02 Mar 2021
-      }
-      return `${formattedDay} ${formattedDate} ${formattedMonth} ${formattedYear}`;
+      return `${formattedYear}-${formattedMonthInNumber}-${formattedDate}`;
     };
 
     return {

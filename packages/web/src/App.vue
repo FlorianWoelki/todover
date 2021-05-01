@@ -290,8 +290,15 @@ export default defineComponent({
       isCalendarVisible.value = false;
     };
 
-    const goToDate = (date: any): void => {
-      console.log(date);
+    const dayOfYear = (date: Date) =>
+      Math.floor(
+        (date.valueOf() - new Date(date.getFullYear(), 0, 0).valueOf()) / 1000 / 60 / 60 / 24
+      );
+
+    const goToDate = (dateStr: string): void => {
+      const currentDayOfYear = dayOfYear(new Date());
+      const clickedDayOfYear = dayOfYear(new Date(dateStr));
+      extraDayIndex.value = clickedDayOfYear - currentDayOfYear;
     };
 
     return {
