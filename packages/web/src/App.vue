@@ -1,6 +1,6 @@
 <template>
-  <navbar />
-  <div class="flex flex-col h-full space-y-4">
+  <navbar class="font-sans antialiased" />
+  <div class="flex flex-col h-full space-y-4 font-sans antialiased">
     <div class="flex h-1/2">
       <div class="flex flex-col items-center space-y-4 text-red-400">
         <button class="focus:outline-none" @click="goToPrevDayItem">
