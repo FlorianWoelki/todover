@@ -2,14 +2,14 @@
   <navbar class="font-sans antialiased" />
   <div class="flex flex-col h-full space-y-4 font-sans antialiased">
     <div class="flex h-1/2">
-      <div class="flex flex-col items-center space-y-4 text-red-400">
-        <button class="focus:outline-none" @click="goToPrevDayItem">
-          <chevron-left class="w-10 h-10 text-red-500" />
+      <div class="flex flex-col items-center space-y-4">
+        <button class="text-red-500 focus:outline-none hover:text-red-600" @click="goToPrevDayItem">
+          <chevron-left class="w-10 h-10" />
         </button>
-        <button class="focus:outline-none" @click="goWeekBack">
+        <button class="text-red-400 focus:outline-none hover:text-red-500" @click="goWeekBack">
           <chevron-double-left class="w-6 h-6" />
         </button>
-        <cog class="w-6 h-6" />
+        <cog class="w-6 h-6 text-red-400" />
       </div>
 
       <list-grid :current-date="new Date()" class="w-full h-full">
@@ -44,14 +44,17 @@
         </list-column>
       </list-grid>
 
-      <div class="flex flex-col items-center space-y-4 text-red-400">
-        <button class="focus:outline-none" @click="goToNextDayItem">
-          <chevron-right class="w-10 h-10 text-red-500" />
+      <div class="flex flex-col items-center space-y-4">
+        <button class="text-red-500 focus:outline-none hover:text-red-600" @click="goToNextDayItem">
+          <chevron-right class="w-10 h-10" />
         </button>
-        <button class="focus:outline-none" @click="goWeekForward">
+        <button class="text-red-400 focus:outline-none hover:text-red-500" @click="goWeekForward">
           <chevron-double-right class="w-6 h-6" />
         </button>
-        <button class="relative focus:outline-none" @click="toggleCalendar">
+        <button
+          class="relative text-red-400 focus:outline-none hover:text-red-500"
+          @click="toggleCalendar"
+        >
           <calendar class="w-6 h-6" />
           <date-picker v-if="isCalendarVisible" class="right-0" @select-date="goToDate" />
         </button>
