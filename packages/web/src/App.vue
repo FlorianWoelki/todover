@@ -117,13 +117,7 @@
     </div>
   </div>
 
-  <button
-    v-if="isCalendarVisible"
-    type="button"
-    tabindex="-1"
-    @click="hideCalendar"
-    class="absolute inset-0 w-full h-full bg-black focus:outline-none opacity-10"
-  ></button>
+  <hide-button v-if="isCalendarVisible" @click="hideCalendar" />
 </template>
 
 <script lang="ts">
@@ -138,9 +132,11 @@ import Calendar from './assets/icons/calendar.svg';
 import { Mutation } from './store';
 import { isSmallDevice, setupEventListener } from './util/screen';
 import { ListType, Todo } from './store/state';
+import HideButton from './components/ui/HideButton';
 
 export default defineComponent({
   components: {
+    HideButton,
     ChevronLeft,
     ChevronRight,
     ChevronDoubleLeft,
