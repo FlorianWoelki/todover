@@ -22,6 +22,7 @@
           @end="updateListOfTodoItem"
         >
           <template #draggable>
+            <div v-if="todosAtDate" class="hidden"></div>
             <todo-item
               v-for="(todo, j) in todosAtDate(day)"
               :id="todo.id"
@@ -229,33 +230,16 @@ export default defineComponent({
 
       let days: Date[] = [previousDate];
       for (let day = clonedDate; day < maxDate; day.setDate(day.getDate() + 1)) {
-        days.push(new Date(day));
+        const date = new Date(day);
+        date.setHours(0, 0, 0, 0);
+        days.push(date);
       }
 
       return days;
     });
 
-    const filteredTodos = computed(
-      (): Map<String, Todo[]> => {
-        const map = new Map<String, Todo[]>();
-        const todos = store.state.todos as Todo[];
-        todos
-          .filter((todo) => todo.date)
-          .forEach((todo) => {
-            const dateStr = todo.date!.toDateString();
-            if (map.has(dateStr)) {
-              map.get(dateStr)!.push(todo);
-            } else {
-              map.set(dateStr, [todo]);
-            }
-          });
-
-        return map;
-      }
-    );
-
     const todosAtDate = (date: Date): Todo[] | undefined => {
-      return filteredTodos.value.get(date.toDateString());
+      return store.getters.mappedTodos[date.toDateString()];
     };
 
     const lists = computed(
@@ -284,7 +268,7 @@ export default defineComponent({
     const updateListOfTodoItem = (e: any) => {
       store.commit(Mutation.UPDATE_TODO, {
         id: e.item.id,
-        value: { updatedDate: new Date(e.to.id) },
+        value: { date: new Date(e.to.id) },
       });
     };
 

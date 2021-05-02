@@ -6,7 +6,6 @@ export interface Todo {
   id: string;
   name: string;
   date?: Date;
-  updatedDate?: Date;
   list?: string;
   done?: boolean;
 }
