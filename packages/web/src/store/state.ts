@@ -37,6 +37,11 @@ export const state: State = {
       date: new Date(2021, 3, 24),
     },
     {
+      id: 'HelloWorld',
+      name: 'Hello World Item',
+      list: 'Other Things',
+    },
+    {
       id: '1234',
       name: 'Todo item in a other list',
       list: 'Things',

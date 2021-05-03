@@ -22,7 +22,7 @@
     <div class="relative w-full space-y-2" style="height: calc(100% - 6rem)">
       <draggable
         v-bind="$attrs"
-        :id="columnDate"
+        :id="listColumnId"
         :animation="150"
         :filter="`.${[staticItemClass]}`"
         group="todos"
@@ -110,7 +110,12 @@ export default defineComponent({
       return undefined;
     });
 
+    const listColumnId = computed((): string => {
+      return columnDate.value?.toDateString() ?? props.customTitle;
+    });
+
     return {
+      listColumnId,
       currentDay,
       isActiveItem,
       isOldDay,

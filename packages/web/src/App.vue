@@ -15,6 +15,7 @@
       <list-grid :current-date="new Date()" class="w-full h-full">
         <list-column
           v-for="(day, i) in days"
+          v-model="stateTodos"
           :key="i"
           :index="i"
           :hide="i !== 1 && isSmallDevice"
@@ -78,15 +79,18 @@
       <list-grid class="w-full h-full">
         <list-column
           v-for="(todos, list, i) in lists"
+          v-model="stateTodos"
           :key="i"
           :index="i"
           :customTitle="list"
           :hide="i !== currentListItem && isSmallDevice"
+          @end="updateListOfTodoItem"
         >
           <template #draggable>
             <todo-item
               v-for="(todo, j) in todos"
               :key="j"
+              :id="todo.id"
               :value="todo.name"
               :done="todo.done"
               placeholder="Double click to edit todo"
@@ -265,10 +269,18 @@ export default defineComponent({
     };
 
     const updateListOfTodoItem = (e: any) => {
-      store.commit(Mutation.UPDATE_TODO, {
-        id: e.item.id,
-        value: { date: new Date(e.to.id) },
-      });
+      const toDate = new Date(e.to.id);
+      if (!isNaN(toDate.getTime())) {
+        store.commit(Mutation.UPDATE_TODO, {
+          id: e.item.id,
+          value: { date: new Date(e.to.id), list: undefined },
+        });
+      } else {
+        store.commit(Mutation.UPDATE_TODO, {
+          id: e.item.id,
+          value: { date: undefined, list: e.to.id },
+        });
+      }
     };
 
     const goWeekForward = (): void => {
@@ -307,6 +319,7 @@ export default defineComponent({
     };
 
     return {
+      stateTodos: store.state.todos,
       goToDate,
       isCalendarVisible,
       hideCalendar,
