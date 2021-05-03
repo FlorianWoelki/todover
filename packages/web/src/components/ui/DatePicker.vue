@@ -124,10 +124,10 @@ export default defineComponent({
     const datepickerValue = ref('');
     const month = ref(0);
     const year = ref(0);
-    const blankdays = ref<any[]>([]);
+    const blankdays = ref<number[]>([]);
     const noOfDays = ref<any[]>([]);
 
-    onMounted(() => {
+    onMounted((): void => {
       const today = new Date();
       month.value = today.getMonth();
       year.value = today.getFullYear();
@@ -136,17 +136,18 @@ export default defineComponent({
       getNoOfDays();
     });
 
-    const handleBackClick = () => {
-      if (month.value == 0) {
+    const handleBackClick = (): void => {
+      if (month.value === 0) {
         year.value--;
         month.value = 12;
       }
+
       month.value--;
       getNoOfDays();
     };
 
-    const handleForwardClick = () => {
-      if (month.value == 11) {
+    const handleForwardClick = (): void => {
+      if (month.value === 11) {
         month.value = 0;
         year.value++;
       } else {
@@ -156,16 +157,16 @@ export default defineComponent({
       getNoOfDays();
     };
 
-    const getNoOfDays = () => {
+    const getNoOfDays = (): void => {
       const daysInMonth = new Date(year.value, month.value + 1, 0).getDate();
       // find where to start calendar day of week
       const dayOfWeek = new Date(year.value, month.value).getDay();
-      const blankdaysArray = [];
+      const blankdaysArray: number[] = [];
       for (var i = 1; i <= dayOfWeek; i++) {
         blankdaysArray.push(i);
       }
 
-      const daysArray = [];
+      const daysArray: number[] = [];
       for (var i = 1; i <= daysInMonth; i++) {
         daysArray.push(i);
       }
@@ -174,27 +175,27 @@ export default defineComponent({
       noOfDays.value = daysArray;
     };
 
-    const getDateValue = (date: any) => {
+    const getDateValue = (date: number): void => {
       const selectedDate = new Date(year.value, month.value, date);
       datepickerValue.value = formatDateForDisplay(selectedDate);
       isSelectedDate(date);
       emit('select-date', datepickerValue.value);
     };
 
-    const isToday = (date: any) => {
+    const isToday = (date: number) => {
       const today = new Date();
       const d = new Date(year.value, month.value, date);
       return today.toDateString() === d.toDateString() ? true : false;
     };
 
-    const isSelectedDate = (date: any) => {
+    const isSelectedDate = (date: number) => {
       const d = new Date(year.value, month.value, date);
       return datepickerValue.value === formatDateForDisplay(d) ? true : false;
     };
 
-    const formatDateForDisplay = (date: any) => {
+    const formatDateForDisplay = (date: Date) => {
       const formattedDate = ('0' + date.getDate()).slice(-2); // appends 0 (zero) in single digit date
-      const formattedMonthInNumber = ('0' + (parseInt(date.getMonth()) + 1)).slice(-2);
+      const formattedMonthInNumber = ('0' + (date.getMonth() + 1)).slice(-2);
       const formattedYear = date.getFullYear();
       return `${formattedYear}-${formattedMonthInNumber}-${formattedDate}`;
     };
