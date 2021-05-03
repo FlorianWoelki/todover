@@ -69,7 +69,7 @@
         class="px-1 mb-1"
       >
         <div
-          @click="getDateValue(date)"
+          @click="setDatepickerValue(date)"
           class="text-sm leading-none leading-loose text-center transition duration-100 ease-in-out rounded-full cursor-pointer"
           :class="{
             'bg-red-200': isToday(date) == true,
@@ -133,7 +133,7 @@ export default defineComponent({
       year.value = today.getFullYear();
       datepickerValue.value = formatDateForDisplay(today);
 
-      getNoOfDays();
+      setNoOfDays();
     });
 
     const handleBackClick = (): void => {
@@ -143,7 +143,7 @@ export default defineComponent({
       }
 
       month.value--;
-      getNoOfDays();
+      setNoOfDays();
     };
 
     const handleForwardClick = (): void => {
@@ -154,10 +154,10 @@ export default defineComponent({
         month.value++;
       }
 
-      getNoOfDays();
+      setNoOfDays();
     };
 
-    const getNoOfDays = (): void => {
+    const setNoOfDays = (): void => {
       const daysInMonth = new Date(year.value, month.value + 1, 0).getDate();
       // find where to start calendar day of week
       const dayOfWeek = new Date(year.value, month.value).getDay();
@@ -175,25 +175,25 @@ export default defineComponent({
       noOfDays.value = daysArray;
     };
 
-    const getDateValue = (date: number): void => {
+    const setDatepickerValue = (date: number): void => {
       const selectedDate = new Date(year.value, month.value, date);
       datepickerValue.value = formatDateForDisplay(selectedDate);
       isSelectedDate(date);
       emit('select-date', datepickerValue.value);
     };
 
-    const isToday = (date: number) => {
+    const isToday = (date: number): boolean => {
       const today = new Date();
       const d = new Date(year.value, month.value, date);
       return today.toDateString() === d.toDateString() ? true : false;
     };
 
-    const isSelectedDate = (date: number) => {
+    const isSelectedDate = (date: number): boolean => {
       const d = new Date(year.value, month.value, date);
       return datepickerValue.value === formatDateForDisplay(d) ? true : false;
     };
 
-    const formatDateForDisplay = (date: Date) => {
+    const formatDateForDisplay = (date: Date): string => {
       const formattedDate = ('0' + date.getDate()).slice(-2); // appends 0 (zero) in single digit date
       const formattedMonthInNumber = ('0' + (date.getMonth() + 1)).slice(-2);
       const formattedYear = date.getFullYear();
@@ -202,7 +202,7 @@ export default defineComponent({
 
     return {
       datepickerValue,
-      getDateValue,
+      setDatepickerValue,
       isToday,
       isSelectedDate,
       blankdays,
