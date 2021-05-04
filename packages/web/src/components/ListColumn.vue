@@ -20,10 +20,11 @@
         v-else
         ref="listTitleInput"
         v-model="newListTitle"
-        @keydown.enter="handleListTitleChange"
         class="w-full text-2xl font-bold tracking-wider text-center uppercase bg-transparent border-none focus:outline-none"
         style="box-shadow: none"
         type="text"
+        @keydown.enter="handleListTitleChange"
+        @blur="handleListTitleChange"
       />
       <p v-if="!isCustomTitle" class="text-sm">{{ printedDate }}</p>
     </div>
