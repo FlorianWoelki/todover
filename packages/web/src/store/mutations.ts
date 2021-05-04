@@ -3,12 +3,17 @@ import { State, Todo } from './state';
 
 export enum Mutation {
   ADD_TODO = 'ADD_TODO',
+  UPDATE_LIST_TITLE = 'UPDATE_LIST_TITLE',
   UPDATE_TODO = 'UPDATE_TODO',
   TOGGLE_TODO_STATUS = 'TOGGLE_TODO_STATUS',
 }
 
 export type Mutations<S = State> = {
   [Mutation.ADD_TODO](state: S, { value }: { value: Todo }): void;
+  [Mutation.UPDATE_LIST_TITLE](
+    state: S,
+    { newValue, listId }: { newValue: string; listId: string }
+  ): void;
   [Mutation.UPDATE_TODO](state: S, { id, value }: { id: string; value: Partial<Todo> }): void;
   [Mutation.TOGGLE_TODO_STATUS](state: S, { id }: { id: string }): void;
 };
@@ -16,6 +21,13 @@ export type Mutations<S = State> = {
 export const mutations: MutationTree<State> & Mutations = {
   [Mutation.ADD_TODO](state: State, { value }) {
     state.todos.push(value);
+  },
+  [Mutation.UPDATE_LIST_TITLE](state: State, { newValue, listId }) {
+    const list = state.lists.find((list) => list.id === listId);
+    if (list) {
+      const newList = { ...list, name: newValue };
+      state.lists = [...state.lists.filter((list) => list.id !== listId), newList];
+    }
   },
   [Mutation.UPDATE_TODO](state: State, { id, value }) {
     const filteredTodosWithId = state.todos.filter((todo) => todo.id === id);

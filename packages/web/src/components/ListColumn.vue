@@ -13,9 +13,18 @@
     "
   >
     <div class="flex flex-col items-center justify-center">
-      <h1 class="text-2xl font-bold tracking-wider uppercase">
-        {{ !isCustomTitle ? currentDay : listTitle }}
+      <h1 v-if="!isCustomTitle" class="text-2xl font-bold tracking-wider uppercase">
+        {{ currentDay }}
       </h1>
+      <input
+        v-else
+        ref="listTitleInput"
+        v-model="newListTitle"
+        @keydown.enter="handleListTitleChange"
+        class="w-full text-2xl font-bold tracking-wider text-center uppercase bg-transparent border-none focus:outline-none"
+        style="box-shadow: none"
+        type="text"
+      />
       <p v-if="!isCustomTitle" class="text-sm">{{ printedDate }}</p>
     </div>
 
@@ -36,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from '@vue/runtime-core';
+import { computed, defineComponent, inject, ref } from '@vue/runtime-core';
 import { dateKey, activeItemKey } from '@/symbols/day-grid';
 import { mod } from '@/util/math';
 import { staticItemClass, days, dragAndDropDataId, months } from '@/util/constants';
@@ -44,7 +53,7 @@ import { List, Todo } from '../store/state';
 import { useStore } from 'vuex';
 
 export default defineComponent({
-  emits: ['end'],
+  emits: ['end', 'update-list-title'],
   props: {
     index: {
       type: Number,
@@ -106,12 +115,22 @@ export default defineComponent({
       return columnDate.value?.toDateString() ?? props.listId ?? '';
     });
 
-    const listTitle = computed((): string => {
+    const listTitle = computed(() => {
       const filteredLists: List[] = store.state.lists.filter(
         (list: List) => list.id === props.listId
       );
       return filteredLists[0]?.name ?? '';
     });
+
+    const listTitleInput = ref<HTMLInputElement | null>(null);
+    const newListTitle = ref(listTitle.value);
+
+    const handleListTitleChange = (): void => {
+      emit('update-list-title', newListTitle.value);
+      if (listTitleInput.value) {
+        listTitleInput.value.blur();
+      }
+    };
 
     const handleDrop = (event: DragEvent): void => {
       if (!event.dataTransfer) {
@@ -126,6 +145,9 @@ export default defineComponent({
     };
 
     return {
+      listTitleInput,
+      newListTitle,
+      handleListTitleChange,
       handleDrop,
       listTitle,
       listColumnId,

@@ -81,6 +81,7 @@
           :listId="listId"
           :hide="i !== currentListItem && isSmallDevice"
           @end="updateListOfTodoItem"
+          @update-list-title="updateListTitle($event, listId)"
         >
           <template #draggable>
             <todo-item
@@ -102,6 +103,11 @@
             ></todo-item>
           </template>
         </list-column>
+        <button
+          class="flex items-center justify-center text-red-200 rounded-lg hover:bg-gray-100 hover:text-red-300 focus:outline-none"
+        >
+          <plus-icon class="w-12 h-12"></plus-icon>
+        </button>
       </list-grid>
 
       <div class="flex flex-col items-center space-y-4 lg:hidden">
@@ -126,6 +132,7 @@ import { useStore } from 'vuex';
 import ChevronLeft from '../assets/icons/chevron-left.svg';
 import ChevronDoubleLeft from '../assets/icons/chevron-double-left.svg';
 import ChevronRight from '../assets/icons/chevron-right.svg';
+import PlusIcon from '../assets/icons/plus.svg';
 import ChevronDoubleRight from '../assets/icons/chevron-double-right.svg';
 import Cog from '../assets/icons/cog.svg';
 import Calendar from '../assets/icons/calendar.svg';
@@ -141,6 +148,7 @@ export default defineComponent({
     ChevronRight,
     ChevronDoubleLeft,
     ChevronDoubleRight,
+    PlusIcon,
     Cog,
     Calendar,
   },
@@ -314,8 +322,15 @@ export default defineComponent({
       );
     };
 
+    const updateListTitle = (newValue: string, listId: string): void => {
+      store.commit(Mutation.UPDATE_LIST_TITLE, {
+        newValue,
+        listId,
+      });
+    };
+
     return {
-      stateTodos: store.state.todos,
+      updateListTitle,
       goToDate,
       isCalendarVisible,
       hideCalendar,
