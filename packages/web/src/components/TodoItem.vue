@@ -2,7 +2,9 @@
   <div
     class="px-4"
     :class="{ [staticItemClass]: noDblClick }"
+    draggable="true"
     @click="noDblClick ? focusInputField() : handleOnClick($event)"
+    @dragstart="handleDrag"
   >
     <input
       v-bind="$attrs"
@@ -21,13 +23,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, PropType, ref } from '@vue/runtime-core';
+import { defineComponent, nextTick, ref } from '@vue/runtime-core';
 import { staticItemClass } from '@/util/constants';
-import { Todo } from '../store/state';
 
 export default defineComponent({
   emits: ['updateItem', 'click'],
   props: {
+    todoId: {
+      type: String,
+      required: false,
+    },
     noDblClick: {
       type: Boolean,
       default: false,
@@ -37,7 +42,7 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const disabled = ref(true);
     const inputField = ref<HTMLInputElement | null>(null);
     const timeoutId = ref<null | NodeJS.Timeout>(null);
@@ -91,7 +96,18 @@ export default defineComponent({
       }
     };
 
+    const handleDrag = (event: DragEvent): void => {
+      if (!event.dataTransfer || !props.todoId) {
+        return;
+      }
+
+      event.dataTransfer.dropEffect = 'move';
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('todoId', props.todoId);
+    };
+
     return {
+      handleDrag,
       handleOnClick,
       disabled,
       focusInputField,

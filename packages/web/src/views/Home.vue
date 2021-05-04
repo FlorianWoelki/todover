@@ -14,7 +14,6 @@
       <list-grid :current-date="new Date()" class="w-full h-full">
         <list-column
           v-for="(day, i) in days"
-          v-model="stateTodos"
           :key="i"
           :index="i"
           :hide="i !== 1 && isSmallDevice"
@@ -22,10 +21,9 @@
           @end="updateListOfTodoItem"
         >
           <template #draggable>
-            <div v-if="todosAtDate" class="hidden"></div>
             <todo-item
               v-for="(todo, j) in todosAtDate(day)"
-              :id="todo.id"
+              :todo-id="todo.id"
               :key="j"
               :value="todo.name"
               :done="todo.done"
@@ -78,7 +76,6 @@
       <list-grid class="w-full h-full">
         <list-column
           v-for="(todos, listId, i) in lists"
-          v-model="stateTodos"
           :key="i"
           :index="i"
           :listId="listId"
@@ -86,11 +83,10 @@
           @end="updateListOfTodoItem"
         >
           <template #draggable>
-            <div v-if="todos" class="hidden" />
             <todo-item
               v-for="(todo, j) in todos"
+              :todo-id="todo.id"
               :key="j"
-              :id="todo.id"
               :value="todo.name"
               :done="todo.done"
               placeholder="Double click to edit todo"
@@ -270,16 +266,15 @@ export default defineComponent({
     };
 
     const updateListOfTodoItem = (e: any) => {
-      const toDate = new Date(e.to.id);
-      if (!isNaN(toDate.getTime())) {
+      if (!isNaN(new Date(e.newListId).getTime())) {
         store.commit(Mutation.UPDATE_TODO, {
-          id: e.item.id,
-          value: { date: new Date(e.to.id), listId: undefined },
+          id: e.todoItem.id,
+          value: { date: new Date(e.newListId), listId: undefined },
         });
       } else {
         store.commit(Mutation.UPDATE_TODO, {
-          id: e.item.id,
-          value: { date: undefined, listId: e.to.id },
+          id: e.todoItem.id,
+          value: { date: undefined, listId: e.newListId },
         });
       }
     };

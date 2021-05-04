@@ -20,7 +20,7 @@
     </div>
 
     <div class="relative w-full space-y-2" style="height: calc(100% - 6rem)">
-      <draggable
+      <!--<draggable
         v-bind="$attrs"
         :id="listColumnId"
         :animation="150"
@@ -30,7 +30,12 @@
       >
         <slot name="draggable"></slot>
         <slot :date="columnDate"></slot>
-      </draggable>
+      </draggable>-->
+
+      <div class="h-full space-y-2" @drop="handleDrop($event)" @dragenter.prevent @dragover.prevent>
+        <slot name="draggable"></slot>
+        <slot :date="columnDate"></slot>
+      </div>
 
       <div
         v-if="!isCustomTitle"
@@ -44,18 +49,15 @@
 
 <script lang="ts">
 import { computed, defineComponent, inject } from '@vue/runtime-core';
-import { VueDraggableNext } from 'vue-draggable-next';
 import { dateKey, activeItemKey } from '@/symbols/day-grid';
 import { days, months } from '@/constants/date';
 import { mod } from '@/util/math';
 import { staticItemClass } from '@/util/constants';
-import { List } from '../store/state';
+import { List, Todo } from '../store/state';
 import { useStore } from 'vuex';
 
 export default defineComponent({
-  components: {
-    draggable: VueDraggableNext,
-  },
+  emits: ['end'],
   props: {
     index: {
       type: Number,
@@ -74,7 +76,7 @@ export default defineComponent({
       required: false,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const store = useStore();
     const currentDate = inject(dateKey);
     const activeItem = inject(activeItemKey, 1);
@@ -124,7 +126,20 @@ export default defineComponent({
       return filteredLists[0]?.name ?? '';
     });
 
+    const handleDrop = (event: DragEvent): void => {
+      if (!event.dataTransfer) {
+        return;
+      }
+
+      const todoId = event.dataTransfer.getData('todoId');
+      const todoItem: Todo = store.state.todos.filter((todo: Todo) => todo.id === todoId)[0];
+      if (todoItem) {
+        emit('end', { todoItem, newListId: listColumnId.value });
+      }
+    };
+
     return {
+      handleDrop,
       listTitle,
       listColumnId,
       currentDay,
