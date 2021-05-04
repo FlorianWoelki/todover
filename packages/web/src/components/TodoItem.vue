@@ -85,14 +85,12 @@ export default defineComponent({
       clicks.value += 1;
       if (clicks.value === 1) {
         timeoutId.value = setTimeout(() => {
-          console.log('single click');
           emit('click');
           clicks.value = 0;
         }, 200);
       } else if (clicks.value === 2) {
         if (timeoutId.value) clearTimeout(timeoutId.value);
         clicks.value = 0;
-        console.log('double click');
         focusInputField();
       }
     };
