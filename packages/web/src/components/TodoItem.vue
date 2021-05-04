@@ -24,8 +24,7 @@
 
 <script lang="ts">
 import { defineComponent, nextTick, ref } from '@vue/runtime-core';
-import { staticItemClass } from '@/util/constants';
-import { dragAndDropDataId } from '../constants/date';
+import { staticItemClass, dragAndDropDataId } from '@/util/constants';
 
 export default defineComponent({
   emits: ['updateItem', 'click'],

@@ -38,9 +38,8 @@
 <script lang="ts">
 import { computed, defineComponent, inject } from '@vue/runtime-core';
 import { dateKey, activeItemKey } from '@/symbols/day-grid';
-import { days, dragAndDropDataId, months } from '@/constants/date';
 import { mod } from '@/util/math';
-import { staticItemClass } from '@/util/constants';
+import { staticItemClass, days, dragAndDropDataId, months } from '@/util/constants';
 import { List, Todo } from '../store/state';
 import { useStore } from 'vuex';
 
