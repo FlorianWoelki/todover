@@ -87,6 +87,7 @@
           @end="updateListOfTodoItem"
         >
           <template #draggable>
+            <div v-if="todos" class="hidden" />
             <todo-item
               v-for="(todo, j) in todos"
               :key="j"
@@ -205,15 +206,15 @@ export default defineComponent({
       });
     };
 
-    const insertNewTodo = (value: string, date: Date, listName?: string): void => {
+    const insertNewTodo = (value: string, date: Date, listId?: string): void => {
       newTodoItemInputField.value = '';
 
       store.commit(Mutation.ADD_TODO, {
         value: {
           id: 'someunqiueid' + value,
           name: value,
-          date: !listName ? date : undefined,
-          list: listName,
+          date: !listId ? date : undefined,
+          listId: listId,
         } as Todo,
       });
     };
@@ -248,15 +249,16 @@ export default defineComponent({
     const lists = computed(
       (): ListType => {
         const todos = store.state.todos as Todo[];
+        const listIds: string[] = store.state.lists.map((list: List) => list.id);
         const lists: ListType = {};
+        listIds.forEach((list) => {
+          lists[list] = [];
+        });
+
         todos
           .filter((todo) => todo.listId)
           .forEach((todo) => {
-            if (lists[todo.listId!]) {
-              lists[todo.listId!].push(todo);
-            } else {
-              lists[todo.listId!] = [todo];
-            }
+            lists[todo.listId!].push(todo);
           });
         return lists;
       }
@@ -276,6 +278,7 @@ export default defineComponent({
           value: { date: new Date(e.to.id), listId: undefined },
         });
       } else {
+        console.log(e.to.id, e.item.id);
         store.commit(Mutation.UPDATE_TODO, {
           id: e.item.id,
           value: { date: undefined, listId: e.to.id },
