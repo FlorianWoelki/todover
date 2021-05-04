@@ -2,7 +2,7 @@
   <div
     class="px-4"
     :class="{ [staticItemClass]: noDblClick }"
-    draggable="true"
+    :draggable="!noDblClick"
     @click="noDblClick ? focusInputField() : handleOnClick($event)"
     @dragstart="handleDrag"
   >
@@ -25,6 +25,7 @@
 <script lang="ts">
 import { defineComponent, nextTick, ref } from '@vue/runtime-core';
 import { staticItemClass } from '@/util/constants';
+import { dragAndDropDataId } from '../constants/date';
 
 export default defineComponent({
   emits: ['updateItem', 'click'],
@@ -103,7 +104,7 @@ export default defineComponent({
 
       event.dataTransfer.dropEffect = 'move';
       event.dataTransfer.effectAllowed = 'move';
-      event.dataTransfer.setData('todoId', props.todoId);
+      event.dataTransfer.setData(dragAndDropDataId, props.todoId);
     };
 
     return {

@@ -14,3 +14,5 @@ export const months = [
   'November',
   'December',
 ];
+
+export const dragAndDropDataId = 'todoId';

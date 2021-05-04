@@ -20,18 +20,6 @@
     </div>
 
     <div class="relative w-full space-y-2" style="height: calc(100% - 6rem)">
-      <!--<draggable
-        v-bind="$attrs"
-        :id="listColumnId"
-        :animation="150"
-        :filter="`.${[staticItemClass]}`"
-        group="todos"
-        class="h-full space-y-2"
-      >
-        <slot name="draggable"></slot>
-        <slot :date="columnDate"></slot>
-      </draggable>-->
-
       <div class="h-full space-y-2" @drop="handleDrop($event)" @dragenter.prevent @dragover.prevent>
         <slot name="draggable"></slot>
         <slot :date="columnDate"></slot>
@@ -50,7 +38,7 @@
 <script lang="ts">
 import { computed, defineComponent, inject } from '@vue/runtime-core';
 import { dateKey, activeItemKey } from '@/symbols/day-grid';
-import { days, months } from '@/constants/date';
+import { days, dragAndDropDataId, months } from '@/constants/date';
 import { mod } from '@/util/math';
 import { staticItemClass } from '@/util/constants';
 import { List, Todo } from '../store/state';
@@ -131,7 +119,7 @@ export default defineComponent({
         return;
       }
 
-      const todoId = event.dataTransfer.getData('todoId');
+      const todoId = event.dataTransfer.getData(dragAndDropDataId);
       const todoItem: Todo = store.state.todos.filter((todo: Todo) => todo.id === todoId)[0];
       if (todoItem) {
         emit('end', { todoItem, newListId: listColumnId.value });
