@@ -14,7 +14,7 @@
   >
     <div class="flex flex-col items-center justify-center">
       <h1 class="text-2xl font-bold tracking-wider uppercase">
-        {{ !isCustomTitle ? currentDay : customTitle }}
+        {{ !isCustomTitle ? currentDay : listTitle }}
       </h1>
       <p v-if="!isCustomTitle" class="text-sm">{{ printedDate }}</p>
     </div>
@@ -49,6 +49,8 @@ import { dateKey, activeItemKey } from '@/symbols/day-grid';
 import { days, months } from '@/constants/date';
 import { mod } from '@/util/math';
 import { staticItemClass } from '@/util/constants';
+import { List } from '../store/state';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   components: {
@@ -59,10 +61,6 @@ export default defineComponent({
       type: Number,
       required: true,
     },
-    customTitle: {
-      type: String,
-      default: '',
-    },
     hide: {
       type: Boolean,
       default: false,
@@ -71,8 +69,13 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
+    listId: {
+      type: String,
+      required: false,
+    },
   },
   setup(props) {
+    const store = useStore();
     const currentDate = inject(dateKey);
     const activeItem = inject(activeItemKey, 1);
     const isCustomTitle = currentDate === undefined;
@@ -111,10 +114,18 @@ export default defineComponent({
     });
 
     const listColumnId = computed((): string => {
-      return columnDate.value?.toDateString() ?? props.customTitle;
+      return columnDate.value?.toDateString() ?? props.listId ?? '';
+    });
+
+    const listTitle = computed((): string => {
+      const filteredLists: List[] = store.state.lists.filter(
+        (list: List) => list.id === props.listId
+      );
+      return filteredLists[0]?.name ?? '';
     });
 
     return {
+      listTitle,
       listColumnId,
       currentDay,
       isActiveItem,

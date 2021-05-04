@@ -78,11 +78,11 @@
 
       <list-grid class="w-full h-full">
         <list-column
-          v-for="(todos, list, i) in lists"
+          v-for="(todos, listId, i) in lists"
           v-model="stateTodos"
           :key="i"
           :index="i"
-          :customTitle="list"
+          :listId="listId"
           :hide="i !== currentListItem && isSmallDevice"
           @end="updateListOfTodoItem"
         >
@@ -94,7 +94,7 @@
               :value="todo.name"
               :done="todo.done"
               placeholder="Double click to edit todo"
-              @update-item="updateTodoItem(todo.id, { value: $event })"
+              @update-item="updateTodoItem(todo.id, { name: $event })"
               @click="toggleTodoStatus(todo.id)"
             ></todo-item>
           </template>
@@ -102,7 +102,7 @@
             <todo-item
               no-dbl-click
               :value="newTodoItemInputField"
-              @update-item="insertNewTodo($event, date, list)"
+              @update-item="insertNewTodo($event, date, listId)"
             ></todo-item>
           </template>
         </list-column>
@@ -135,7 +135,7 @@ import Cog from './assets/icons/cog.svg';
 import Calendar from './assets/icons/calendar.svg';
 import { Mutation } from './store';
 import { isSmallDevice, setupEventListener } from './util/screen';
-import { ListType, Todo } from './store/state';
+import { List, ListType, Todo } from './store/state';
 import HideButton from './components/ui/HideButton';
 
 export default defineComponent({
@@ -250,12 +250,12 @@ export default defineComponent({
         const todos = store.state.todos as Todo[];
         const lists: ListType = {};
         todos
-          .filter((todo) => todo.list)
+          .filter((todo) => todo.listId)
           .forEach((todo) => {
-            if (lists[todo.list!]) {
-              lists[todo.list!].push(todo);
+            if (lists[todo.listId!]) {
+              lists[todo.listId!].push(todo);
             } else {
-              lists[todo.list!] = [todo];
+              lists[todo.listId!] = [todo];
             }
           });
         return lists;
@@ -273,12 +273,12 @@ export default defineComponent({
       if (!isNaN(toDate.getTime())) {
         store.commit(Mutation.UPDATE_TODO, {
           id: e.item.id,
-          value: { date: new Date(e.to.id), list: undefined },
+          value: { date: new Date(e.to.id), listId: undefined },
         });
       } else {
         store.commit(Mutation.UPDATE_TODO, {
           id: e.item.id,
-          value: { date: undefined, list: e.to.id },
+          value: { date: undefined, listId: e.to.id },
         });
       }
     };

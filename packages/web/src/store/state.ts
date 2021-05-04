@@ -5,21 +5,18 @@ export interface ListType {
 export interface List {
   id: string;
   name: string;
-  todos: Todo[];
 }
 
 export interface Todo {
   id: string;
   name: string;
+  date?: Date;
   done?: boolean;
-}
-
-export interface DayTodo extends Todo {
-  date: Date;
+  listId?: string;
 }
 
 export interface State {
-  todos: DayTodo[];
+  todos: Todo[];
   lists: List[];
 }
 
@@ -45,27 +42,25 @@ export const state: State = {
       name: 'Today Item',
       date: new Date(2021, 3, 24),
     },
+    {
+      id: '1234',
+      name: 'Todo item in another list',
+      listId: '123456789',
+    },
+    {
+      id: 'HelloWorld',
+      name: 'Hello World Item',
+      listId: 'awesomelistid',
+    },
   ],
   lists: [
     {
-      id: 'myawesomelist',
-      name: 'Things',
-      todos: [
-        {
-          id: '1234',
-          name: 'Todo item in another list',
-        },
-      ],
+      id: 'awesomelistid',
+      name: 'Other Things',
     },
     {
-      id: '123ListId',
-      name: 'Other Things',
-      todos: [
-        {
-          id: 'HelloWorld',
-          name: 'Hello World Item',
-        },
-      ],
+      id: '123456789',
+      name: 'Things',
     },
   ],
 };
