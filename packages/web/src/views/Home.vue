@@ -63,6 +63,7 @@
       <div></div>
       <button
         class="flex items-center justify-center text-gray-300 rounded-lg hover:text-gray-100 hover:text-gray-200 focus:outline-none"
+        @click="createNewList"
       >
         <plus-icon class="w-8 h-8"></plus-icon>
       </button>
@@ -251,24 +252,6 @@ export default defineComponent({
       return store.getters.mappedTodos[date.toDateString()];
     };
 
-    const lists = computed(
-      (): ListType => {
-        const todos = store.state.todos as Todo[];
-        const listIds: string[] = store.state.lists.map((list: List) => list.id);
-        const lists: ListType = {};
-        listIds.forEach((list) => {
-          lists[list] = [];
-        });
-
-        todos
-          .filter((todo) => todo.listId)
-          .forEach((todo) => {
-            lists[todo.listId!].push(todo);
-          });
-        return lists;
-      }
-    );
-
     const sizeOfLists = computed((): number => Object.keys(lists.value).length);
 
     const toggleTodoStatus = (todoId: string): void => {
@@ -331,7 +314,14 @@ export default defineComponent({
       });
     };
 
+    const createNewList = (): void => {
+      store.commit(Mutation.CREATE_LIST);
+    };
+
+    const lists = computed(() => store.getters.mappedLists);
+
     return {
+      createNewList,
       updateListTitle,
       goToDate,
       isCalendarVisible,

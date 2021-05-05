@@ -18,13 +18,10 @@
       </h1>
       <input
         v-else
-        ref="listTitleInput"
-        v-model="newListTitle"
+        v-model="listTitle"
         class="w-full text-2xl font-bold tracking-wider text-center uppercase bg-transparent border-none focus:outline-none hover:bg-gray-100"
         style="box-shadow: none"
         type="text"
-        @keydown.enter="handleListTitleChange"
-        @blur="handleListTitleChange"
       />
       <p v-if="!isCustomTitle" class="text-sm">{{ printedDate }}</p>
     </div>
@@ -46,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, ref } from '@vue/runtime-core';
+import { computed, defineComponent, inject } from '@vue/runtime-core';
 import { dateKey, activeItemKey } from '@/symbols/day-grid';
 import { mod } from '@/util/math';
 import { staticItemClass, days, dragAndDropDataId, months } from '@/util/constants';
@@ -116,22 +113,17 @@ export default defineComponent({
       return columnDate.value?.toDateString() ?? props.listId ?? '';
     });
 
-    const listTitle = computed(() => {
-      const filteredLists: List[] = store.state.lists.filter(
-        (list: List) => list.id === props.listId
-      );
-      return filteredLists[0]?.name ?? '';
+    const listTitle = computed({
+      get() {
+        const filteredLists: List[] = store.state.lists.filter(
+          (list: List) => list.id === props.listId
+        );
+        return filteredLists[0]?.name ?? '';
+      },
+      set(newValue) {
+        emit('update-list-title', newValue);
+      },
     });
-
-    const listTitleInput = ref<HTMLInputElement | null>(null);
-    const newListTitle = ref(listTitle.value);
-
-    const handleListTitleChange = (): void => {
-      emit('update-list-title', newListTitle.value);
-      if (listTitleInput.value) {
-        listTitleInput.value.blur();
-      }
-    };
 
     const handleDrop = (event: DragEvent): void => {
       if (!event.dataTransfer) {
@@ -146,11 +138,8 @@ export default defineComponent({
     };
 
     return {
-      listTitleInput,
-      newListTitle,
-      handleListTitleChange,
-      handleDrop,
       listTitle,
+      handleDrop,
       listColumnId,
       currentDay,
       isActiveItem,

@@ -1,11 +1,12 @@
 import { MutationTree } from 'vuex';
-import { State, Todo } from './state';
+import { List, State, Todo } from './state';
 
 export enum Mutation {
   ADD_TODO = 'ADD_TODO',
   UPDATE_LIST_TITLE = 'UPDATE_LIST_TITLE',
   UPDATE_TODO = 'UPDATE_TODO',
   TOGGLE_TODO_STATUS = 'TOGGLE_TODO_STATUS',
+  CREATE_LIST = 'CREATE_LIST',
 }
 
 export type Mutations<S = State> = {
@@ -41,5 +42,8 @@ export const mutations: MutationTree<State> & Mutations = {
     if (filteredTodosWithId.length === 1) {
       filteredTodosWithId[0].done = !filteredTodosWithId[0].done;
     }
+  },
+  [Mutation.CREATE_LIST](state: State) {
+    state.lists.push({ id: String(state.lists.length + 1), name: 'Unnamed' } as List);
   },
 };
