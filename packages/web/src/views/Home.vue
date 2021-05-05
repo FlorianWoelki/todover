@@ -59,7 +59,14 @@
       </div>
     </div>
 
-    <div class="p-4 bg-gray-500"></div>
+    <div class="flex items-center justify-between p-2 bg-gray-500">
+      <div></div>
+      <button
+        class="flex items-center justify-center text-gray-300 rounded-lg hover:text-gray-100 hover:text-gray-200 focus:outline-none"
+      >
+        <plus-icon class="w-8 h-8"></plus-icon>
+      </button>
+    </div>
 
     <div class="flex h-1/2">
       <div class="flex flex-col items-center space-y-4 lg:hidden">
@@ -103,11 +110,6 @@
             ></todo-item>
           </template>
         </list-column>
-        <button
-          class="flex items-center justify-center text-red-200 rounded-lg hover:bg-gray-100 hover:text-red-300 focus:outline-none"
-        >
-          <plus-icon class="w-12 h-12"></plus-icon>
-        </button>
       </list-grid>
 
       <div class="flex flex-col items-center space-y-4 lg:hidden">

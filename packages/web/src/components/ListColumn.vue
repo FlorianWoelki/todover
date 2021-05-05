@@ -20,7 +20,7 @@
         v-else
         ref="listTitleInput"
         v-model="newListTitle"
-        class="w-full text-2xl font-bold tracking-wider text-center uppercase bg-transparent border-none focus:outline-none"
+        class="w-full text-2xl font-bold tracking-wider text-center uppercase bg-transparent border-none focus:outline-none hover:bg-gray-100"
         style="box-shadow: none"
         type="text"
         @keydown.enter="handleListTitleChange"
