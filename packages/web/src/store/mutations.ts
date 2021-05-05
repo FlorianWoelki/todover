@@ -44,6 +44,6 @@ export const mutations: MutationTree<State> & Mutations = {
     }
   },
   [Mutation.CREATE_LIST](state: State) {
-    state.lists.push({ id: String(state.lists.length + 1), name: 'Unnamed' } as List);
+    state.lists.push({ id: `someid${state.lists.length + 1}`, name: 'Unnamed' } as List);
   },
 };
