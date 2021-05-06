@@ -1,6 +1,6 @@
 <template>
   <div
-    class="px-4"
+    class="flex items-center justify-between px-2 mx-4 bg-white border-b border-gray-200 border-dashed rounded cursor-pointer hover:bg-gray-100 focus-within:bg-gray-100"
     :class="{ [staticItemClass]: noDblClick }"
     :draggable="!noDblClick"
     @click="noDblClick ? focusInputField() : handleOnClick($event)"
@@ -9,7 +9,7 @@
     <input
       v-bind="$attrs"
       ref="inputField"
-      class="w-full px-2 py-1 placeholder-gray-300 bg-white border-b border-gray-200 border-dashed rounded cursor-pointer focus:outline-none hover:bg-gray-100 focus:bg-gray-100"
+      class="w-full py-1 placeholder-gray-300 bg-transparent focus:outline-none"
       :class="{
         'cursor-pointer': disabled,
         'cursor-text': !disabled || noDblClick,
