@@ -29,6 +29,7 @@
               :done="todo.done"
               placeholder="Double click to edit todo"
               @update-item="updateTodoItem(todo.id, { name: $event })"
+              @remove-item="removeTodoItem(todo.id)"
               @click="toggleTodoStatus(todo.id)"
             ></todo-item>
           </template>
@@ -99,8 +100,9 @@
               :value="todo.name"
               :done="todo.done"
               placeholder="Double click to edit todo"
-              @update-item="updateTodoItem(todo.id, { name: $event })"
               @click="toggleTodoStatus(todo.id)"
+              @update-item="updateTodoItem(todo.id, { name: $event })"
+              @remove-item="removeTodoItem(todo.id)"
             ></todo-item>
           </template>
           <template #default="{ date }">
@@ -320,7 +322,12 @@ export default defineComponent({
 
     const lists = computed(() => store.getters.mappedLists);
 
+    const removeTodoItem = (id: string): void => {
+      store.commit(Mutation.REMOVE_TODO, { id });
+    };
+
     return {
+      removeTodoItem,
       createNewList,
       updateListTitle,
       goToDate,

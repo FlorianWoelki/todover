@@ -7,9 +7,11 @@ export enum Mutation {
   UPDATE_TODO = 'UPDATE_TODO',
   TOGGLE_TODO_STATUS = 'TOGGLE_TODO_STATUS',
   CREATE_LIST = 'CREATE_LIST',
+  REMOVE_TODO = 'REMOVE_TODO',
 }
 
 export type Mutations<S = State> = {
+  [Mutation.REMOVE_TODO](state: S, { id }: { id: string }): void;
   [Mutation.ADD_TODO](state: S, { value }: { value: Todo }): void;
   [Mutation.UPDATE_LIST_TITLE](
     state: S,
@@ -20,6 +22,12 @@ export type Mutations<S = State> = {
 };
 
 export const mutations: MutationTree<State> & Mutations = {
+  [Mutation.REMOVE_TODO](state: State, { id }) {
+    const index = state.todos.findIndex((todo) => todo.id === id);
+    if (index > -1) {
+      state.todos.splice(index, 1);
+    }
+  },
   [Mutation.ADD_TODO](state: State, { value }) {
     state.todos.push(value);
   },

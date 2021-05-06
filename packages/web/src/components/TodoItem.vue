@@ -5,6 +5,8 @@
     :draggable="!noDblClick"
     @click="noDblClick ? focusInputField() : handleOnClick($event)"
     @dragstart="handleDrag"
+    @mouseenter="toggleHovered"
+    @mouseleave="toggleHovered"
   >
     <input
       v-bind="$attrs"
@@ -19,15 +21,28 @@
       @blur="blurInputField"
       :disabled="disabled"
     />
+
+    <button
+      v-if="isHovered && !noDblClick"
+      type="button"
+      class="text-gray-400 hover:text-gray-500 focus:outline-none"
+      @click.stop="handleRemoveButtonClick"
+    >
+      <x-icon class="w-4 h-4"></x-icon>
+    </button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, nextTick, ref } from '@vue/runtime-core';
 import { staticItemClass, dragAndDropDataId } from '@/util/constants';
+import XIcon from '@/assets/icons/x.svg';
 
 export default defineComponent({
-  emits: ['updateItem', 'click'],
+  emits: ['updateItem', 'click', 'removeItem'],
+  components: {
+    XIcon,
+  },
   props: {
     todoId: {
       type: String,
@@ -47,6 +62,7 @@ export default defineComponent({
     const inputField = ref<HTMLInputElement | null>(null);
     const timeoutId = ref<null | NodeJS.Timeout>(null);
     const clicks = ref(0);
+    const isHovered = ref(false);
 
     const focusInputField = (): void => {
       if (!inputField.value) {
@@ -104,7 +120,18 @@ export default defineComponent({
       event.dataTransfer.setData(dragAndDropDataId, props.todoId);
     };
 
+    const toggleHovered = (): void => {
+      isHovered.value = !isHovered.value;
+    };
+
+    const handleRemoveButtonClick = (): void => {
+      emit('removeItem');
+    };
+
     return {
+      handleRemoveButtonClick,
+      isHovered,
+      toggleHovered,
       handleDrag,
       handleOnClick,
       disabled,
