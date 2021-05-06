@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!hide"
-    class="space-y-8 border-l border-r border-gray-100"
+    class="relative space-y-8 border-l border-r border-gray-100"
     :class="
       isCustomTitle
         ? 'text-gray-600'
@@ -11,8 +11,23 @@
             'text-gray-600': !isActiveItem && !isOldDay,
           }
     "
+    @mouseenter="isCustomTitle ? toggleListMenu() : () => {}"
+    @mouseleave="isCustomTitle ? toggleListMenu() : () => {}"
   >
-    <div class="flex flex-col items-center justify-center">
+    <div
+      v-if="isCustomTitle"
+      v-show="isCustomTitle && !isListMenuHidden"
+      class="absolute top-0 left-0 right-0 px-2 mt-1"
+    >
+      <button type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none">
+        <x-icon class="w-4 h-4"></x-icon>
+      </button>
+    </div>
+
+    <div
+      class="flex flex-col items-center justify-center"
+      :style="isCustomTitle ? 'margin-top: 1.5rem' : ''"
+    >
       <h1 v-if="!isCustomTitle" class="text-2xl font-bold tracking-wider uppercase">
         {{ currentDay }}
       </h1>
@@ -43,15 +58,19 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from '@vue/runtime-core';
+import { computed, defineComponent, inject, ref } from '@vue/runtime-core';
+import { useStore } from 'vuex';
 import { dateKey, activeItemKey } from '@/symbols/day-grid';
 import { mod } from '@/util/math';
 import { staticItemClass, days, dragAndDropDataId, months } from '@/util/constants';
 import { List, Todo } from '../store/state';
-import { useStore } from 'vuex';
+import XIcon from '@/assets/icons/x.svg';
 
 export default defineComponent({
   emits: ['end', 'update-list-title'],
+  components: {
+    XIcon,
+  },
   props: {
     index: {
       type: Number,
@@ -75,6 +94,8 @@ export default defineComponent({
     const currentDate = inject(dateKey);
     const activeItem = inject(activeItemKey, 1);
     const isCustomTitle = currentDate === undefined;
+
+    const isListMenuHidden = ref(true);
 
     const isActiveItem = computed((): boolean => activeItem - props.extraDayIndex === props.index);
     const isOldDay = computed((): boolean => activeItem - 1 - props.extraDayIndex >= props.index);
@@ -137,7 +158,13 @@ export default defineComponent({
       }
     };
 
+    const toggleListMenu = (): void => {
+      isListMenuHidden.value = !isListMenuHidden.value;
+    };
+
     return {
+      toggleListMenu,
+      isListMenuHidden,
       listTitle,
       handleDrop,
       listColumnId,

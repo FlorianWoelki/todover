@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col h-full space-y-4 font-sans antialiased">
-    <div class="flex h-1/2">
+  <div class="flex flex-col h-full font-sans antialiased">
+    <div class="flex mb-4 h-1/2">
       <div class="flex flex-col items-center space-y-4">
         <button class="text-red-500 focus:outline-none hover:text-red-600" @click="goToPrevDayItem">
           <chevron-left class="w-10 h-10" />
@@ -70,7 +70,7 @@
       </button>
     </div>
 
-    <div class="flex h-1/2">
+    <div class="flex mt-1 h-1/2">
       <div class="flex flex-col items-center space-y-4 lg:hidden">
         <chevron-left
           class="w-10 h-10"
