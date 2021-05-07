@@ -8,10 +8,10 @@ export enum Mutation {
   TOGGLE_TODO_STATUS = 'TOGGLE_TODO_STATUS',
   CREATE_LIST = 'CREATE_LIST',
   REMOVE_TODO = 'REMOVE_TODO',
+  REMOVE_LIST = 'REMOVE_LIST',
 }
 
 export type Mutations<S = State> = {
-  [Mutation.REMOVE_TODO](state: S, { id }: { id: string }): void;
   [Mutation.ADD_TODO](state: S, { value }: { value: Todo }): void;
   [Mutation.UPDATE_LIST_TITLE](
     state: S,
@@ -19,15 +19,11 @@ export type Mutations<S = State> = {
   ): void;
   [Mutation.UPDATE_TODO](state: S, { id, value }: { id: string; value: Partial<Todo> }): void;
   [Mutation.TOGGLE_TODO_STATUS](state: S, { id }: { id: string }): void;
+  [Mutation.REMOVE_TODO](state: S, { id }: { id: string }): void;
+  [Mutation.REMOVE_LIST](state: S, { id }: { id: string }): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
-  [Mutation.REMOVE_TODO](state: State, { id }) {
-    const index = state.todos.findIndex((todo) => todo.id === id);
-    if (index > -1) {
-      state.todos.splice(index, 1);
-    }
-  },
   [Mutation.ADD_TODO](state: State, { value }) {
     state.todos.push(value);
   },
@@ -53,5 +49,19 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [Mutation.CREATE_LIST](state: State) {
     state.lists.push({ id: `someid${state.lists.length + 1}`, name: 'Unnamed' } as List);
+  },
+  [Mutation.REMOVE_TODO](state: State, { id }) {
+    const index = state.todos.findIndex((todo) => todo.id === id);
+    if (index > -1) {
+      state.todos.splice(index, 1);
+    }
+  },
+  [Mutation.REMOVE_LIST](state: State, { id }): void {
+    const index = state.lists.findIndex((list) => list.id === id);
+    const notInListTodos = state.todos.filter((todo) => todo.listId !== id);
+    state.todos = notInListTodos;
+    if (index > -1) {
+      state.lists.splice(index, 1);
+    }
   },
 };

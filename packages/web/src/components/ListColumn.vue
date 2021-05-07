@@ -19,7 +19,11 @@
       v-show="isCustomTitle && !isListMenuHidden"
       class="absolute top-0 left-0 right-0 px-2 mt-1"
     >
-      <button type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none">
+      <button
+        type="button"
+        class="text-gray-400 hover:text-gray-500 focus:outline-none"
+        @click="handleRemoveButton"
+      >
         <x-icon class="w-4 h-4"></x-icon>
       </button>
     </div>
@@ -67,7 +71,7 @@ import { List, Todo } from '../store/state';
 import XIcon from '@/assets/icons/x.svg';
 
 export default defineComponent({
-  emits: ['end', 'update-list-title'],
+  emits: ['end', 'update-list-title', 'removeList'],
   components: {
     XIcon,
   },
@@ -162,7 +166,12 @@ export default defineComponent({
       isListMenuHidden.value = !isListMenuHidden.value;
     };
 
+    const handleRemoveButton = (): void => {
+      emit('removeList');
+    };
+
     return {
+      handleRemoveButton,
       toggleListMenu,
       isListMenuHidden,
       listTitle,

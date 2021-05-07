@@ -90,6 +90,7 @@
           :listId="listId"
           :hide="i !== currentListItem && isSmallDevice"
           @end="updateListOfTodoItem"
+          @remove-list="removeList(listId)"
           @update-list-title="updateListTitle($event, listId)"
         >
           <template #draggable>
@@ -326,7 +327,12 @@ export default defineComponent({
       store.commit(Mutation.REMOVE_TODO, { id });
     };
 
+    const removeList = (id: string): void => {
+      store.commit(Mutation.REMOVE_LIST, { id });
+    };
+
     return {
+      removeList,
       removeTodoItem,
       createNewList,
       updateListTitle,
