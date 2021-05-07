@@ -6,8 +6,8 @@
     @click="noDblClick ? focusInputField() : handleOnClick($event)"
     @dragstart="handleDragStart"
     @dragend="handleDragEnd"
-    @mouseenter="toggleHovered"
-    @mouseleave="toggleHovered"
+    @mouseenter="disabled ? setHovered(true) : () => {}"
+    @mouseleave="disabled ? setHovered(false) : () => {}"
   >
     <input
       v-bind="$attrs"
@@ -87,6 +87,7 @@ export default defineComponent({
       }
 
       disabled.value = true;
+      setHovered(false);
       nextTick(() => {
         inputField.value!.blur();
       });
@@ -128,8 +129,8 @@ export default defineComponent({
       dragClasses.value = 'opacity-100';
     };
 
-    const toggleHovered = (): void => {
-      isHovered.value = !isHovered.value;
+    const setHovered = (hovered: boolean): void => {
+      isHovered.value = hovered;
     };
 
     const handleRemoveButtonClick = (): void => {
@@ -140,7 +141,7 @@ export default defineComponent({
       dragClasses,
       handleRemoveButtonClick,
       isHovered,
-      toggleHovered,
+      setHovered,
       handleDragStart,
       handleDragEnd,
       handleOnClick,
