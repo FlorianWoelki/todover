@@ -1,10 +1,11 @@
 <template>
   <div
     class="flex items-center justify-between px-2 mx-4 bg-white border-b border-gray-200 border-dashed rounded cursor-pointer hover:bg-gray-100 focus-within:bg-gray-100"
-    :class="{ [staticItemClass]: noDblClick }"
+    :class="{ [staticItemClass]: noDblClick, [dragClasses]: true }"
     :draggable="!noDblClick"
     @click="noDblClick ? focusInputField() : handleOnClick($event)"
-    @dragstart="handleDrag"
+    @dragstart="handleDragStart"
+    @dragend="handleDragEnd"
     @mouseenter="toggleHovered"
     @mouseleave="toggleHovered"
   >
@@ -63,6 +64,7 @@ export default defineComponent({
     const timeoutId = ref<null | NodeJS.Timeout>(null);
     const clicks = ref(0);
     const isHovered = ref(false);
+    const dragClasses = ref('');
 
     const focusInputField = (): void => {
       if (!inputField.value) {
@@ -110,14 +112,20 @@ export default defineComponent({
       }
     };
 
-    const handleDrag = (event: DragEvent): void => {
+    const handleDragStart = (event: DragEvent): void => {
       if (!event.dataTransfer || !props.todoId) {
         return;
       }
 
+      dragClasses.value = 'opacity-40';
+
       event.dataTransfer.dropEffect = 'move';
       event.dataTransfer.effectAllowed = 'move';
       event.dataTransfer.setData(dragAndDropDataId, props.todoId);
+    };
+
+    const handleDragEnd = (): void => {
+      dragClasses.value = 'opacity-100';
     };
 
     const toggleHovered = (): void => {
@@ -129,10 +137,12 @@ export default defineComponent({
     };
 
     return {
+      dragClasses,
       handleRemoveButtonClick,
       isHovered,
       toggleHovered,
-      handleDrag,
+      handleDragStart,
+      handleDragEnd,
       handleOnClick,
       disabled,
       focusInputField,
