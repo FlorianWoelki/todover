@@ -11,8 +11,8 @@
             'text-gray-600': !isActiveItem && !isOldDay,
           }
     "
-    @mouseenter="isCustomTitle ? toggleListMenu() : () => {}"
-    @mouseleave="isCustomTitle ? toggleListMenu() : () => {}"
+    @mouseenter="isCustomTitle ? setListMenuHidden(false) : () => {}"
+    @mouseleave="isCustomTitle ? setListMenuHidden(true) : () => {}"
   >
     <div
       v-if="isCustomTitle"
@@ -155,6 +155,7 @@ export default defineComponent({
         return;
       }
 
+      setListMenuHidden(true);
       const todoId = event.dataTransfer.getData(dragAndDropDataId);
       const todoItem: Todo = store.state.todos.filter((todo: Todo) => todo.id === todoId)[0];
       if (todoItem) {
@@ -162,8 +163,8 @@ export default defineComponent({
       }
     };
 
-    const toggleListMenu = (): void => {
-      isListMenuHidden.value = !isListMenuHidden.value;
+    const setListMenuHidden = (isHidden: boolean): void => {
+      isListMenuHidden.value = isHidden;
     };
 
     const handleRemoveButton = (): void => {
@@ -172,7 +173,7 @@ export default defineComponent({
 
     return {
       handleRemoveButton,
-      toggleListMenu,
+      setListMenuHidden,
       isListMenuHidden,
       listTitle,
       handleDrop,
