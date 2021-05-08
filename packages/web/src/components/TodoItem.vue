@@ -26,6 +26,7 @@
     <todo-item-menu
       v-if="isHovered && !noDblClick"
       @remove-todo-item="handleRemoveButtonClick"
+      @open-menu="handleOpenMenuClick"
     ></todo-item-menu>
   </div>
 </template>
@@ -35,7 +36,7 @@ import { defineComponent, nextTick, ref } from '@vue/runtime-core';
 import { staticItemClass, dragAndDropDataId } from '@/util/constants';
 
 export default defineComponent({
-  emits: ['updateItem', 'click', 'removeItem'],
+  emits: ['updateItem', 'click', 'removeItem', 'openMenu'],
   props: {
     todoId: {
       type: String,
@@ -129,7 +130,12 @@ export default defineComponent({
       emit('removeItem');
     };
 
+    const handleOpenMenuClick = (): void => {
+      emit('openMenu');
+    };
+
     return {
+      handleOpenMenuClick,
       dragClasses,
       handleRemoveButtonClick,
       isHovered,

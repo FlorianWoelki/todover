@@ -104,6 +104,7 @@
               @click="toggleTodoStatus(todo.id)"
               @update-item="updateTodoItem(todo.id, { name: $event })"
               @remove-item="removeTodoItem(todo.id)"
+              @open-menu="isTodoMenuOpen = true"
             ></todo-item>
           </template>
           <template #default="{ date }">
@@ -129,7 +130,27 @@
     </div>
   </div>
 
-  <hide-button v-if="isCalendarVisible" @click="hideCalendar" />
+  <transition
+    enter-active-class="transition-all duration-300 ease-in-out"
+    leave-active-class="transition-all duration-300 ease-in-out"
+    enter-from-class="opacity-0"
+    enter-to-class="opacity-100"
+    leave-from-class="opacity-100"
+    leave-to-class="opacity-0"
+  >
+    <todo-item-modal v-if="isTodoMenuOpen" @hide-button="hideHideButton"></todo-item-modal>
+  </transition>
+
+  <transition
+    enter-active-class="transition-all duration-300 ease-in-out"
+    leave-active-class="transition-all duration-300 ease-in-out"
+    enter-from-class="opacity-0"
+    enter-to-class="opacity-100"
+    leave-from-class="opacity-100"
+    leave-to-class="opacity-0"
+  >
+    <hide-button v-show="isTodoMenuOpen || isCalendarVisible" @click="hideHideButton" />
+  </transition>
 </template>
 
 <script lang="ts">
@@ -144,7 +165,7 @@ import Cog from '../assets/icons/cog.svg';
 import Calendar from '../assets/icons/calendar.svg';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
-import { List, ListType, Todo } from '../store/state';
+import { Todo } from '../store/state';
 import HideButton from '../components/ui/HideButton';
 
 export default defineComponent({
@@ -167,6 +188,8 @@ export default defineComponent({
     const currentListItem = ref(0);
     const currentDate = ref(new Date());
     const extraDayIndex = ref(0);
+
+    const isTodoMenuOpen = ref(false);
 
     const setCurrentDate = (date: Date) => {
       currentDate.value = date;
@@ -291,8 +314,13 @@ export default defineComponent({
       isCalendarVisible.value = !isCalendarVisible.value;
     };
 
-    const hideCalendar = (): void => {
-      isCalendarVisible.value = false;
+    const hideHideButton = (): void => {
+      if (isCalendarVisible.value) {
+        isCalendarVisible.value = false;
+      }
+      if (isTodoMenuOpen.value) {
+        isTodoMenuOpen.value = false;
+      }
     };
 
     const dayOfYear = (date: Date) =>
@@ -332,13 +360,14 @@ export default defineComponent({
     };
 
     return {
+      isTodoMenuOpen,
       removeList,
       removeTodoItem,
       createNewList,
       updateListTitle,
       goToDate,
       isCalendarVisible,
-      hideCalendar,
+      hideHideButton,
       toggleCalendar,
       goWeekForward,
       goWeekBack,
