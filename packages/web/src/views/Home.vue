@@ -55,7 +55,9 @@
           @click="toggleCalendar"
         >
           <calendar class="w-6 h-6" />
-          <date-picker v-if="isCalendarVisible" class="right-0" @select-date="goToDate" />
+          <transition name="fade-in">
+            <date-picker v-if="isCalendarVisible" class="right-0" @select-date="goToDate" />
+          </transition>
         </button>
       </div>
     </div>
@@ -130,14 +132,7 @@
     </div>
   </div>
 
-  <transition
-    enter-active-class="transition-all duration-300 ease-in-out"
-    leave-active-class="transition-all duration-300 ease-in-out"
-    enter-from-class="opacity-0"
-    enter-to-class="opacity-100"
-    leave-from-class="opacity-100"
-    leave-to-class="opacity-0"
-  >
+  <transition name="fade-in">
     <todo-item-modal v-if="isTodoMenuOpen" @hide-button="hideHideButton"></todo-item-modal>
   </transition>
 
@@ -149,11 +144,12 @@
     leave-from-class="opacity-100"
     leave-to-class="opacity-0"
   >
-    <hide-button v-show="isTodoMenuOpen || isCalendarVisible" @click="hideHideButton" />
+    <hide-button v-if="isTodoMenuOpen || isCalendarVisible" @click="hideHideButton" />
   </transition>
 </template>
 
 <script lang="ts">
+import '@/assets/styles/transitions.css';
 import { computed, defineComponent, ref } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 import ChevronLeft from '../assets/icons/chevron-left.svg';

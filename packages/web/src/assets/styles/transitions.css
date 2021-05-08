@@ -1,0 +1,17 @@
+.fade-in-enter-active {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.fade-in-leave-active {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.fade-in-enter-from,
+.fade-in-leave-to {
+  @apply opacity-0;
+}
+
+.fade-in-leave-from,
+.fade-in-enter-to {
+  @apply opacity-100;
+}
