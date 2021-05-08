@@ -23,27 +23,19 @@
       :disabled="disabled"
     />
 
-    <button
+    <todo-item-menu
       v-if="isHovered && !noDblClick"
-      type="button"
-      class="text-gray-400 hover:text-gray-500 focus:outline-none"
-      @click.stop="handleRemoveButtonClick"
-    >
-      <x-icon class="w-4 h-4"></x-icon>
-    </button>
+      @remove-todo-item="handleRemoveButtonClick"
+    ></todo-item-menu>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, nextTick, ref } from '@vue/runtime-core';
 import { staticItemClass, dragAndDropDataId } from '@/util/constants';
-import XIcon from '@/assets/icons/x.svg';
 
 export default defineComponent({
   emits: ['updateItem', 'click', 'removeItem'],
-  components: {
-    XIcon,
-  },
   props: {
     todoId: {
       type: String,
