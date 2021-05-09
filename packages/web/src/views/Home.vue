@@ -31,6 +31,7 @@
               @update-item="updateTodoItem(todo.id, { name: $event })"
               @remove-item="removeTodoItem(todo.id)"
               @click="toggleTodoStatus(todo.id)"
+              @open-menu="selectedTodoItem = todo"
             ></todo-item>
           </template>
           <template #default="{ date }">
