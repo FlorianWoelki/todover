@@ -106,7 +106,7 @@
               @click="toggleTodoStatus(todo.id)"
               @update-item="updateTodoItem(todo.id, { name: $event })"
               @remove-item="removeTodoItem(todo.id)"
-              @open-menu="isTodoMenuOpen = true"
+              @open-menu="selectedTodoItem = todo"
             ></todo-item>
           </template>
           <template #default="{ date }">
@@ -133,19 +133,14 @@
   </div>
 
   <transition name="fade-in">
-    <todo-item-modal v-if="isTodoMenuOpen" @hide-button="hideHideButton"></todo-item-modal>
+    <todo-item-modal
+      v-if="selectedTodoItem"
+      :todo-item="selectedTodoItem"
+      @hide-button="hideHideButton"
+    ></todo-item-modal>
   </transition>
 
-  <transition
-    enter-active-class="transition-all duration-300 ease-in-out"
-    leave-active-class="transition-all duration-300 ease-in-out"
-    enter-from-class="opacity-0"
-    enter-to-class="opacity-100"
-    leave-from-class="opacity-100"
-    leave-to-class="opacity-0"
-  >
-    <hide-button v-if="isTodoMenuOpen || isCalendarVisible" @click="hideHideButton" />
-  </transition>
+  <hide-button v-if="selectedTodoItem || isCalendarVisible" @click="hideHideButton" />
 </template>
 
 <script lang="ts">
@@ -185,7 +180,7 @@ export default defineComponent({
     const currentDate = ref(new Date());
     const extraDayIndex = ref(0);
 
-    const isTodoMenuOpen = ref(false);
+    const selectedTodoItem = ref<Todo | null>(null);
 
     const setCurrentDate = (date: Date) => {
       currentDate.value = date;
@@ -314,9 +309,7 @@ export default defineComponent({
       if (isCalendarVisible.value) {
         isCalendarVisible.value = false;
       }
-      if (isTodoMenuOpen.value) {
-        isTodoMenuOpen.value = false;
-      }
+      selectedTodoItem.value = null;
     };
 
     const dayOfYear = (date: Date) =>
@@ -356,7 +349,7 @@ export default defineComponent({
     };
 
     return {
-      isTodoMenuOpen,
+      selectedTodoItem,
       removeList,
       removeTodoItem,
       createNewList,
