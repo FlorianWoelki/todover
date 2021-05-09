@@ -12,9 +12,10 @@
         <label for="todo-description" class="text-sm text-gray-500">ToDo Description</label>
         <textarea
           id="todo-description"
-          class="w-full h-full px-3 py-2 mt-1 text-gray-500 bg-white border-gray-300 rounded appearance-none focus:shadow-none focus:border-transparent focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50"
+          class="w-full h-full px-3 py-2 mt-1 text-gray-500 placeholder-gray-300 bg-white border-gray-300 rounded appearance-none focus:shadow-none focus:border-transparent focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50"
           placeholder="Enter your todo description..."
           rows="5"
+          :value="todoItem.description"
         ></textarea>
       </div>
     </div>

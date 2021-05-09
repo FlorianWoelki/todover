@@ -13,6 +13,7 @@ export interface Todo {
   date?: Date;
   done?: boolean;
   listId?: string;
+  description?: string;
 }
 
 export interface State {
@@ -51,6 +52,7 @@ export const state: State = {
       id: 'HelloWorld',
       name: 'Hello World Item',
       listId: 'awesomelistid',
+      description: 'Hello World this is a little description',
     },
   ],
   lists: [
