@@ -285,7 +285,7 @@ export default defineComponent({
       } else {
         store.commit(Mutation.UPDATE_TODO, {
           id: e.todoItem.id,
-          value: { date: undefined, listId: e.newListId },
+          value: { date: undefined, repetition: undefined, listId: e.newListId },
         });
       }
     };

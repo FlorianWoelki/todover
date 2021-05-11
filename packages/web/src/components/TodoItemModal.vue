@@ -20,6 +20,9 @@
             <div class="space-x-2">
               <input
                 type="checkbox"
+                value="daily"
+                :checked="todoItem.repetition === 'daily'"
+                @change="handleCheckboxChange($event, 'daily')"
                 class="text-red-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm  focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0"
               />
               <label class="text-sm text-gray-500">Daily</label>
@@ -27,8 +30,10 @@
             <div class="space-x-2">
               <input
                 type="checkbox"
+                value="weekly"
+                :checked="todoItem.repetition === 'weekly'"
+                @change="handleCheckboxChange($event, 'weekly')"
                 class="text-red-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm  focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0"
-                checked
               />
               <label class="text-sm text-gray-500">Weekly</label>
             </div>
@@ -50,7 +55,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@vue/runtime-core';
-import { Todo } from '../store/state';
+import { Todo, TodoRepetition } from '../store/state';
 import XIcon from '@/assets/icons/x.svg';
 
 export default defineComponent({
@@ -64,7 +69,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const nameInputField = ref<null | HTMLInputElement>(null);
 
     const hideButton = (): void => {
@@ -79,7 +84,17 @@ export default defineComponent({
       nameInputField.value.blur();
     };
 
+    const handleCheckboxChange = (event: InputEvent, type: TodoRepetition) => {
+      const target = event.target as HTMLInputElement;
+      if (type === 'weekly') {
+        props.todoItem.repetition = target.checked ? 'weekly' : undefined;
+      } else if (type === 'daily') {
+        props.todoItem.repetition = target.checked ? 'daily' : undefined;
+      }
+    };
+
     return {
+      handleCheckboxChange,
       nameInputField,
       blurInputField,
       hideButton,

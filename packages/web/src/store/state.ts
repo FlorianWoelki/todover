@@ -7,10 +7,13 @@ export interface List {
   name: string;
 }
 
+export type TodoRepetition = 'weekly' | 'daily';
+
 export interface Todo {
   id: string;
   name: string;
   date?: Date;
+  repetition?: TodoRepetition;
   done?: boolean;
   listId?: string;
   description?: string;
@@ -23,6 +26,12 @@ export interface State {
 
 export const state: State = {
   todos: [
+    {
+      id: 'today_item',
+      name: 'My today item',
+      date: new Date(),
+      repetition: 'daily',
+    },
     {
       id: 'specific_id',
       name: 'First todo item',
