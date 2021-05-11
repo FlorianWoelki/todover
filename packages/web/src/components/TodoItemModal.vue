@@ -14,6 +14,27 @@
           </button>
         </div>
 
+        <div v-if="todoItem.date" class="flex-col items-center mb-4">
+          <label class="text-sm text-gray-500">ToDo Repeat?</label>
+          <div class="flex items-center space-x-6">
+            <div class="space-x-2">
+              <input
+                type="checkbox"
+                class="text-red-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm  focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0"
+              />
+              <label class="text-sm text-gray-500">Daily</label>
+            </div>
+            <div class="space-x-2">
+              <input
+                type="checkbox"
+                class="text-red-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm  focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0"
+                checked
+              />
+              <label class="text-sm text-gray-500">Weekly</label>
+            </div>
+          </div>
+        </div>
+
         <label for="todo-description" class="text-sm text-gray-500">ToDo Description</label>
         <textarea
           id="todo-description"
