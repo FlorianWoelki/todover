@@ -44,6 +44,17 @@
             >
               <refresh-icon class="w-5 h-5 text-gray-300"></refresh-icon>
             </todo-item>
+            <todo-item
+              v-for="(todo, j) in weeklyTodos(day)"
+              :todo-id="todo.id"
+              :key="j"
+              :value="todo.name"
+              class="text-gray-400"
+              no-dbl-click
+              disabled
+            >
+              <refresh-icon class="w-5 h-5 text-gray-300"></refresh-icon>
+            </todo-item>
           </template>
           <template #default="{ date }">
             <todo-item
@@ -77,7 +88,7 @@
     <div class="flex items-center justify-between p-2 bg-gray-500">
       <div></div>
       <button
-        class="flex items-center justify-center text-gray-300 rounded-lg hover:text-gray-100 hover:text-gray-200 focus:outline-none"
+        class="flex items-center justify-center text-gray-300 rounded-lg  hover:text-gray-100 hover:text-gray-200 focus:outline-none"
         @click="createNewList"
       >
         <plus-icon class="w-8 h-8"></plus-icon>
@@ -373,7 +384,21 @@ export default defineComponent({
       );
     };
 
+    const weeklyTodos = (day: string): Todo[] => {
+      const date = new Date(day);
+      const todos = store.state.todos as Todo[];
+
+      return todos.filter(
+        (todo) =>
+          todo.repetition === 'weekly' &&
+          todo.date &&
+          todo.date.getDay() === date.getDay() &&
+          todo.date.getTime() < date.getTime()
+      );
+    };
+
     return {
+      weeklyTodos,
       dailyTodos,
       selectedTodoItem,
       removeList,

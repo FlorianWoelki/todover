@@ -27,6 +27,12 @@ export interface State {
 export const state: State = {
   todos: [
     {
+      id: 'weekly_todo_item',
+      name: 'My weekly todo',
+      date: new Date(),
+      repetition: 'weekly',
+    },
+    {
       id: 'today_item',
       name: 'My today item',
       date: new Date(),
