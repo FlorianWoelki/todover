@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center justify-between px-2 mx-4 bg-white border-b border-gray-200 border-dashed rounded cursor-pointer hover:bg-gray-100 focus-within:bg-gray-100"
+    class="flex items-center justify-between px-2 mx-4 bg-white border-b border-gray-200 border-dashed rounded cursor-pointer  hover:bg-gray-100 focus-within:bg-gray-100"
     :class="{ [staticItemClass]: noDblClick, [dragClasses]: true }"
     :draggable="!noDblClick"
     @click="noDblClick ? focusInputField() : handleOnClick($event)"

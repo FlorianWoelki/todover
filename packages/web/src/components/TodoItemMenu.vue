@@ -30,7 +30,7 @@ export default defineComponent({
     DotsHorizontal,
   },
   setup(_, { emit }) {
-    const handleRemoveTodoItemClick = () => {
+    const handleRemoveButtonClick = () => {
       emit('removeTodoItem');
     };
 
@@ -40,7 +40,7 @@ export default defineComponent({
 
     return {
       handleOpenMenuClick,
-      handleRemoveTodoItemClick,
+      handleRemoveButtonClick,
     };
   },
 });
