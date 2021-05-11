@@ -3,12 +3,12 @@
     <div class="flex mb-4 h-1/2">
       <div class="flex flex-col items-center space-y-4">
         <button class="text-red-500 focus:outline-none hover:text-red-600" @click="goToPrevDayItem">
-          <chevron-left class="w-10 h-10" />
+          <chevron-left-icon class="w-10 h-10" />
         </button>
         <button class="text-red-400 focus:outline-none hover:text-red-500" @click="goWeekBack">
-          <chevron-double-left class="w-6 h-6" />
+          <chevron-double-left-icon class="w-6 h-6" />
         </button>
-        <cog class="w-6 h-6 text-red-400" />
+        <cog-icon class="w-6 h-6 text-red-400" />
       </div>
 
       <list-grid :current-date="new Date()" class="w-full h-full">
@@ -57,16 +57,16 @@
 
       <div class="flex flex-col items-center space-y-4">
         <button class="text-red-500 focus:outline-none hover:text-red-600" @click="goToNextDayItem">
-          <chevron-right class="w-10 h-10" />
+          <chevron-right-icon class="w-10 h-10" />
         </button>
         <button class="text-red-400 focus:outline-none hover:text-red-500" @click="goWeekForward">
-          <chevron-double-right class="w-6 h-6" />
+          <chevron-double-right-icon class="w-6 h-6" />
         </button>
         <button
           class="relative text-red-400 focus:outline-none hover:text-red-500"
           @click="toggleCalendar"
         >
-          <calendar class="w-6 h-6" />
+          <calendar-icon class="w-6 h-6" />
           <transition name="fade-in">
             <date-picker v-if="isCalendarVisible" class="right-0" @select-date="goToDate" />
           </transition>
@@ -77,7 +77,7 @@
     <div class="flex items-center justify-between p-2 bg-gray-500">
       <div></div>
       <button
-        class="flex items-center justify-center text-gray-300 rounded-lg  hover:text-gray-100 hover:text-gray-200 focus:outline-none"
+        class="flex items-center justify-center text-gray-300 rounded-lg hover:text-gray-100 hover:text-gray-200 focus:outline-none"
         @click="createNewList"
       >
         <plus-icon class="w-8 h-8"></plus-icon>
@@ -86,7 +86,7 @@
 
     <div class="flex mt-1 h-1/2">
       <div class="flex flex-col items-center space-y-4 lg:hidden">
-        <chevron-left
+        <chevron-left-icon
           class="w-10 h-10"
           @click="goToPrevListItem"
           :class="{
@@ -132,7 +132,7 @@
       </list-grid>
 
       <div class="flex flex-col items-center space-y-4 lg:hidden">
-        <chevron-right
+        <chevron-right-icon
           class="w-10 h-10"
           @click="goToNextListItem"
           :class="{
@@ -159,13 +159,13 @@
 import '@/assets/styles/transitions.css';
 import { computed, defineComponent, ref } from '@vue/runtime-core';
 import { useStore } from 'vuex';
-import ChevronLeft from '../assets/icons/chevron-left.svg';
-import ChevronDoubleLeft from '../assets/icons/chevron-double-left.svg';
-import ChevronRight from '../assets/icons/chevron-right.svg';
+import ChevronLeftIcon from '../assets/icons/chevron-left.svg';
+import ChevronDoubleLeftIcon from '../assets/icons/chevron-double-left.svg';
+import ChevronRightIcon from '../assets/icons/chevron-right.svg';
 import PlusIcon from '../assets/icons/plus.svg';
-import ChevronDoubleRight from '../assets/icons/chevron-double-right.svg';
-import Cog from '../assets/icons/cog.svg';
-import Calendar from '../assets/icons/calendar.svg';
+import ChevronDoubleRightIcon from '../assets/icons/chevron-double-right.svg';
+import CogIcon from '../assets/icons/cog.svg';
+import CalendarIcon from '../assets/icons/calendar.svg';
 import RefreshIcon from '../assets/icons/refresh.svg';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
@@ -175,13 +175,13 @@ import HideButton from '../components/ui/HideButton';
 export default defineComponent({
   components: {
     HideButton,
-    ChevronLeft,
-    ChevronRight,
-    ChevronDoubleLeft,
-    ChevronDoubleRight,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    ChevronDoubleLeftIcon,
+    ChevronDoubleRightIcon,
     PlusIcon,
-    Cog,
-    Calendar,
+    CogIcon,
+    CalendarIcon,
     RefreshIcon,
   },
   setup() {

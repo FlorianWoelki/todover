@@ -5,7 +5,7 @@
       class="text-gray-400 hover:text-gray-500 focus:outline-none"
       @click.stop="handleOpenMenuClick"
     >
-      <dots-horizontal class="w-4 h-4"></dots-horizontal>
+      <dots-horizontal-icon class="w-4 h-4"></dots-horizontal-icon>
     </button>
 
     <button
@@ -21,13 +21,13 @@
 <script lang="ts">
 import { defineComponent } from '@vue/runtime-core';
 import XIcon from '@/assets/icons/x.svg';
-import DotsHorizontal from '@/assets/icons/dots-horizontal.svg';
+import DotsHorizontalIcon from '@/assets/icons/dots-horizontal.svg';
 
 export default defineComponent({
   emits: ['removeTodoItem', 'openMenu'],
   components: {
     XIcon,
-    DotsHorizontal,
+    DotsHorizontalIcon,
   },
   setup(_, { emit }) {
     const handleRemoveButtonClick = () => {
