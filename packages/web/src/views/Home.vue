@@ -33,6 +33,17 @@
               @click="toggleTodoStatus(todo.id)"
               @open-menu="selectedTodoItem = todo"
             ></todo-item>
+            <todo-item
+              v-for="(todo, j) in dailyTodos(day)"
+              :todo-id="todo.id"
+              :key="j"
+              :value="todo.name"
+              class="text-gray-400"
+              no-dbl-click
+              disabled
+            >
+              <refresh-icon class="w-5 h-5 text-gray-300"></refresh-icon>
+            </todo-item>
           </template>
           <template #default="{ date }">
             <todo-item
@@ -155,6 +166,7 @@ import PlusIcon from '../assets/icons/plus.svg';
 import ChevronDoubleRight from '../assets/icons/chevron-double-right.svg';
 import Cog from '../assets/icons/cog.svg';
 import Calendar from '../assets/icons/calendar.svg';
+import RefreshIcon from '../assets/icons/refresh.svg';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
 import { Todo } from '../store/state';
@@ -170,6 +182,7 @@ export default defineComponent({
     PlusIcon,
     Cog,
     Calendar,
+    RefreshIcon,
   },
   setup() {
     setupEventListener();
@@ -351,7 +364,17 @@ export default defineComponent({
       store.commit(Mutation.REMOVE_LIST, { id });
     };
 
+    const dailyTodos = (day: string): Todo[] => {
+      const date = new Date(day);
+      const todos = store.state.todos as Todo[];
+
+      return todos.filter(
+        (todo) => todo.repetition === 'daily' && todo.date && todo.date.getTime() < date.getTime()
+      );
+    };
+
     return {
+      dailyTodos,
       selectedTodoItem,
       removeList,
       removeTodoItem,

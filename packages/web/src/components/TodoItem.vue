@@ -10,7 +10,6 @@
     @mouseleave="disabled ? setHovered(false) : () => {}"
   >
     <input
-      v-bind="$attrs"
       ref="inputField"
       class="w-full py-1 placeholder-gray-300 bg-transparent focus:outline-none"
       :class="{
@@ -21,6 +20,7 @@
       @keydown.enter="blurInputField"
       @blur="blurInputField"
       :disabled="disabled"
+      v-bind="$attrs"
     />
 
     <todo-item-menu
@@ -28,6 +28,7 @@
       @remove-todo-item="handleRemoveButtonClick"
       @open-menu="handleOpenMenuClick"
     ></todo-item-menu>
+    <slot />
   </div>
 </template>
 

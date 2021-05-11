@@ -15,7 +15,7 @@
         </div>
 
         <div v-if="todoItem.date" class="flex-col items-center mb-4">
-          <label class="text-sm text-gray-500">ToDo Repeat?</label>
+          <label class="text-sm text-gray-400">ToDo Repeat?</label>
           <div class="flex items-center space-x-6">
             <div class="space-x-2">
               <input
@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <label for="todo-description" class="text-sm text-gray-500">ToDo Description</label>
+        <label for="todo-description" class="text-sm text-gray-400">ToDo Description</label>
         <textarea
           id="todo-description"
           v-model="todoItem.description"
