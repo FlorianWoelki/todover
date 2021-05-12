@@ -1,0 +1,21 @@
+{
+  "name": "@todover/ui",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.14.0",
+    "@storybook/addon-actions": "^6.3.0-alpha.24",
+    "@storybook/addon-essentials": "^6.3.0-alpha.24",
+    "@storybook/addon-links": "^6.3.0-alpha.24",
+    "@storybook/vue3": "^6.3.0-alpha.24",
+    "babel-loader": "^8.2.2",
+    "vue-loader": "^16.2.0"
+  },
+  "dependencies": {
+    "vue": "^3.0.11"
+  },
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  }
+}
