@@ -88,7 +88,15 @@
     <div class="flex items-center justify-between p-2 bg-gray-500">
       <div></div>
       <button
-        class="flex items-center justify-center text-gray-300 rounded-lg  hover:text-gray-100 hover:text-gray-200 focus:outline-none"
+        class="
+          flex
+          items-center
+          justify-center
+          text-gray-300
+          rounded-lg
+          hover:text-gray-100 hover:text-gray-200
+          focus:outline-none
+        "
         @click="createNewList"
       >
         <plus-icon class="w-8 h-8"></plus-icon>

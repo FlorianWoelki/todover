@@ -8,7 +8,18 @@
       <div>
         <button
           type="button"
-          class="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer focus:outline-none focus:shadow-outline hover:bg-gray-100"
+          class="
+            inline-flex
+            p-1
+            transition
+            duration-100
+            ease-in-out
+            rounded-full
+            cursor-pointer
+            focus:outline-none
+            focus:shadow-outline
+            hover:bg-gray-100
+          "
           @click.stop="handleBackClick"
         >
           <svg
@@ -27,7 +38,18 @@
         </button>
         <button
           type="button"
-          class="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer focus:outline-none focus:shadow-outline hover:bg-gray-100"
+          class="
+            inline-flex
+            p-1
+            transition
+            duration-100
+            ease-in-out
+            rounded-full
+            cursor-pointer
+            focus:outline-none
+            focus:shadow-outline
+            hover:bg-gray-100
+          "
           @click.stop="handleForwardClick"
         >
           <svg
@@ -70,7 +92,16 @@
       >
         <div
           @click="setDatepickerValue(date)"
-          class="text-sm leading-none leading-loose text-center transition duration-100 ease-in-out rounded-full cursor-pointer"
+          class="
+            text-sm
+            leading-none leading-loose
+            text-center
+            transition
+            duration-100
+            ease-in-out
+            rounded-full
+            cursor-pointer
+          "
           :class="{
             'bg-red-200': isToday(date) == true,
             'text-gray-600 hover:bg-red-200':
