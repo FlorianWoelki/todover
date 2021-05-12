@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "lerna run dev",
-    "dev:web": "lerna run dev --scope={@clean-todo-app/web}"
+    "dev:web": "lerna run dev --scope={@todover/web}"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
