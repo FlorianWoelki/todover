@@ -7,13 +7,19 @@
           type="text"
           class="
             h-10
-            px-5
+            px-3
             pr-16
             text-sm
             bg-white
             border-2 border-gray-300
             rounded-lg
+            transition
+            duration-100
+            ease-in-out
+            focus:border-red-400
+            focus:ring-2 focus:ring-red-400
             focus:outline-none
+            focus:ring-opacity-50 focus:ring-offset-0
           "
           placeholder="Search ..."
         />
