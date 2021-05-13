@@ -11,6 +11,6 @@
     "lib": ["esnext", "dom"],
     "allowJs": true
   },
-  "include": ["src/**/*", "stories/**/*"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
   "exclude": ["node_modules", "dist", "scripts"]
 }
