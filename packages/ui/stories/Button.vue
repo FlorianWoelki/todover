@@ -1,8 +1,15 @@
 <template>
-  <button type="button" :class="classes" @click="onClick" :style="style">{{ label }}</button>
+  <button
+    type="button"
+    class="px-4 py-6 text-xl bg-blue-300 text-red-600"
+    @click="onClick"
+    :style="style"
+  >
+    {{ label }}
+  </button>
 </template>
 
-<script>
+<script lang="ts">
 import './button.css';
 import { reactive, computed } from 'vue';
 
@@ -45,8 +52,8 @@ export default {
       })),
       onClick() {
         emit('click');
-      }
-    }
+      },
+    };
   },
 };
 </script>
