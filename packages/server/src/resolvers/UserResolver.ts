@@ -1,4 +1,4 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, Int, Mutation, Query, Resolver } from 'type-graphql';
 import { hash, compare } from 'bcryptjs';
 import { User } from '../entities/User';
 import { MyContext } from '../MyContext';
@@ -11,6 +11,23 @@ export class UserResolver {
   @Query(() => [User])
   users(@Ctx() { prisma }: MyContext): Promise<User[]> {
     return prisma.user.findMany();
+  }
+
+  // TODO: remove and add export to custom function because it will not be used in prod
+  @Mutation(() => Boolean)
+  async revokeRefreshTokensForUser(
+    @Ctx() { prisma }: MyContext,
+    @Arg('userId', () => Int) userId: number
+  ): Promise<boolean> {
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        tokenVersion: {
+          increment: 1,
+        },
+      },
+    });
+    return true;
   }
 
   @Mutation(() => User)
