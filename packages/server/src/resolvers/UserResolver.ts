@@ -4,6 +4,7 @@ import { User } from '../entities/User';
 import { MyContext } from '../MyContext';
 import { LoginResponse } from '../entities/LoginResponse';
 import { createAccessToken, createRefreshToken } from '../auth';
+import { sendRefreshToken } from '../sendRefreshToken';
 
 @Resolver()
 export class UserResolver {
@@ -40,7 +41,7 @@ export class UserResolver {
       return undefined;
     }
 
-    res.cookie('jid', createRefreshToken(user), { httpOnly: true });
+    sendRefreshToken(res, createRefreshToken(user));
 
     return {
       accessToken: createAccessToken(user),
