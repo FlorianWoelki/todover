@@ -14,7 +14,7 @@ import { MyContext } from './MyContext';
     schema: await buildSchema({
       resolvers: [UserResolver],
     }),
-    context: (): MyContext => ({ prisma }),
+    context: ({ req, res }): MyContext => ({ res, req, prisma }),
   });
 
   apolloServer.applyMiddleware({ app, path: '/graphql' });

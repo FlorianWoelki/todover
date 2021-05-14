@@ -1,7 +1,9 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
-import { hash } from 'bcryptjs';
+import { hash, compare } from 'bcryptjs';
 import { User } from '../entities/User';
 import { MyContext } from '../MyContext';
+import { LoginResponse } from '../entities/LoginResponse';
+import { createAccessToken, createRefreshToken } from '../auth';
 
 @Resolver()
 export class UserResolver {
@@ -20,5 +22,28 @@ export class UserResolver {
 
     const user = prisma.user.create({ data: { email, password: hashedPassword } });
     return user;
+  }
+
+  @Mutation(() => LoginResponse, { nullable: true })
+  async login(
+    @Ctx() { prisma, res }: MyContext,
+    @Arg('email') email: string,
+    @Arg('password') password: string
+  ): Promise<LoginResponse | undefined> {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      return undefined;
+    }
+
+    const isValid = await compare(password, user.password);
+    if (!isValid) {
+      return undefined;
+    }
+
+    res.cookie('jid', createRefreshToken(user), { httpOnly: true });
+
+    return {
+      accessToken: createAccessToken(user),
+    };
   }
 }
