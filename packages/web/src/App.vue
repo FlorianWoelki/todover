@@ -4,7 +4,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent, provide } from '@vue/runtime-core';
+import { DefaultApolloClient } from '@vue/apollo-composable';
+import { apolloClient } from './apollo-client';
 
-export default defineComponent({});
+export default defineComponent({
+  setup() {
+    provide(DefaultApolloClient, apolloClient);
+  },
+});
 </script>

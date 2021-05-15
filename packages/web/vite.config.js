@@ -7,6 +7,10 @@ import pkg from './package.json';
 
 export default defineConfig({
   plugins: [Vue(), ViteComponents(), svgLoader()],
+  optimizeDeps: {
+    include: ['@apollo/client/core'],
+    exclude: ['@apollo/client'],
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

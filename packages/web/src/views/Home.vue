@@ -88,15 +88,7 @@
     <div class="flex items-center justify-between p-2 bg-gray-500">
       <div></div>
       <button
-        class="
-          flex
-          items-center
-          justify-center
-          text-gray-300
-          rounded-lg
-          hover:text-gray-100 hover:text-gray-200
-          focus:outline-none
-        "
+        class="flex items-center justify-center text-gray-300 rounded-lg hover:text-gray-100 hover:text-gray-200 focus:outline-none"
         @click="createNewList"
       >
         <plus-icon class="w-8 h-8"></plus-icon>
@@ -176,7 +168,7 @@
 
 <script lang="ts">
 import '@/assets/styles/transitions.css';
-import { computed, defineComponent, ref } from '@vue/runtime-core';
+import { computed, defineComponent, ref, watchEffect } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 import ChevronLeftIcon from '../assets/icons/chevron-left.svg';
 import ChevronDoubleLeftIcon from '../assets/icons/chevron-double-left.svg';
@@ -190,6 +182,8 @@ import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
 import { Todo } from '../store/state';
 import HideButton from '../components/ui/HideButton';
+import { useQuery } from '@vue/apollo-composable';
+import gql from 'graphql-tag';
 
 export default defineComponent({
   components: {
@@ -404,6 +398,19 @@ export default defineComponent({
           todo.date.getTime() < date.getTime()
       );
     };
+
+    const { result } = useQuery(gql`
+      query GetUsers {
+        users {
+          id
+          email
+        }
+      }
+    `);
+
+    watchEffect(() => {
+      console.log(result.value);
+    });
 
     return {
       weeklyTodos,

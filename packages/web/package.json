@@ -10,6 +10,10 @@
     "test:unit": "jest"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.18",
+    "@vue/apollo-composable": "^4.0.0-alpha.12",
+    "graphql": "^15.5.0",
+    "graphql-tag": "^2.12.4",
     "vue": "~3.0",
     "vue-router": "^4.0.6",
     "vuex": "~4.0"
