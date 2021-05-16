@@ -79,7 +79,7 @@
         >
           <calendar-icon class="w-6 h-6" />
           <transition name="fade-in">
-            <date-picker v-if="isCalendarVisible" class="right-0" @select-date="goToDate" />
+            <datepicker v-if="isCalendarVisible" class="right-0" @select-date="goToDate" />
           </transition>
         </button>
       </div>

@@ -2,6 +2,8 @@
   "name": "@todover/ui",
   "version": "1.0.0",
   "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@storybook/addon-actions": "^6.3.0-alpha.24",
