@@ -3,7 +3,7 @@
     ref="inputField"
     v-bind="$attrs"
     :value="modelValue"
-    class="w-full py-1 text-xl placeholder-gray-300 bg-transparent focus:outline-none"
+    class="w-full py-1 placeholder-gray-300 bg-transparent focus:outline-none"
     @keydown.enter="blurInputField"
     @input="updateModelValue"
   />

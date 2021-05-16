@@ -35,13 +35,12 @@
       <h1 v-if="!isCustomTitle" class="text-2xl font-bold tracking-wider uppercase">
         {{ currentDay }}
       </h1>
-      <input
+      <title-input
         v-else
         v-model="listTitle"
-        class="w-full text-2xl font-bold tracking-wider text-center uppercase bg-transparent border-none focus:outline-none hover:bg-gray-100"
+        class="text-2xl font-bold tracking-wider text-center uppercase"
         style="box-shadow: none"
-        type="text"
-      />
+      ></title-input>
       <p v-if="!isCustomTitle" class="text-sm">{{ printedDate }}</p>
     </div>
 

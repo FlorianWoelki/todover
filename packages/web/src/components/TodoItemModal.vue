@@ -3,7 +3,7 @@
     <div class="flex items-center justify-center h-full">
       <div class="w-full max-w-xl px-6 py-4 bg-white rounded" @click.stop>
         <div class="flex items-center justify-between mb-4">
-          <title-input v-model="todoItem.name"></title-input>
+          <title-input v-model="todoItem.name" class="text-xl"></title-input>
           <button class="text-gray-500 hover:text-gray-600 focus:outline-none" @click="hideButton">
             <x-icon class="w-4 h-4"></x-icon>
           </button>

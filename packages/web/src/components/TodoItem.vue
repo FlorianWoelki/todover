@@ -9,9 +9,8 @@
     @mouseenter="disabled ? setHovered(true) : () => {}"
     @mouseleave="disabled ? setHovered(false) : () => {}"
   >
-    <input
+    <title-input
       ref="inputField"
-      class="w-full py-1 placeholder-gray-300 bg-transparent focus:outline-none"
       :class="{
         'cursor-pointer': disabled,
         'cursor-text': !disabled || noDblClick,
@@ -21,7 +20,7 @@
       @blur="blurInputField"
       :disabled="disabled"
       v-bind="$attrs"
-    />
+    ></title-input>
 
     <todo-item-menu
       v-if="isHovered && !noDblClick"
@@ -54,7 +53,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const disabled = ref(true);
-    const inputField = ref<HTMLInputElement | null>(null);
+    const inputField = ref<any | null>(null);
     const timeoutId = ref<null | NodeJS.Timeout>(null);
     const clicks = ref(0);
     const isHovered = ref(false);
@@ -67,7 +66,7 @@ export default defineComponent({
 
       disabled.value = false;
       nextTick(() => {
-        inputField.value!.focus();
+        inputField.value!.inputField.focus();
       });
     };
 
@@ -76,14 +75,14 @@ export default defineComponent({
         return;
       }
 
-      if (inputField.value.value.length > 0) {
-        emit('updateItem', inputField.value.value);
+      if (inputField.value.inputField.value.length > 0) {
+        emit('updateItem', inputField.value.inputField.value);
       }
 
       disabled.value = true;
       setHovered(false);
       nextTick(() => {
-        inputField.value!.blur();
+        inputField.value!.inputField.blur();
       });
     };
 
