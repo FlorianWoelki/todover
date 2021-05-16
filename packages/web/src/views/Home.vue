@@ -181,13 +181,11 @@ import RefreshIcon from '../assets/icons/refresh.svg';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
 import { Todo } from '../store/state';
-import HideButton from '../components/ui/HideButton';
 import { useQuery } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
 
 export default defineComponent({
   components: {
-    HideButton,
     ChevronLeftIcon,
     ChevronRightIcon,
     ChevronDoubleLeftIcon,
