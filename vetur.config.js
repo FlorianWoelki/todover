@@ -5,5 +5,10 @@ module.exports = {
       package: 'package.json',
       tsconfig: 'tsconfig.json',
     },
+    {
+      root: './packages/ui',
+      package: 'package.json',
+      tsconfig: 'tsconfig.json',
+    },
   ],
 };
