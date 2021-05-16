@@ -2,8 +2,10 @@
   <input
     ref="inputField"
     v-bind="$attrs"
+    :value="modelValue"
     class="w-full py-1 text-xl placeholder-gray-300 bg-transparent focus:outline-none"
     @keydown.enter="blurInputField"
+    @input="updateModelValue"
   />
 </template>
 
@@ -12,7 +14,12 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'TitleInput',
-  emits: ['blur'],
+  emits: ['blur', 'update:modelValue'],
+  props: {
+    modelValue: {
+      type: String,
+    },
+  },
   setup(_, { emit }) {
     const inputField = ref<null | HTMLInputElement>(null);
 
@@ -25,8 +32,13 @@ export default defineComponent({
       emit('blur');
     };
 
+    const updateModelValue = (e: InputEvent) => {
+      emit('update:modelValue', (e.target as HTMLInputElement).value);
+    };
+
     return {
       inputField,
+      updateModelValue,
       blurInputField,
     };
   },

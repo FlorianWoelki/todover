@@ -11,8 +11,8 @@
     "test:unit": "jest"
   },
   "dependencies": {
-    "@todover/ui": "*",
     "@apollo/client": "^3.3.18",
+    "@todover/ui": "1.0.0",
     "@vue/apollo-composable": "^4.0.0-alpha.12",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.12.4",
