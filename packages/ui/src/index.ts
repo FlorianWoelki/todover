@@ -1,10 +1,11 @@
 import type { App, Plugin } from 'vue';
 import Datepicker from './components/Datepicker/Datepicker.vue';
 import TitleInput from './components/TitleInput/TitleInput.vue';
+import Searchbar from './components/Searchbar/Searchbar.vue';
 import HideButton from './components/HideButton/HideButton';
 
-const components = [Datepicker, HideButton, TitleInput];
-export { Datepicker, HideButton, TitleInput };
+const components = [Datepicker, HideButton, TitleInput, Searchbar];
+export { Datepicker, HideButton, TitleInput, Searchbar };
 
 function install(app: App): void {
   for (const comp of components) {
