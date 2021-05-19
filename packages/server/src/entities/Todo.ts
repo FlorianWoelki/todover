@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from 'type-graphql';
+import { List } from './List';
 
 export type TodoRepetition = 'weekly' | 'daily';
 
@@ -18,6 +19,9 @@ export class Todo {
 
   @Field({ nullable: true })
   repetition?: TodoRepetition;
+
+  @Field(() => List, { nullable: true })
+  list?: List;
 
   @Field({ nullable: true })
   listId?: string;
