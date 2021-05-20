@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from 'type-graphql';
 import { List } from './List';
+import { User } from './User';
 
 export type TodoRepetition = 'weekly' | 'daily';
 
@@ -10,6 +11,9 @@ export class Todo {
 
   @Field()
   name: string;
+
+  @Field(() => User)
+  user: User;
 
   @Field({ defaultValue: false })
   done: boolean;

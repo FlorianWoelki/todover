@@ -9,5 +9,5 @@ export interface MyContext {
     never,
     Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined
   >;
-  payload?: { userId: string };
+  payload?: { userId: number };
 }
