@@ -1,4 +1,4 @@
-import { Ctx, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
+import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { Todo } from '../entities/Todo';
 import { isAuth } from '../isAuth';
 import { MyContext } from '../MyContext';
@@ -17,9 +17,21 @@ export class TodoResolver {
 
   @Mutation()
   @UseMiddleware(isAuth)
-  addTodo() {}
+  addTodo(@Ctx() { prisma, payload }: MyContext, @Arg('name') name: string) {
+    if (!payload) {
+      return;
+    }
+
+    return prisma.todo.create({ data: { name, userId: payload.userId } });
+  }
 
   @Mutation()
   @UseMiddleware(isAuth)
-  removeTodo() {}
+  removeTodo(@Ctx() { prisma, payload }: MyContext, @Arg('id') id: string) {
+    if (!payload) {
+      return;
+    }
+
+    return prisma.todo.delete({ where: { id } });
+  }
 }
