@@ -12,18 +12,24 @@ model User {
   email        String @unique @db.VarChar(255)
   password     String @unique @db.VarChar(255)
   tokenVersion Int    @default(0)
+  todos        Todo[]
+  lists        List[]
 }
 
 model List {
   id    String @id @default(uuid())
   name  String @db.VarChar(255)
   todos Todo[]
+  user  User @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 model Todo {
   id          String    @id @default(uuid())
   name        String    @db.VarChar(255)
   done        Boolean   @default(false)
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
   date        DateTime?
   repetition  String?
   list        List?     @relation(fields: [listId], references: [id])
