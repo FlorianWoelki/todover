@@ -9,6 +9,8 @@ import { MyContext } from './MyContext';
 import { verify } from 'jsonwebtoken';
 import { createAccessToken, createRefreshToken } from './auth';
 import { sendRefreshToken } from './sendRefreshToken';
+import { TodoResolver } from './resolvers/TodoResolver';
+import { ListResolver } from './resolvers/ListResolver';
 
 (async () => {
   const prisma = new PrismaClient();
@@ -45,7 +47,7 @@ import { sendRefreshToken } from './sendRefreshToken';
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver],
+      resolvers: [UserResolver, TodoResolver, ListResolver],
     }),
     context: ({ req, res }): MyContext => ({ res, req, prisma }),
   });
