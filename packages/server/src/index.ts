@@ -1,16 +1,13 @@
 import 'reflect-metadata';
 import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from 'apollo-server-express';
-import { buildSchema } from 'type-graphql';
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import { UserResolver } from './resolvers/UserResolver';
 import { MyContext } from './MyContext';
 import { verify } from 'jsonwebtoken';
 import { createAccessToken, createRefreshToken } from './auth';
 import { sendRefreshToken } from './sendRefreshToken';
-import { TodoResolver } from './resolvers/TodoResolver';
-import { ListResolver } from './resolvers/ListResolver';
+import { createSchema } from './utils/createSchema';
 
 (async () => {
   const prisma = new PrismaClient();
@@ -46,9 +43,7 @@ import { ListResolver } from './resolvers/ListResolver';
   });
 
   const apolloServer = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [UserResolver, TodoResolver, ListResolver],
-    }),
+    schema: await createSchema(),
     context: ({ req, res }): MyContext => ({ res, req, prisma }),
   });
 
