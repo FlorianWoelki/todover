@@ -18,7 +18,7 @@ test('should create new user', async () => {
     id: 1,
     email: 'test@test.de',
     password: '123',
-    tokenVersion: 0,
+    tokenVersion: null,
   };
 
   mockCtx.prisma.user.create.mockResolvedValue(user);
@@ -27,6 +27,6 @@ test('should create new user', async () => {
     id: 1,
     email: 'test@test.de',
     password: '123',
-    tokenVersion: 0,
+    tokenVersion: null,
   });
 });
