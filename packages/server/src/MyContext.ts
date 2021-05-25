@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
+import { mockDeep, MockProxy } from 'jest-mock-extended';
 
 export interface MyContext {
   res: Response;
@@ -11,3 +12,13 @@ export interface MyContext {
   >;
   payload?: { userId: number };
 }
+
+export type MockContext = {
+  prisma: MockProxy<PrismaClient>;
+};
+
+export const createMockContext = (): MockContext => {
+  return {
+    prisma: mockDeep<PrismaClient>(),
+  };
+};
