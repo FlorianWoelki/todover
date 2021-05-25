@@ -1,8 +1,8 @@
-import { Field, ObjectType } from 'type-graphql';
-import { TodoRepetition } from '../../entities/Todo';
+import { Field, InputType } from 'type-graphql';
+import { Todo, TodoRepetition } from '../../entities/Todo';
 
-@ObjectType()
-export class UpdateTodoInput {
+@InputType()
+export class UpdateTodoInput implements Partial<Todo> {
   @Field()
   name?: string;
 
