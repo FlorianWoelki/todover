@@ -47,6 +47,10 @@ beforeAll(async () => {
   server = (await constructTestServer()).server;
 });
 
+afterAll(async () => {
+  await prisma.$disconnect();
+});
+
 describe('Mutations', () => {
   it('should register a new user', async () => {
     // clean up user for new registering
