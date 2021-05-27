@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { createTestClient } from 'apollo-server-testing';
 // import { MockContext, MyContext, createMockContext } from '../src/MyContext';
-import { cleanupUser } from './util/testUser';
+import { cleanupUser } from './util/user';
 import { constructTestServer } from './util/server';
 
 const prisma = new PrismaClient();
