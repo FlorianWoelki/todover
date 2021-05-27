@@ -2,26 +2,14 @@ import 'reflect-metadata';
 import { PrismaClient } from '@prisma/client';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { createTestClient } from 'apollo-server-testing';
-import { Request } from 'express';
 // import { MockContext, MyContext, createMockContext } from '../src/MyContext';
 import { cleanupUser } from './util/testUser';
-import { createSchema } from '../src/utils/createSchema';
+import { constructTestServer } from './util/server';
 
 const prisma = new PrismaClient();
 // let mockCtx: MockContext;
 // let ctx: MyContext;
 // let request: Partial<Request>;
-
-// TODO: refactor to jest setup file
-const constructTestServer = async (request?: Partial<Request>) => {
-  const schema = await createSchema();
-  const server = new ApolloServer({
-    schema,
-    playground: true,
-    context: ({ req = request }) => ({ req, prisma }),
-  });
-  return { server, prisma };
-};
 
 const REGISTER = gql`
   mutation register($email: String!, $password: String!) {
@@ -39,12 +27,7 @@ beforeEach(() => {
 let server: ApolloServer;
 
 beforeAll(async () => {
-  // TODO: refactor to jest setup file
-  process.env.DATABASE_URL =
-    'postgresql://postgres:postgres@localhost:5432/clean-todo-app?schema=public';
-  process.env.ACCESS_TOKEN_SECRET = 'accesstokensecret';
-  process.env.REFRESH_TOKEN_SECRET = 'refreshtokensecret';
-  server = (await constructTestServer()).server;
+  server = (await constructTestServer(prisma)).server;
 });
 
 afterAll(async () => {
