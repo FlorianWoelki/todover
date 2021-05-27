@@ -1,10 +1,11 @@
-import { Arg, Ctx, Int, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, Int, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { hash, compare } from 'bcryptjs';
 import { User } from '../entities/User';
 import { MyContext } from '../MyContext';
 import { LoginResponse } from '../entities/LoginResponse';
 import { createAccessToken, createRefreshToken } from '../auth';
 import { sendRefreshToken } from '../sendRefreshToken';
+import { isAuth } from '../isAuth';
 
 @Resolver()
 export class UserResolver {
@@ -63,5 +64,15 @@ export class UserResolver {
     return {
       accessToken: createAccessToken(user),
     };
+  }
+
+  @Mutation(() => User)
+  @UseMiddleware(isAuth)
+  async removeUser(@Ctx() { prisma, payload }: MyContext) {
+    if (!payload) {
+      return;
+    }
+
+    return prisma.user.delete({ where: { id: payload.userId } });
   }
 }
