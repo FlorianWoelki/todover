@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { PrismaClient } from '@prisma/client';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { createTestClient } from 'apollo-server-testing';
