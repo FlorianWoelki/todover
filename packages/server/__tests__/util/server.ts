@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from 'apollo-server-express';
+import { Request } from 'express';
 import { createSchema } from '../../src/utils/createSchema';
 
 export const constructTestServer = async (prisma: PrismaClient, request?: Partial<Request>) => {

@@ -27,6 +27,14 @@ const LOGIN = gql`
   }
 `;
 
+const ME = gql`
+  query me {
+    me {
+      email
+    }
+  }
+`;
+
 beforeEach(() => {
   // mockCtx = createMockContext();
   // ctx = (mockCtx as unknown) as MyContext;
@@ -72,11 +80,21 @@ describe('Mutations', () => {
       },
     });
 
-    console.log(res.data);
     const token = res.data?.login.accessToken;
     expect(res.errors).toBeUndefined();
     expect(token).not.toBeUndefined();
     request = { headers: { authorization: `bearer ${token}` } };
-    console.log(request);
+  });
+
+  it('should return user object', async () => {
+    server = (await constructTestServer(prisma, request)).server;
+    const query = createTestClient(server).query;
+
+    const res = await query({
+      query: ME,
+    });
+
+    expect(res.errors).toBeUndefined();
+    expect(res.data?.me.email).toBe('test@test.de');
   });
 });

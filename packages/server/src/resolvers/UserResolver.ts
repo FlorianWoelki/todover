@@ -15,6 +15,7 @@ export class UserResolver {
   }
 
   @Query(() => User)
+  @UseMiddleware(isAuth)
   me(@Ctx() { prisma, payload }: MyContext) {
     if (!payload) {
       return;
