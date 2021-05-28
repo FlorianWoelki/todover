@@ -69,6 +69,16 @@ describe('Mutations', () => {
     expect(res.data?.register.email).toBe('test@test.de');
   });
 
+  it('cannot return user without being logged in', async () => {
+    const query = createTestClient(server).query;
+
+    const res = await query({
+      query: ME,
+    });
+
+    expect(res.data).toBeNull();
+  });
+
   it('should login a new user', async () => {
     const mutate = createTestClient(server).mutate;
 
