@@ -14,6 +14,15 @@ export class UserResolver {
     return prisma.user.findMany();
   }
 
+  @Query(() => User)
+  me(@Ctx() { prisma, payload }: MyContext) {
+    if (!payload) {
+      return;
+    }
+
+    return prisma.user.findFirst({ where: { id: payload.userId } });
+  }
+
   // TODO: remove and add export to custom function because it will not be used in prod
   @Mutation(() => Boolean)
   async revokeRefreshTokensForUser(
