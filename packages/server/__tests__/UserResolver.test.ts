@@ -1,15 +1,23 @@
 import { PrismaClient } from '@prisma/client';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { createTestClient } from 'apollo-server-testing';
-// import { MockContext, MyContext, createMockContext } from '../src/MyContext';
+import { sign } from 'jsonwebtoken';
 import { Request } from 'express';
 import { cleanupUser } from './util/user';
 import { constructTestServer } from './util/server';
 
 const prisma = new PrismaClient();
-// let mockCtx: MockContext;
-// let ctx: MyContext;
 let request: Partial<Request>;
+let server: ApolloServer;
+
+const randomAccessToken = sign({ userId: 1 }, process.env.ACCESS_TOKEN_SECRET!, {
+  expiresIn: '15m',
+});
+const unauthorizedRequest = {
+  headers: {
+    authorization: `bearer ${randomAccessToken}`,
+  },
+};
 
 const REGISTER = gql`
   mutation register($email: String!, $password: String!) {
@@ -34,13 +42,6 @@ const ME = gql`
     }
   }
 `;
-
-beforeEach(() => {
-  // mockCtx = createMockContext();
-  // ctx = (mockCtx as unknown) as MyContext;
-});
-
-let server: ApolloServer;
 
 beforeAll(async () => {
   server = (await constructTestServer(prisma)).server;
@@ -94,6 +95,19 @@ describe('Mutations', () => {
     expect(res.errors).toBeUndefined();
     expect(token).not.toBeUndefined();
     request = { headers: { authorization: `bearer ${token}` } };
+  });
+
+  it('unauthorized user cannot get user data', async () => {
+    server = (await constructTestServer(prisma, unauthorizedRequest)).server;
+
+    const query = createTestClient(server).query;
+
+    const res = await query({
+      query: ME,
+    });
+
+    expect(res.data).toBeNull();
+    expect(res.errors).toHaveLength(1);
   });
 
   it('should return user object', async () => {
