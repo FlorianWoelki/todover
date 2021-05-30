@@ -1,4 +1,5 @@
 import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
+import { Todo as PrismaTodo } from '.prisma/client';
 import { Todo } from '../entities/Todo';
 import { isAuth } from '../isAuth';
 import { MyContext } from '../MyContext';
@@ -8,7 +9,7 @@ import { UpdateTodoInput } from './input/UpdateTodoInput';
 export class TodoResolver {
   @Query(() => [Todo])
   @UseMiddleware(isAuth)
-  getTodos(@Ctx() { prisma, payload }: MyContext) {
+  getTodos(@Ctx() { prisma, payload }: MyContext): Promise<PrismaTodo[]> | null {
     if (!payload) {
       return null;
     }
@@ -22,7 +23,7 @@ export class TodoResolver {
     @Ctx() { prisma, payload }: MyContext,
     @Arg('id') id: string,
     @Arg('data') data: UpdateTodoInput
-  ) {
+  ): Promise<PrismaTodo> | null {
     if (!payload) {
       return null;
     }
@@ -37,7 +38,10 @@ export class TodoResolver {
 
   @Mutation(() => Todo)
   @UseMiddleware(isAuth)
-  addTodo(@Ctx() { prisma, payload }: MyContext, @Arg('name') name: string) {
+  addTodo(
+    @Ctx() { prisma, payload }: MyContext,
+    @Arg('name') name: string
+  ): Promise<PrismaTodo> | null {
     if (!payload) {
       return null;
     }
@@ -47,7 +51,10 @@ export class TodoResolver {
 
   @Mutation(() => Todo)
   @UseMiddleware(isAuth)
-  removeTodo(@Ctx() { prisma, payload }: MyContext, @Arg('id') id: string) {
+  removeTodo(
+    @Ctx() { prisma, payload }: MyContext,
+    @Arg('id') id: string
+  ): Promise<PrismaTodo> | null {
     if (!payload) {
       return null;
     }
