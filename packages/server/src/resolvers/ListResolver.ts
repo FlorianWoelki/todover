@@ -9,7 +9,7 @@ export class ListResolver {
   @UseMiddleware(isAuth)
   createList(@Ctx() { prisma, payload }: MyContext, @Arg('name') name: string) {
     if (!payload) {
-      return;
+      return null;
     }
 
     return prisma.list.create({ data: { name, userId: payload.userId } });
@@ -19,7 +19,7 @@ export class ListResolver {
   @UseMiddleware(isAuth)
   deleteList(@Ctx() { prisma, payload }: MyContext, @Arg('id') id: string) {
     if (!payload) {
-      return;
+      return null;
     }
 
     return prisma.list.delete({ where: { id } });
@@ -29,7 +29,7 @@ export class ListResolver {
   @UseMiddleware(isAuth)
   lists(@Ctx() { prisma, payload }: MyContext) {
     if (!payload) {
-      return;
+      return null;
     }
 
     return prisma.list.findMany({ where: { userId: payload.userId } });

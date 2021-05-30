@@ -10,7 +10,7 @@ export class TodoResolver {
   @UseMiddleware(isAuth)
   getTodos(@Ctx() { prisma, payload }: MyContext) {
     if (!payload) {
-      return;
+      return null;
     }
 
     return prisma.todo.findMany({ where: { userId: payload.userId } });
@@ -24,7 +24,7 @@ export class TodoResolver {
     @Arg('data') data: UpdateTodoInput
   ) {
     if (!payload) {
-      return;
+      return null;
     }
 
     return prisma.todo.update({
@@ -39,7 +39,7 @@ export class TodoResolver {
   @UseMiddleware(isAuth)
   addTodo(@Ctx() { prisma, payload }: MyContext, @Arg('name') name: string) {
     if (!payload) {
-      return;
+      return null;
     }
 
     return prisma.todo.create({ data: { name, userId: payload.userId } });
@@ -49,7 +49,7 @@ export class TodoResolver {
   @UseMiddleware(isAuth)
   removeTodo(@Ctx() { prisma, payload }: MyContext, @Arg('id') id: string) {
     if (!payload) {
-      return;
+      return null;
     }
 
     return prisma.todo.delete({ where: { id } });
