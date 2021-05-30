@@ -6,14 +6,10 @@ import { LoginResponse } from '../entities/LoginResponse';
 import { createAccessToken, createRefreshToken } from '../auth';
 import { sendRefreshToken } from '../sendRefreshToken';
 import { isAuth } from '../isAuth';
+import { revokeRefreshToken } from '../utils/revokeRefreshToken';
 
 @Resolver()
 export class UserResolver {
-  @Query(() => [User])
-  users(@Ctx() { prisma }: MyContext) {
-    return prisma.user.findMany();
-  }
-
   @Query(() => User)
   @UseMiddleware(isAuth)
   me(@Ctx() { prisma, payload }: MyContext) {
@@ -24,21 +20,18 @@ export class UserResolver {
     return prisma.user.findFirst({ where: { id: payload.userId } });
   }
 
-  // TODO: remove and add export to custom function because it will not be used in prod
-  @Mutation(() => Boolean)
-  async revokeRefreshTokensForUser(
+  @Mutation(() => User, { nullable: true })
+  async forgotPassword(
     @Ctx() { prisma }: MyContext,
     @Arg('userId', () => Int) userId: number
-  ): Promise<boolean> {
-    await prisma.user.update({
-      where: { id: userId },
-      data: {
-        tokenVersion: {
-          increment: 1,
-        },
-      },
-    });
-    return true;
+  ): Promise<User | undefined> {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      return undefined;
+    }
+
+    await revokeRefreshToken(prisma, userId);
+    return user;
   }
 
   @Mutation(() => User)
