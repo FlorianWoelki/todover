@@ -52,7 +52,7 @@ afterAll(async () => {
 });
 
 describe('Mutations', () => {
-  it('should register a new user', async () => {
+  it('register', async () => {
     // clean up user for new registering
     await cleanupUser(prisma);
 
@@ -70,7 +70,7 @@ describe('Mutations', () => {
     expect(res.data?.register.email).toBe('test@test.de');
   });
 
-  it('should login a new user', async () => {
+  it('login', async () => {
     const mutate = createTestClient(server).mutate;
 
     const res = await mutate({
@@ -89,7 +89,7 @@ describe('Mutations', () => {
 });
 
 describe('Queries', () => {
-  it('cannot return user without being logged in', async () => {
+  it('me - without being logged in', async () => {
     const query = createTestClient(server).query;
 
     const res = await query({
@@ -99,7 +99,7 @@ describe('Queries', () => {
     expect(res.data).toBeNull();
   });
 
-  it('unauthorized user cannot get user data', async () => {
+  it('me - unauthorized token', async () => {
     server = (await constructTestServer(prisma, unauthorizedRequest)).server;
 
     const query = createTestClient(server).query;
@@ -112,7 +112,7 @@ describe('Queries', () => {
     expect(res.errors).toHaveLength(1);
   });
 
-  it('should return user object', async () => {
+  it('me', async () => {
     server = (await constructTestServer(prisma, request)).server;
     const query = createTestClient(server).query;
 

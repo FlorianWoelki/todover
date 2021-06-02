@@ -85,7 +85,6 @@ describe('Mutations', () => {
     expect(res.data?.addTodo.listId).toBe(null);
     expect(res.data?.addTodo.description).toBe(null);
     todoId = res.data?.addTodo.id;
-    console.log(todoId);
   });
 });
 
