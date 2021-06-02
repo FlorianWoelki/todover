@@ -61,4 +61,18 @@ export class TodoResolver {
 
     return prisma.todo.delete({ where: { id } });
   }
+
+  @Mutation(() => Todo)
+  @UseMiddleware(isAuth)
+  moveToList(
+    @Ctx() { prisma, payload }: MyContext,
+    @Arg('todoId') todoId: string,
+    @Arg('listId') listId: string
+  ): Promise<PrismaTodo> | null {
+    if (!payload) {
+      return null;
+    }
+
+    return prisma.todo.update({ where: { id: todoId }, data: { listId, date: null } });
+  }
 }
