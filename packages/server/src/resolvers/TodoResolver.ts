@@ -9,7 +9,7 @@ import { UpdateTodoInput } from './input/UpdateTodoInput';
 export class TodoResolver {
   @Query(() => [Todo])
   @UseMiddleware(isAuth)
-  getTodos(@Ctx() { prisma, payload }: MyContext): Promise<PrismaTodo[]> | null {
+  todos(@Ctx() { prisma, payload }: MyContext): Promise<PrismaTodo[]> | null {
     if (!payload) {
       return null;
     }
