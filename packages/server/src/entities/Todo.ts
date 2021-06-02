@@ -13,7 +13,7 @@ export class Todo {
   name: string;
 
   @Field(() => User)
-  user: User;
+  user?: User;
 
   @Field({ defaultValue: false })
   done: boolean;

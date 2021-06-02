@@ -32,6 +32,20 @@ const ADD_TODO = gql`
   }
 `;
 
+const UPDATE_TODO = gql`
+  mutation updateTodo($id: String!, $data: UpdateTodoInput!) {
+    updateTodo(id: $id, data: $data) {
+      id
+      name
+      done
+      date
+      repetition
+      listId
+      description
+    }
+  }
+`;
+
 beforeAll(async () => {
   server = (await constructTestServer(prisma)).server;
   await createUser(prisma);
@@ -78,13 +92,37 @@ describe('Mutations', () => {
 
     expect(res.errors).toBeUndefined();
     expect(res.data?.addTodo.id).not.toBeUndefined();
-    expect(res.data?.addTodo.title).toBe('Test Todo');
+    expect(res.data?.addTodo.name).toBe('Test Todo');
     expect(res.data?.addTodo.done).toBe(false);
     expect(res.data?.addTodo.date).toBe(null);
     expect(res.data?.addTodo.repetition).toBe(null);
     expect(res.data?.addTodo.listId).toBe(null);
     expect(res.data?.addTodo.description).toBe(null);
     todoId = res.data?.addTodo.id;
+  });
+
+  it('updateTodo - change name', async () => {
+    server = (await constructTestServer(prisma, request)).server;
+    const mutate = createTestClient(server).mutate;
+
+    const res = await mutate({
+      mutation: UPDATE_TODO,
+      variables: {
+        id: todoId,
+        data: {
+          name: 'updated todo name',
+        },
+      },
+    });
+
+    expect(res.errors).toBeUndefined();
+    expect(res.data?.updateTodo.id).toBe(todoId);
+    expect(res.data?.updateTodo.name).toBe('updated todo name');
+    expect(res.data?.updateTodo.done).toBe(false);
+    expect(res.data?.updateTodo.date).toBe(null);
+    expect(res.data?.updateTodo.repetition).toBe(null);
+    expect(res.data?.updateTodo.listId).toBe(null);
+    expect(res.data?.updateTodo.description).toBe(null);
   });
 });
 

@@ -3,7 +3,7 @@ import { Todo, TodoRepetition } from '../../entities/Todo';
 
 @InputType()
 export class UpdateTodoInput implements Partial<Todo> {
-  @Field()
+  @Field({ nullable: true })
   name?: string;
 
   @Field({ nullable: true })
@@ -12,12 +12,12 @@ export class UpdateTodoInput implements Partial<Todo> {
   @Field({ nullable: true })
   repetition?: TodoRepetition;
 
-  @Field()
+  @Field({ nullable: true })
   done?: boolean;
 
-  @Field()
+  @Field({ nullable: true })
   listId?: string;
 
-  @Field()
+  @Field({ nullable: true })
   description?: string;
 }
