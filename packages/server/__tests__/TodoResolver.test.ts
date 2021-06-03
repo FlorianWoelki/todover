@@ -13,8 +13,8 @@ let server: ApolloServer;
 let todo: Partial<Todo> = {};
 
 const ADD_TODO = gql`
-  mutation addTodo($name: String!) {
-    addTodo(name: $name) {
+  mutation addTodo($name: String!, $date: DateTime, $listId: String) {
+    addTodo(name: $name, date: $date, listId: $listId) {
       id
       name
       done
