@@ -4,21 +4,13 @@ import { createTestClient } from 'apollo-server-testing';
 import { Request } from 'express';
 import { Todo } from '../src/entities/Todo';
 import { constructTestServer } from './util/server';
-import { cleanupUser, createUser } from './util/user';
+import { cleanupUser, createUser, login } from './util/user';
 
 const prisma = new PrismaClient();
 let request: Partial<Request>;
 let server: ApolloServer;
 
 let todo: Partial<Todo> = {};
-
-const LOGIN = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      accessToken
-    }
-  }
-`;
 
 const ADD_TODO = gql`
   mutation addTodo($name: String!) {
@@ -65,6 +57,8 @@ const TODOS = gql`
 beforeAll(async () => {
   server = (await constructTestServer(prisma)).server;
   await createUser(prisma);
+
+  request = await login(server);
 });
 
 afterAll(async () => {
@@ -78,23 +72,6 @@ afterAll(async () => {
 });
 
 describe('Mutations', () => {
-  it('login', async () => {
-    const mutate = createTestClient(server).mutate;
-
-    const res = await mutate({
-      mutation: LOGIN,
-      variables: {
-        email: 'test@test.de',
-        password: '123',
-      },
-    });
-
-    const token = res.data?.login.accessToken;
-    expect(res.errors).toBeUndefined();
-    expect(token).not.toBeUndefined();
-    request = { headers: { authorization: `bearer ${token}` } };
-  });
-
   it('addTodo', async () => {
     server = (await constructTestServer(prisma, request)).server;
     const mutate = createTestClient(server).mutate;
