@@ -1,10 +1,19 @@
-import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
-import { List as PrismaList } from '.prisma/client';
+import {
+  Arg,
+  Ctx,
+  FieldResolver,
+  Mutation,
+  Query,
+  Resolver,
+  Root,
+  UseMiddleware,
+} from 'type-graphql';
+import { List as PrismaList, Todo as PrismaTodo } from '.prisma/client';
 import { List } from '../entities/List';
 import { isAuth } from '../isAuth';
 import { MyContext } from '../MyContext';
 
-@Resolver()
+@Resolver(() => List)
 export class ListResolver {
   @Mutation(() => List)
   @UseMiddleware(isAuth)
@@ -40,5 +49,10 @@ export class ListResolver {
     }
 
     return prisma.list.findMany({ where: { userId: payload.userId } });
+  }
+
+  @FieldResolver()
+  todos(@Root() list: List, @Ctx() { prisma }: MyContext): Promise<PrismaTodo[]> {
+    return prisma.todo.findMany({ where: { listId: list.id } });
   }
 }

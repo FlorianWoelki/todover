@@ -13,6 +13,6 @@ export class List {
   @Field(() => User)
   user: User;
 
-  @Field(() => [Todo])
+  @Field(() => [Todo], { defaultValue: [] })
   todos: Todo[];
 }
