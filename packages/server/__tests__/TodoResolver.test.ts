@@ -11,6 +11,7 @@ let request: Partial<Request>;
 let server: ApolloServer;
 
 let todo: Partial<Todo> = {};
+let todoWithDate: Partial<Todo> = {};
 
 const ADD_TODO = gql`
   mutation addTodo($name: String!, $date: DateTime, $listId: String) {
@@ -64,7 +65,12 @@ beforeAll(async () => {
 afterAll(async () => {
   const toDeleteTodo = await prisma.todo.findUnique({ where: { id: todo.id } });
   if (toDeleteTodo) {
-    await prisma.todo.delete({ where: { id: todo.id } });
+    await prisma.todo.delete({ where: { id: toDeleteTodo.id } });
+  }
+
+  const toDeleteTodoWithDate = await prisma.todo.findUnique({ where: { id: todoWithDate.id } });
+  if (toDeleteTodoWithDate) {
+    await prisma.todo.delete({ where: { id: toDeleteTodoWithDate.id } });
   }
 
   await cleanupUser(prisma);
@@ -92,6 +98,30 @@ describe('Mutations', () => {
     expect(res.data?.addTodo.listId).toBe(null);
     expect(res.data?.addTodo.description).toBe(null);
     todo.id = res.data?.addTodo.id;
+  });
+
+  it('addTodo - add with date', async () => {
+    server = (await constructTestServer(prisma, request)).server;
+    const mutate = createTestClient(server).mutate;
+    const date = new Date().toISOString();
+
+    const res = await mutate({
+      mutation: ADD_TODO,
+      variables: {
+        name: 'Test Todo',
+        date,
+      },
+    });
+
+    expect(res.errors).toBeUndefined();
+    expect(res.data?.addTodo.id).not.toBeUndefined();
+    expect(res.data?.addTodo.name).toBe('Test Todo');
+    expect(res.data?.addTodo.done).toBe(false);
+    expect(res.data?.addTodo.date).toBe(date);
+    expect(res.data?.addTodo.repetition).toBe(null);
+    expect(res.data?.addTodo.listId).toBe(null);
+    expect(res.data?.addTodo.description).toBe(null);
+    todoWithDate.id = res.data?.addTodo.id;
   });
 
   it('updateTodo - change name', async () => {
@@ -233,13 +263,14 @@ describe('Queries', () => {
     });
 
     expect(res.errors).toBeUndefined();
-    expect(res.data?.todos).toHaveLength(1);
-    expect(res.data?.todos[0].id).toBe(todo.id);
-    expect(res.data?.todos[0].name).toBe(todo.name);
-    expect(res.data?.todos[0].done).toBe(todo.done);
-    expect(res.data?.todos[0].date).toBe(todo.date?.toISOString());
-    expect(res.data?.todos[0].repetition).toBe(todo.repetition);
-    expect(res.data?.todos[0].listId).toBe(null);
-    expect(res.data?.todos[0].description).toBe(todo.description);
+    expect(res.data?.todos).toHaveLength(2);
+    expect(res.data?.todos[0].id).toBe(todoWithDate.id);
+    expect(res.data?.todos[1].id).toBe(todo.id);
+    expect(res.data?.todos[1].name).toBe(todo.name);
+    expect(res.data?.todos[1].done).toBe(todo.done);
+    expect(res.data?.todos[1].date).toBe(todo.date?.toISOString());
+    expect(res.data?.todos[1].repetition).toBe(todo.repetition);
+    expect(res.data?.todos[1].listId).toBe(null);
+    expect(res.data?.todos[1].description).toBe(todo.description);
   });
 });
