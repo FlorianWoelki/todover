@@ -38,6 +38,8 @@ jobs:
         run: yarn install
       - name: Generate prisma schema
         run: yarn db:push
+        env:
+          DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/todover?schema=public'
       - name: Run tests
         run: yarn test:server
         env:
