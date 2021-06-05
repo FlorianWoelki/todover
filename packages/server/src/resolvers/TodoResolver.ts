@@ -38,17 +38,16 @@ export class TodoResolver {
 
   @Mutation(() => Todo)
   @UseMiddleware(isAuth)
-  addTodo(
+  addTodoWithDate(
     @Ctx() { prisma, payload }: MyContext,
     @Arg('name') name: string,
-    @Arg('date', { nullable: true }) date?: Date,
-    @Arg('listId', { nullable: true }) listId?: string
+    @Arg('date') date: Date
   ): Promise<PrismaTodo> | null {
     if (!payload) {
       return null;
     }
 
-    return prisma.todo.create({ data: { name, userId: payload.userId, date, listId } });
+    return prisma.todo.create({ data: { userId: payload.userId, date, name } });
   }
 
   @Mutation(() => Todo)

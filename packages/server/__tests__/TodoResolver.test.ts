@@ -11,11 +11,10 @@ let request: Partial<Request>;
 let server: ApolloServer;
 
 let todo: Partial<Todo> = {};
-let todoWithDate: Partial<Todo> = {};
 
-const ADD_TODO = gql`
-  mutation addTodo($name: String!, $date: DateTime, $listId: String) {
-    addTodo(name: $name, date: $date, listId: $listId) {
+const ADD_TODO_WITH_DATE = gql`
+  mutation addTodoWithDate($name: String!, $date: DateTime!) {
+    addTodoWithDate(name: $name, date: $date) {
       id
       name
       done
@@ -68,60 +67,34 @@ afterAll(async () => {
     await prisma.todo.delete({ where: { id: toDeleteTodo.id } });
   }
 
-  const toDeleteTodoWithDate = await prisma.todo.findUnique({ where: { id: todoWithDate.id } });
-  if (toDeleteTodoWithDate) {
-    await prisma.todo.delete({ where: { id: toDeleteTodoWithDate.id } });
-  }
-
   await cleanupUser(prisma);
   await prisma.$disconnect();
 });
 
 describe('Mutations', () => {
-  it('addTodo', async () => {
+  it('addTodoWithDate', async () => {
     server = (await constructTestServer(prisma, request)).server;
     const mutate = createTestClient(server).mutate;
+    const date = new Date();
 
     const res = await mutate({
-      mutation: ADD_TODO,
+      mutation: ADD_TODO_WITH_DATE,
       variables: {
         name: 'Test Todo',
+        date: date.toISOString(),
       },
     });
 
     expect(res.errors).toBeUndefined();
-    expect(res.data?.addTodo.id).not.toBeUndefined();
-    expect(res.data?.addTodo.name).toBe('Test Todo');
-    expect(res.data?.addTodo.done).toBe(false);
-    expect(res.data?.addTodo.date).toBe(null);
-    expect(res.data?.addTodo.repetition).toBe(null);
-    expect(res.data?.addTodo.listId).toBe(null);
-    expect(res.data?.addTodo.description).toBe(null);
-    todo.id = res.data?.addTodo.id;
-  });
-
-  it('addTodo - add with date', async () => {
-    server = (await constructTestServer(prisma, request)).server;
-    const mutate = createTestClient(server).mutate;
-    const date = new Date().toISOString();
-
-    const res = await mutate({
-      mutation: ADD_TODO,
-      variables: {
-        name: 'Test Todo',
-        date,
-      },
-    });
-
-    expect(res.errors).toBeUndefined();
-    expect(res.data?.addTodo.id).not.toBeUndefined();
-    expect(res.data?.addTodo.name).toBe('Test Todo');
-    expect(res.data?.addTodo.done).toBe(false);
-    expect(res.data?.addTodo.date).toBe(date);
-    expect(res.data?.addTodo.repetition).toBe(null);
-    expect(res.data?.addTodo.listId).toBe(null);
-    expect(res.data?.addTodo.description).toBe(null);
-    todoWithDate.id = res.data?.addTodo.id;
+    expect(res.data?.addTodoWithDate.id).not.toBeUndefined();
+    expect(res.data?.addTodoWithDate.name).toBe('Test Todo');
+    expect(res.data?.addTodoWithDate.done).toBe(false);
+    expect(res.data?.addTodoWithDate.date).toBe(date.toISOString());
+    expect(res.data?.addTodoWithDate.repetition).toBe(null);
+    expect(res.data?.addTodoWithDate.listId).toBe(null);
+    expect(res.data?.addTodoWithDate.description).toBe(null);
+    todo = res.data?.addTodoWithDate;
+    todo.date = date;
   });
 
   it('updateTodo - change name', async () => {
@@ -143,7 +116,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.id).toBe(todo.id);
     expect(res.data?.updateTodo.name).toBe(name);
     expect(res.data?.updateTodo.done).toBe(false);
-    expect(res.data?.updateTodo.date).toBe(null);
+    expect(res.data?.updateTodo.date).toBe(todo.date?.toISOString());
     expect(res.data?.updateTodo.repetition).toBe(null);
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(null);
@@ -168,7 +141,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.id).toBe(todo.id);
     expect(res.data?.updateTodo.name).toBe(todo.name);
     expect(res.data?.updateTodo.done).toBe(true);
-    expect(res.data?.updateTodo.date).toBe(null);
+    expect(res.data?.updateTodo.date).toBe(todo.date?.toISOString());
     expect(res.data?.updateTodo.repetition).toBe(null);
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(null);
@@ -263,14 +236,13 @@ describe('Queries', () => {
     });
 
     expect(res.errors).toBeUndefined();
-    expect(res.data?.todos).toHaveLength(2);
-    expect(res.data?.todos[0].id).toBe(todoWithDate.id);
-    expect(res.data?.todos[1].id).toBe(todo.id);
-    expect(res.data?.todos[1].name).toBe(todo.name);
-    expect(res.data?.todos[1].done).toBe(todo.done);
-    expect(res.data?.todos[1].date).toBe(todo.date?.toISOString());
-    expect(res.data?.todos[1].repetition).toBe(todo.repetition);
-    expect(res.data?.todos[1].listId).toBe(null);
-    expect(res.data?.todos[1].description).toBe(todo.description);
+    expect(res.data?.todos).toHaveLength(1);
+    expect(res.data?.todos[0].id).toBe(todo.id);
+    expect(res.data?.todos[0].name).toBe(todo.name);
+    expect(res.data?.todos[0].done).toBe(todo.done);
+    expect(res.data?.todos[0].date).toBe(todo.date?.toISOString());
+    expect(res.data?.todos[0].repetition).toBe(todo.repetition);
+    expect(res.data?.todos[0].listId).toBe(null);
+    expect(res.data?.todos[0].description).toBe(todo.description);
   });
 });
