@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "lerna run dev",
     "dev:web": "lerna run dev --scope={@todover/web}",
-    "test:server": "lerna run test --scope={@todover/server}"
+    "test:server": "lerna run test --scope=@todover/server --stream"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
