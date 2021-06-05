@@ -12,6 +12,7 @@ import { List as PrismaList, Todo as PrismaTodo } from '.prisma/client';
 import { List } from '../entities/List';
 import { isAuth } from '../isAuth';
 import { MyContext } from '../MyContext';
+import { Todo } from '../entities/Todo';
 
 @Resolver(() => List)
 export class ListResolver {
@@ -54,5 +55,19 @@ export class ListResolver {
   @FieldResolver()
   todos(@Root() list: List, @Ctx() { prisma }: MyContext): Promise<PrismaTodo[]> {
     return prisma.todo.findMany({ where: { listId: list.id } });
+  }
+
+  @Mutation(() => Todo)
+  @UseMiddleware(isAuth)
+  addTodoToList(
+    @Ctx() { prisma, payload }: MyContext,
+    @Arg('name') name: string,
+    @Arg('listId') listId: string
+  ) {
+    if (!payload) {
+      return;
+    }
+
+    return prisma.todo.create({ data: { name, listId } });
   }
 }

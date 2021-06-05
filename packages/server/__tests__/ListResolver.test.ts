@@ -3,6 +3,7 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { createTestClient } from 'apollo-server-testing';
 import { Request } from 'express';
 import { List } from '../src/entities/List';
+import { Todo } from '../src/entities/Todo';
 import { constructTestServer } from './util/server';
 import { cleanupUser, createUser, login } from './util/user';
 
@@ -10,6 +11,8 @@ const prisma = new PrismaClient();
 let request: Partial<Request>;
 let server: ApolloServer;
 let list: Partial<List> = {};
+
+let createdTodoInList: Partial<Todo> = {};
 
 const CREATE_LIST = gql`
   mutation createList($name: String!) {
@@ -37,6 +40,20 @@ const LISTS = gql`
     lists {
       id
       name
+      todos {
+        listId
+        name
+      }
+    }
+  }
+`;
+
+const ADD_TODO_TO_LIST = gql`
+  mutation addTodoToList($name: String!, $listId: String!) {
+    addTodoToList(name: $name, listId: $listId) {
+      id
+      name
+      listId
     }
   }
 `;
@@ -53,6 +70,11 @@ afterAll(async () => {
   const toDeleteList = await prisma.list.findUnique({ where: { id: list.id } });
   if (toDeleteList) {
     await prisma.list.delete({ where: { id: toDeleteList.id } });
+  }
+
+  const toDeleteTodo = await prisma.todo.findUnique({ where: { id: createdTodoInList.id } });
+  if (toDeleteTodo) {
+    await prisma.todo.delete({ where: { id: toDeleteTodo.id } });
   }
 
   await cleanupUser(prisma);
@@ -98,6 +120,23 @@ describe('Mutations', () => {
     expect(res.data?.deleteList.id).toBe(list.id);
     expect(res.data?.deleteList.name).toBe(list.name);
   });
+
+  it('addTodoToList', async () => {
+    const mutate = createTestClient(server).mutate;
+
+    const res = await mutate({
+      mutation: ADD_TODO_TO_LIST,
+      variables: {
+        name: 'test todo',
+        listId: list.id,
+      },
+    });
+
+    expect(res.errors).toBeUndefined();
+    expect(res.data?.addTodoToList.name).toBe('test todo');
+    expect(res.data?.addTodoToList.listId).toBe(list.id);
+    createdTodoInList = res.data?.addTodoToList;
+  });
 });
 
 describe('Queries', () => {
@@ -112,5 +151,7 @@ describe('Queries', () => {
     expect(res.data?.lists).toHaveLength(1);
     expect(res.data?.lists[0].id).toBe(list.id);
     expect(res.data?.lists[0].name).toBe(list.name);
+    expect(res.data?.lists[0].todos).toHaveLength(1);
+    expect(res.data?.lists[0].todos[0].name).toBe(createdTodoInList.name);
   });
 });
