@@ -37,6 +37,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Run tests
-        run: yarn test
+        run: yarn test:server
         env:
           DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/todover?schema=public'
