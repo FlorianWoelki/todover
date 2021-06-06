@@ -49,8 +49,8 @@ const LISTS = gql`
 `;
 
 const ADD_TODO_TO_LIST = gql`
-  mutation addTodoToList($name: String!, $listId: String!) {
-    addTodoToList(name: $name, listId: $listId) {
+  mutation addTodoToList($data: AddTodoToListInput!) {
+    addTodoToList(data: $data) {
       id
       name
       listId
@@ -127,8 +127,10 @@ describe('Mutations', () => {
     const res = await mutate({
       mutation: ADD_TODO_TO_LIST,
       variables: {
-        name: 'test todo',
-        listId: list.id,
+        data: {
+          name: 'test todo',
+          listId: list.id,
+        },
       },
     });
 
