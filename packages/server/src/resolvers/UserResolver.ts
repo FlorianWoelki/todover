@@ -3,7 +3,7 @@ import { hash, compare } from 'bcryptjs';
 import { User } from '../entities/User';
 import { MyContext } from '../MyContext';
 import { LoginResponse } from '../entities/LoginResponse';
-import { createAccessToken, createRefreshToken } from '../auth';
+import { createAccessToken, createRefreshToken, SALT } from '../auth';
 import { sendRefreshToken } from '../sendRefreshToken';
 import { isAuth } from '../isAuth';
 import { revokeRefreshToken } from '../utils/revokeRefreshToken';
@@ -40,7 +40,7 @@ export class UserResolver {
     @Arg('email') email: string,
     @Arg('password') password: string
   ): Promise<User> {
-    const hashedPassword = await hash(password, 12);
+    const hashedPassword = await hash(password, SALT);
 
     const user = prisma.user.create({ data: { email, password: hashedPassword } });
     return user;

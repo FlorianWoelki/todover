@@ -3,6 +3,7 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { createTestClient } from 'apollo-server-testing';
 import { hash } from 'bcryptjs';
 import { Request } from 'express';
+import { SALT } from '../../src/auth';
 
 const email = 'test@test.de';
 const password = '123';
@@ -16,7 +17,7 @@ export const createUser = async (prisma: PrismaClient): Promise<void> => {
   await prisma.user.create({
     data: {
       email,
-      password: await hash(password, 12),
+      password: await hash(password, SALT),
     },
   });
 };
