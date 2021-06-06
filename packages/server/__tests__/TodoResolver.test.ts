@@ -13,8 +13,8 @@ let server: ApolloServer;
 let todo: Partial<Todo> = {};
 
 const ADD_TODO_WITH_DATE = gql`
-  mutation addTodoWithDate($name: String!, $date: DateTime!) {
-    addTodoWithDate(name: $name, date: $date) {
+  mutation addTodoWithDate($data: AddTodoWithDateInput!) {
+    addTodoWithDate(data: $data) {
       id
       name
       done
@@ -80,8 +80,10 @@ describe('Mutations', () => {
     const res = await mutate({
       mutation: ADD_TODO_WITH_DATE,
       variables: {
-        name: 'Test Todo',
-        date: date.toISOString(),
+        data: {
+          name: 'Test Todo',
+          date: date.toISOString(),
+        },
       },
     });
 
