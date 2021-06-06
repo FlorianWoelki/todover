@@ -1,3 +1,4 @@
+import { AuthenticationError } from 'apollo-server-errors';
 import { verify } from 'jsonwebtoken';
 import { MiddlewareFn } from 'type-graphql';
 import { MyContext } from './MyContext';
@@ -6,8 +7,7 @@ export const isAuth: MiddlewareFn<MyContext> = ({ context }, next) => {
   const authorization = context.req.headers['authorization'];
 
   if (!authorization) {
-    console.log('not authenticated user');
-    throw new Error('not authenticated');
+    throw new AuthenticationError('You must be logged in');
   }
 
   try {
@@ -16,7 +16,7 @@ export const isAuth: MiddlewareFn<MyContext> = ({ context }, next) => {
     context.payload = payload as any;
   } catch (err) {
     console.log(err);
-    throw new Error('not authenticated');
+    throw new AuthenticationError('You must be logged in');
   }
 
   return next();
