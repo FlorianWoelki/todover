@@ -7,6 +7,7 @@ import { createAccessToken, createRefreshToken, SALT } from '../auth';
 import { sendRefreshToken } from '../sendRefreshToken';
 import { isAuth } from '../isAuth';
 import { revokeRefreshToken } from '../utils/revokeRefreshToken';
+import { AuthenticationError, UserInputError } from 'apollo-server-express';
 
 @Resolver()
 export class UserResolver {
@@ -14,7 +15,7 @@ export class UserResolver {
   @UseMiddleware(isAuth)
   me(@Ctx() { prisma, payload }: MyContext): Promise<User | null> | null {
     if (!payload) {
-      return null;
+      throw new AuthenticationError('You are not logged in');
     }
 
     return prisma.user.findUnique({ where: { id: payload.userId } });
@@ -27,7 +28,7 @@ export class UserResolver {
   ): Promise<User | null> {
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
-      return null;
+      throw new UserInputError('Specified `userId` could not be');
     }
 
     await revokeRefreshToken(prisma, userId);
@@ -54,12 +55,12 @@ export class UserResolver {
   ): Promise<LoginResponse | null> {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      return null;
+      throw new UserInputError('Invalid credentials input');
     }
 
     const isValid = await compare(password, user.password);
     if (!isValid) {
-      return null;
+      throw new UserInputError('Invalid credentials input');
     }
 
     sendRefreshToken(res, createRefreshToken(user));
@@ -73,7 +74,7 @@ export class UserResolver {
   @UseMiddleware(isAuth)
   removeUser(@Ctx() { prisma, payload }: MyContext): Promise<User> | null {
     if (!payload) {
-      return null;
+      throw new AuthenticationError('You are not logged in');
     }
 
     return prisma.user.delete({ where: { id: payload.userId } });
