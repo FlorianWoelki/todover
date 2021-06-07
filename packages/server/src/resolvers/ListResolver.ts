@@ -56,7 +56,7 @@ export class ListResolver {
 
   @FieldResolver()
   todos(@Root() list: List, @Ctx() { prisma }: MyContext): Promise<PrismaTodo[]> {
-    return prisma.todo.findMany({ where: { listId: list.id } });
+    return prisma.list.findUnique({ where: { id: list.id } }).todos();
   }
 
   @Mutation(() => Todo)
