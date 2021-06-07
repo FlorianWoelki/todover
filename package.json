@@ -12,6 +12,9 @@
     "test:server": "lerna run test --scope=@todover/server --stream"
   },
   "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "husky": "4",
     "lerna": "^4.0.0"
   }
 }
