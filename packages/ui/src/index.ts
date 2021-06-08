@@ -4,9 +4,10 @@ import TitleInput from './components/TitleInput/TitleInput.vue';
 import Searchbar from './components/Searchbar/Searchbar.vue';
 import HideButton from './components/HideButton/HideButton';
 import InputField from './components/InputField/InputField.vue';
+import Button from './components/InputField/Button.vue';
 
-const components = [Datepicker, HideButton, TitleInput, Searchbar, InputField];
-export { Datepicker, HideButton, TitleInput, Searchbar, InputField };
+const components = [Datepicker, HideButton, TitleInput, Searchbar, InputField, Button];
+export { Datepicker, HideButton, TitleInput, Searchbar, InputField, Button };
 
 function install(app: App): void {
   for (const comp of components) {
