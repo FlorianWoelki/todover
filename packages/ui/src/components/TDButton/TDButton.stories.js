@@ -1,4 +1,4 @@
-import MyButton from './Button.vue';
+import MyButton from './TDButton.vue';
 
 export default {
   title: 'UI/Button',
