@@ -1,5 +1,5 @@
 <template>
-  <navbar class="font-sans antialiased" />
+  <navbar v-if="$route.path === '/'" class="font-sans antialiased" />
   <router-view />
 </template>
 
