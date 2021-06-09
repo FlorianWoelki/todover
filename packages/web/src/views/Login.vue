@@ -4,8 +4,18 @@
     <h1 class="text-3xl font-bold tracking-wide mb-12 text-gray-700">Sign in to your account</h1>
 
     <div class="bg-white shadow rounded-lg px-10 py-8 w-full max-w-lg space-y-6">
-      <input-field v-model="email" label="Email address" type="email" />
-      <input-field v-model="password" label="Password" type="password" />
+      <input-field
+        v-model="email"
+        label="Email address"
+        type="email"
+        @keydown.enter="handleSignIn"
+      />
+      <input-field
+        v-model="password"
+        label="Password"
+        type="password"
+        @keydown.enter="handleSignIn"
+      />
 
       <td-button @click="handleSignIn">Sign in</td-button>
     </div>
@@ -32,7 +42,16 @@ export default defineComponent({
       }
     `);
 
+    const isEmailValid = (): boolean => {
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email.value.toLowerCase());
+    };
+
     const handleSignIn = (): void => {
+      if (email.value.length === 0 || password.value.length === 0 || !isEmailValid()) {
+        return;
+      }
+
       login({ email: email.value, password: password.value })
         .then((result) => {
           console.log('res', result);
