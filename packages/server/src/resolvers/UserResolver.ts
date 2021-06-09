@@ -43,7 +43,9 @@ export class UserResolver {
   ): Promise<User> {
     const hashedPassword = await hash(password, SALT);
 
-    const user = prisma.user.create({ data: { email, password: hashedPassword } });
+    const user = prisma.user.create({
+      data: { email: email.toLowerCase(), password: hashedPassword },
+    });
     return user;
   }
 
@@ -53,7 +55,7 @@ export class UserResolver {
     @Arg('email') email: string,
     @Arg('password') password: string
   ): Promise<LoginResponse | null> {
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
     if (!user) {
       throw new UserInputError('Invalid credentials input');
     }
