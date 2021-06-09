@@ -17,7 +17,7 @@
         @keydown.enter="handleSignIn"
       />
 
-      <td-button @click="handleSignIn">Sign in</td-button>
+      <td-button :disabled="loginButtonDisabled" @click="handleSignIn">Sign in</td-button>
     </div>
     <p v-if="showError" class="text-red-500 mt-4">Wrong email address or password</p>
   </div>
@@ -26,7 +26,7 @@
 <script lang="ts">
 import { useMutation } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -42,13 +42,17 @@ export default defineComponent({
       }
     `);
 
+    const loginButtonDisabled = computed((): boolean => {
+      return email.value.length === 0 || password.value.length === 0 || !isEmailValid();
+    });
+
     const isEmailValid = (): boolean => {
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email.value.toLowerCase());
     };
 
     const handleSignIn = (): void => {
-      if (email.value.length === 0 || password.value.length === 0 || !isEmailValid()) {
+      if (loginButtonDisabled) {
         return;
       }
 
@@ -62,6 +66,7 @@ export default defineComponent({
     };
 
     return {
+      loginButtonDisabled,
       email,
       password,
       handleSignIn,
