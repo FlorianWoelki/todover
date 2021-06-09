@@ -7,7 +7,10 @@ export default {
 
 const Template = (args) => ({
   components: { MyButton },
-  template: '<my-button>Register</my-button>',
+  template: `<my-button :disabled="${args.disabled}">Register</my-button>`,
 });
 
 export const Default = Template.bind({});
+Default.args = {
+  disabled: false,
+};
