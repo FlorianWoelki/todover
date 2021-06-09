@@ -1,4 +1,6 @@
 import 'reflect-metadata';
+import dotenv from 'dotenv';
+dotenv.config();
 import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
