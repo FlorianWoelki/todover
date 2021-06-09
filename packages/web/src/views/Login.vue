@@ -9,26 +9,44 @@
 
       <td-button @click="handleSignIn">Sign in</td-button>
     </div>
+    <p v-if="showError" class="text-red-500 mt-4">Wrong email address or password</p>
   </div>
 </template>
 
 <script lang="ts">
+import { useMutation } from '@vue/apollo-composable';
+import gql from 'graphql-tag';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
     const email = ref<string>('');
     const password = ref<string>('');
+    const showError = ref<boolean>(false);
+
+    const { mutate: login } = useMutation(gql`
+      mutation login($email: String!, $password: String!) {
+        login(email: $email, password: $password) {
+          accessToken
+        }
+      }
+    `);
 
     const handleSignIn = (): void => {
-      console.log(email.value);
-      console.log(password.value);
+      login({ email: email.value, password: password.value })
+        .then((result) => {
+          console.log('res', result);
+        })
+        .catch(() => {
+          showError.value = true;
+        });
     };
 
     return {
       email,
       password,
       handleSignIn,
+      showError,
     };
   },
 });

@@ -168,7 +168,7 @@
 
 <script lang="ts">
 import '@/assets/styles/transitions.css';
-import { computed, defineComponent, ref, watchEffect } from '@vue/runtime-core';
+import { computed, defineComponent, ref } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 import ChevronLeftIcon from '../assets/icons/chevron-left.svg';
 import ChevronDoubleLeftIcon from '../assets/icons/chevron-double-left.svg';
@@ -181,8 +181,6 @@ import RefreshIcon from '../assets/icons/refresh.svg';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
 import { Todo } from '../store/state';
-import { useQuery } from '@vue/apollo-composable';
-import gql from 'graphql-tag';
 
 export default defineComponent({
   components: {
@@ -396,19 +394,6 @@ export default defineComponent({
           todo.date.getTime() < date.getTime()
       );
     };
-
-    const { result } = useQuery(gql`
-      query GetUsers {
-        users {
-          id
-          email
-        }
-      }
-    `);
-
-    watchEffect(() => {
-      console.log(result.value);
-    });
 
     return {
       weeklyTodos,
