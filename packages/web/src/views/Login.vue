@@ -1,7 +1,13 @@
 <template>
   <div class="h-screen w-full flex flex-col items-center justify-center bg-gray-50 -mt-12">
     <img src="@/assets/logo.png" alt="logo" class="h-16 mb-2" />
-    <h1 class="text-3xl font-bold tracking-wide mb-12 text-gray-700">Sign in to your account</h1>
+    <h1 class="text-3xl font-bold tracking-wide text-gray-700 mb-8">Sign in to your account</h1>
+    <router-link
+      to="/register"
+      class="mb-4 text-sm text-right text-gray-400 underline transition duration-100 ease-in-out hover:text-gray-500"
+    >
+      No account? No problem!
+    </router-link>
 
     <div class="bg-white shadow rounded-lg px-10 py-8 w-full max-w-lg space-y-6">
       <input-field
