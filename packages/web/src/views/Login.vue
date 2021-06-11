@@ -33,6 +33,7 @@
 import { useMutation } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
 import { computed, defineComponent, ref } from 'vue';
+import { isEmailValid } from '../util/validation';
 
 export default defineComponent({
   setup() {
@@ -49,13 +50,8 @@ export default defineComponent({
     `);
 
     const loginButtonDisabled = computed((): boolean => {
-      return email.value.length === 0 || password.value.length === 0 || !isEmailValid();
+      return email.value.length === 0 || password.value.length === 0 || !isEmailValid(email.value);
     });
-
-    const isEmailValid = (): boolean => {
-      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email.value.toLowerCase());
-    };
 
     const handleSignIn = (): void => {
       if (loginButtonDisabled) {

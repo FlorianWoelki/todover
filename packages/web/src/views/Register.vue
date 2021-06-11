@@ -37,6 +37,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
+import { isEmailValid } from '../util/validation';
 
 export default defineComponent({
   setup() {
@@ -44,17 +45,12 @@ export default defineComponent({
     const password = ref<string>('');
     const repeatPassword = ref<string>('');
 
-    const isEmailValid = (): boolean => {
-      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email.value.toLowerCase());
-    };
-
     const signupButtonDisabled = computed((): boolean => {
       return (
         email.value.length === 0 ||
         password.value.length === 0 ||
         password.value !== repeatPassword.value ||
-        !isEmailValid()
+        !isEmailValid(email.value)
       );
     });
 
