@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen w-full flex flex-col items-center justify-center bg-gray-50 -mt-12">
-    <img src="@/assets/logo.png" alt="logo" class="h-16 mb-2" />
+    <Logo class="w-48 mb-2" />
     <h1 class="text-3xl font-bold tracking-wide text-gray-700 mb-8">Sign in to your account</h1>
     <router-link
       to="/register"
@@ -33,9 +33,13 @@
 import { useMutation } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
 import { computed, defineComponent, ref } from 'vue';
+import Logo from '@/assets/logo.svg';
 import { isEmailValid } from '../util/validation';
 
 export default defineComponent({
+  components: {
+    Logo,
+  },
   setup() {
     const email = ref<string>('');
     const password = ref<string>('');
