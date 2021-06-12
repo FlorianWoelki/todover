@@ -1,7 +1,9 @@
 <template>
-  <div class="h-screen w-full flex flex-col items-center justify-center bg-gray-50 -mt-12">
+  <div class="flex flex-col items-center justify-center w-full h-screen -mt-12 bg-gray-50">
     <Logo class="w-48 mb-2" />
-    <h1 class="text-3xl font-bold tracking-wide text-gray-700 mb-8">Create a new account</h1>
+    <h1 class="mb-8 text-3xl font-bold tracking-wide text-center text-gray-700">
+      Create a new account
+    </h1>
     <router-link
       to="/login"
       class="mb-4 text-sm text-right text-gray-400 underline transition duration-100 ease-in-out hover:text-gray-500"
@@ -9,7 +11,7 @@
       Have an account? No problem!
     </router-link>
 
-    <div class="bg-white shadow rounded-lg px-10 py-8 w-full max-w-lg space-y-6">
+    <div class="w-full max-w-lg px-10 py-8 space-y-6 bg-white rounded-lg shadow">
       <input-field
         v-model="email"
         label="Email address"
@@ -31,7 +33,7 @@
 
       <td-button :disabled="signupButtonDisabled" @click="handleSignUp">Create account</td-button>
     </div>
-    <p v-if="showError" class="text-red-500 mt-4">Email address is already taken.</p>
+    <p v-if="showError" class="mt-4 text-red-500">Email address is already taken.</p>
   </div>
 </template>
 
