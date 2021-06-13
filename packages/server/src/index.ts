@@ -15,14 +15,14 @@ import { createSchema } from './utils/createSchema';
 (async () => {
   const prisma = new PrismaClient();
   const app = express();
-  app.use(cookieParser());
   app.use(
     cors({
-      origin: 'http://localhost:3000',
+      origin: 'http://localhost:3000', // TODO: change to env variables
       credentials: true,
       optionsSuccessStatus: 204,
     })
   );
+  app.use(cookieParser());
 
   app.post('/refresh_token', async (req, res) => {
     const token = req.cookies.jid;
