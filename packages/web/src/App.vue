@@ -7,10 +7,12 @@
 import { defineComponent, provide } from '@vue/runtime-core';
 import { DefaultApolloClient } from '@vue/apollo-composable';
 import { apolloClient } from './apollo-client';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   setup() {
-    provide(DefaultApolloClient, apolloClient);
+    const store = useStore();
+    provide(DefaultApolloClient, apolloClient(store));
   },
 });
 </script>

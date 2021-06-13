@@ -37,12 +37,18 @@ import gql from 'graphql-tag';
 import { computed, defineComponent, ref } from 'vue';
 import Logo from '@/assets/logo.svg';
 import { isEmailValid } from '../util/validation';
+import { useStore } from 'vuex';
+import { Mutation } from '../store';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   components: {
     Logo,
   },
   setup() {
+    const store = useStore();
+    const router = useRouter();
+
     const email = ref<string>('');
     const password = ref<string>('');
     const showError = ref<boolean>(false);
@@ -60,13 +66,16 @@ export default defineComponent({
     });
 
     const handleSignIn = (): void => {
-      if (loginButtonDisabled) {
+      if (loginButtonDisabled.value) {
         return;
       }
 
       login({ email: email.value, password: password.value })
         .then((result) => {
-          console.log('res', result);
+          if (result.data) {
+            store.commit(Mutation.SET_ACCESS_TOKEN, result.data.login.accessToken);
+            router.push('/');
+          }
         })
         .catch(() => {
           showError.value = true;

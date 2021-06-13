@@ -1,4 +1,6 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
+import { Store } from 'vuex';
+import { State } from './store';
 
 const httpLink = createHttpLink({
   uri: import.meta.env.VITE_GRAPHQL_API as string,
@@ -6,7 +8,12 @@ const httpLink = createHttpLink({
 
 const cache = new InMemoryCache();
 
-export const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache,
-});
+export const apolloClient = (store: Store<State>) =>
+  new ApolloClient({
+    link: httpLink,
+    credentials: 'include',
+    headers: {
+      authorization: store.state.user.accessToken ? `bearer ${store.state.user.accessToken}` : '',
+    },
+    cache,
+  });

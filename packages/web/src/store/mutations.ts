@@ -9,6 +9,8 @@ export enum Mutation {
   CREATE_LIST = 'CREATE_LIST',
   REMOVE_TODO = 'REMOVE_TODO',
   REMOVE_LIST = 'REMOVE_LIST',
+
+  SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN',
 }
 
 export type Mutations<S = State> = {
@@ -21,9 +23,13 @@ export type Mutations<S = State> = {
   [Mutation.TOGGLE_TODO_STATUS](state: S, { id }: { id: string }): void;
   [Mutation.REMOVE_TODO](state: S, { id }: { id: string }): void;
   [Mutation.REMOVE_LIST](state: S, { id }: { id: string }): void;
+  [Mutation.SET_ACCESS_TOKEN](state: S, accessToken: string): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
+  [Mutation.SET_ACCESS_TOKEN](state: State, accessToken) {
+    state.user.accessToken = accessToken;
+  },
   [Mutation.ADD_TODO](state: State, { value }) {
     state.todos.push(value);
   },
