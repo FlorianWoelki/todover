@@ -5,8 +5,9 @@ import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import { MyContext } from './MyContext';
+import cors from 'cors';
 import { verify } from 'jsonwebtoken';
+import { MyContext } from './MyContext';
 import { createAccessToken, createRefreshToken } from './auth';
 import { sendRefreshToken } from './sendRefreshToken';
 import { createSchema } from './utils/createSchema';
@@ -15,6 +16,13 @@ import { createSchema } from './utils/createSchema';
   const prisma = new PrismaClient();
   const app = express();
   app.use(cookieParser());
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+      credentials: true,
+      optionsSuccessStatus: 204,
+    })
+  );
 
   app.post('/refresh_token', async (req, res) => {
     const token = req.cookies.jid;
