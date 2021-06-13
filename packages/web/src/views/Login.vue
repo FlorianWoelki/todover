@@ -25,7 +25,34 @@
         @keydown.enter="handleSignIn"
       />
 
-      <td-button :disabled="loginButtonDisabled" @click="handleSignIn">Sign in</td-button>
+      <td-button
+        :disabled="loginButtonDisabled"
+        @click="handleSignIn"
+        class="flex items-center justify-center"
+      >
+        <svg
+          v-if="loginLoading"
+          class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        Sign in
+      </td-button>
     </div>
     <p v-if="showError" class="mt-4 text-red-500">Wrong email address or password</p>
   </div>
@@ -52,6 +79,7 @@ export default defineComponent({
     const email = ref<string>('');
     const password = ref<string>('');
     const showError = ref<boolean>(false);
+    const loginLoading = ref<boolean>(false);
 
     const { mutate: login } = useMutation(gql`
       mutation login($email: String!, $password: String!) {
@@ -62,13 +90,20 @@ export default defineComponent({
     `);
 
     const loginButtonDisabled = computed((): boolean => {
-      return email.value.length === 0 || password.value.length === 0 || !isEmailValid(email.value);
+      return (
+        loginLoading.value ||
+        email.value.length === 0 ||
+        password.value.length === 0 ||
+        !isEmailValid(email.value)
+      );
     });
 
     const handleSignIn = (): void => {
       if (loginButtonDisabled.value) {
         return;
       }
+
+      loginLoading.value = true;
 
       login({ email: email.value, password: password.value })
         .then((result) => {
@@ -78,11 +113,13 @@ export default defineComponent({
           }
         })
         .catch(() => {
+          loginLoading.value = false;
           showError.value = true;
         });
     };
 
     return {
+      loginLoading,
       loginButtonDisabled,
       email,
       password,

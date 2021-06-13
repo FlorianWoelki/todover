@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="rounded-lg w-full px-4 py-2 text-white bg-red-500 hover:bg-red-600 transition duration-100 ease-in-out disabled:bg-opacity-50"
+    class="w-full px-4 py-2 text-white transition duration-100 ease-in-out bg-red-500 rounded-lg hover:bg-red-600 disabled:bg-opacity-50 focus:outline-none"
     :class="{
       'opacity-50 cursor-not-allowed': disabled,
     }"
