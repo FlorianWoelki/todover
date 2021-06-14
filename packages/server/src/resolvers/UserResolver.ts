@@ -81,4 +81,11 @@ export class UserResolver {
 
     return prisma.user.delete({ where: { id: payload.userId } });
   }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  logout(@Ctx() { res }: MyContext): boolean {
+    sendRefreshToken(res, '');
+    return true;
+  }
 }
