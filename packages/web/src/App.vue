@@ -34,16 +34,16 @@ import { DefaultApolloClient } from '@vue/apollo-composable';
 import { useStore } from 'vuex';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { apolloClient } from './apollo-client';
-import { Mutation } from './store';
+import { State } from './store';
 
 export default defineComponent({
   setup() {
-    const store = useStore();
+    const store = useStore<State>();
     const loading = ref<boolean>(true);
     provide(DefaultApolloClient, apolloClient(store));
 
     onMounted(async () => {
-      const token = store.state.user.accessToken;
+      const token = localStorage.getItem('token');
 
       if (!token) {
         // TODO: change to env variable
@@ -52,7 +52,7 @@ export default defineComponent({
           credentials: 'include',
         }).then((res) => res.json());
 
-        store.commit(Mutation.SET_ACCESS_TOKEN, accessToken);
+        localStorage.setItem('token', accessToken);
         loading.value = false;
       } else {
         try {
@@ -64,9 +64,9 @@ export default defineComponent({
               credentials: 'include',
             }).then((res) => res.json());
 
-            store.commit(Mutation.SET_ACCESS_TOKEN, accessToken);
-            loading.value = false;
+            localStorage.setItem('token', accessToken);
           }
+          loading.value = false;
         } catch (error) {
           console.log('refresh token expired', error);
         }

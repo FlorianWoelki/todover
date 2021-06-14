@@ -22,25 +22,36 @@
       <p>test@test.de</p>
 
       <div v-if="!dropdownHidden" class="absolute inset-x-0 top-0 p-4 mt-8 bg-gray-900 rounded-md">
-        <p class="cursor-pointer">Logout</p>
+        <p class="cursor-pointer" @click="handleLogout">Logout</p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/runtime-core';
-import { useStore } from 'vuex';
-import { State } from '../store';
+import { useMutation } from '@vue/apollo-composable';
+import { computed, defineComponent, ref } from '@vue/runtime-core';
+import gql from 'graphql-tag';
 
 export default defineComponent({
   setup() {
-    const store = useStore<State>();
-    const loggedIn = ref<boolean>(store.state.user.accessToken !== undefined);
+    const loggedIn = computed(() => localStorage.getItem('token') !== '');
 
     const dropdownHidden = ref<boolean>(true);
 
+    const { mutate: logout } = useMutation(gql`
+      mutation logout {
+        logout
+      }
+    `);
+
+    const handleLogout = (): void => {
+      logout();
+      localStorage.setItem('token', '');
+    };
+
     return {
+      handleLogout,
       loggedIn,
       dropdownHidden,
     };

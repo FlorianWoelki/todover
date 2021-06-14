@@ -108,7 +108,7 @@ export default defineComponent({
       login({ email: email.value, password: password.value })
         .then((result) => {
           if (result.data) {
-            store.commit(Mutation.SET_ACCESS_TOKEN, result.data.login.accessToken);
+            localStorage.setItem('token', result.data.login.accessToken);
             router.push('/');
           }
         })

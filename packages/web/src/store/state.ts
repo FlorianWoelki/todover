@@ -19,20 +19,12 @@ export interface Todo {
   description?: string;
 }
 
-interface User {
-  accessToken?: string;
-}
-
 export interface State {
-  user: User;
   todos: Todo[];
   lists: List[];
 }
 
 export const state: State = {
-  user: {
-    accessToken: undefined,
-  },
   todos: [
     {
       id: 'weekly_todo_item',
