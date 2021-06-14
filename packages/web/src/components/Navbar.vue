@@ -4,19 +4,46 @@
       <h1 class="text-xl font-bold">todover</h1>
       <searchbar />
     </div>
-    <div class="flex items-center space-x-4">
-      <button type="button" class="rounded px-4 py-2 bg-gray-500 hover:bg-gray-600">
+    <div v-if="!loggedIn" class="flex items-center space-x-4">
+      <router-link to="/register" class="px-4 py-2 bg-gray-500 rounded hover:bg-gray-600">
         Register
-      </button>
-      <button type="button" class="rounded px-4 py-2 bg-transparent hover:bg-gray-800">
+      </router-link>
+      <router-link to="/login" class="px-4 py-2 bg-transparent rounded hover:bg-gray-800">
         Sign in
-      </button>
+      </router-link>
+    </div>
+    <div
+      v-else
+      class="relative px-4 py-2 text-sm bg-transparent rounded cursor-default hover:bg-gray-800"
+      :class="{ 'bg-gray-800': !dropdownHidden }"
+      @mouseenter="dropdownHidden = false"
+      @mouseleave="dropdownHidden = true"
+    >
+      <p>test@test.de</p>
+
+      <div v-if="!dropdownHidden" class="absolute inset-x-0 top-0 p-4 mt-8 bg-gray-900 rounded-md">
+        <p class="cursor-pointer">Logout</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent, ref } from '@vue/runtime-core';
+import { useStore } from 'vuex';
+import { State } from '../store';
 
-export default defineComponent({});
+export default defineComponent({
+  setup() {
+    const store = useStore<State>();
+    const loggedIn = ref<boolean>(store.state.user.accessToken !== undefined);
+
+    const dropdownHidden = ref<boolean>(true);
+
+    return {
+      loggedIn,
+      dropdownHidden,
+    };
+  },
+});
 </script>
