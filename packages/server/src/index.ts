@@ -5,7 +5,7 @@ import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import cors from 'cors';
+import cors, { CorsOptions } from 'cors';
 import { verify } from 'jsonwebtoken';
 import { MyContext } from './MyContext';
 import { createAccessToken, createRefreshToken } from './auth';
@@ -13,15 +13,15 @@ import { sendRefreshToken } from './sendRefreshToken';
 import { createSchema } from './utils/createSchema';
 
 (async () => {
+  const corsOptions: CorsOptions = {
+    origin: 'http://localhost:3000', // TODO: change to env variables
+    credentials: true,
+    optionsSuccessStatus: 204,
+  };
+
   const prisma = new PrismaClient();
   const app = express();
-  app.use(
-    cors({
-      origin: 'http://localhost:3000', // TODO: change to env variables
-      credentials: true,
-      optionsSuccessStatus: 204,
-    })
-  );
+  app.use(cors(corsOptions));
   app.use(cookieParser());
 
   app.post('/refresh_token', async (req, res) => {
@@ -57,7 +57,7 @@ import { createSchema } from './utils/createSchema';
     context: ({ req, res }): MyContext => ({ res, req, prisma }),
   });
 
-  apolloServer.applyMiddleware({ app, path: '/graphql' });
+  apolloServer.applyMiddleware({ app, path: '/graphql', cors: corsOptions });
 
   app.listen(4000, () => {
     console.log('server started on port 4000');
