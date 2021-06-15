@@ -19,7 +19,7 @@
       @mouseenter="dropdownHidden = false"
       @mouseleave="dropdownHidden = true"
     >
-      <p>test@test.de</p>
+      <p>{{ me.email }}</p>
 
       <div v-if="!dropdownHidden" class="absolute inset-x-0 top-0 p-4 mt-8 bg-gray-900 rounded-md">
         <p class="cursor-pointer" @click="handleLogout">Logout</p>
@@ -29,12 +29,15 @@
 </template>
 
 <script lang="ts">
-import { useMutation } from '@vue/apollo-composable';
-import { computed, defineComponent, ref } from '@vue/runtime-core';
+import { useMutation, useQuery } from '@vue/apollo-composable';
+import { computed, defineComponent, ref, watch } from '@vue/runtime-core';
 import gql from 'graphql-tag';
+import { useStore } from 'vuex';
+import { Mutation, State } from '../store';
 
 export default defineComponent({
   setup() {
+    const store = useStore<State>();
     const loggedIn = computed(() => localStorage.getItem('token') !== '');
 
     const dropdownHidden = ref<boolean>(true);
@@ -50,7 +53,22 @@ export default defineComponent({
       localStorage.setItem('token', '');
     };
 
+    const { result } = useQuery(gql`
+      query Me {
+        me {
+          email
+        }
+      }
+    `);
+
+    watch(result, (val) => {
+      store.commit(Mutation.SET_ME, { value: val.me });
+    });
+
+    const me = computed(() => store.state.me);
+
     return {
+      me,
       handleLogout,
       loggedIn,
       dropdownHidden,

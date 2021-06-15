@@ -1,5 +1,5 @@
 import { MutationTree } from 'vuex';
-import { List, State, Todo } from './state';
+import { List, Me, State, Todo } from './state';
 
 export enum Mutation {
   ADD_TODO = 'ADD_TODO',
@@ -9,6 +9,7 @@ export enum Mutation {
   CREATE_LIST = 'CREATE_LIST',
   REMOVE_TODO = 'REMOVE_TODO',
   REMOVE_LIST = 'REMOVE_LIST',
+  SET_ME = 'SET_ME',
 }
 
 export type Mutations<S = State> = {
@@ -21,6 +22,7 @@ export type Mutations<S = State> = {
   [Mutation.TOGGLE_TODO_STATUS](state: S, { id }: { id: string }): void;
   [Mutation.REMOVE_TODO](state: S, { id }: { id: string }): void;
   [Mutation.REMOVE_LIST](state: S, { id }: { id: string }): void;
+  [Mutation.SET_ME](state: S, { value }: { value: Me }): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -63,5 +65,8 @@ export const mutations: MutationTree<State> & Mutations = {
     if (index > -1) {
       state.lists.splice(index, 1);
     }
+  },
+  [Mutation.SET_ME](state: State, { value }) {
+    state.me = value;
   },
 };

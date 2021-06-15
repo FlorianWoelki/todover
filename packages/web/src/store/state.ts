@@ -19,12 +19,20 @@ export interface Todo {
   description?: string;
 }
 
+export interface Me {
+  email?: string;
+}
+
 export interface State {
   todos: Todo[];
   lists: List[];
+  me: Me;
 }
 
 export const state: State = {
+  me: {
+    email: undefined,
+  },
   todos: [
     {
       id: 'weekly_todo_item',
