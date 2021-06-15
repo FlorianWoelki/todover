@@ -67,6 +67,7 @@ import { isEmailValid } from '../util/validation';
 import { useStore } from 'vuex';
 import { Mutation } from '../store';
 import { useRouter } from 'vue-router';
+import { setAccessToken } from '../accessToken';
 
 export default defineComponent({
   components: {
@@ -108,7 +109,7 @@ export default defineComponent({
       login({ email: email.value, password: password.value })
         .then((result) => {
           if (result.data) {
-            localStorage.setItem('token', result.data.login.accessToken);
+            setAccessToken(result.data.login.accessToken);
             router.push('/');
           }
         })

@@ -35,6 +35,7 @@ import { useStore } from 'vuex';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { apolloClient } from './apollo-client';
 import { State } from './store';
+import { getAccessToken, setAccessToken } from './accessToken';
 
 export default defineComponent({
   setup() {
@@ -43,7 +44,7 @@ export default defineComponent({
     provide(DefaultApolloClient, apolloClient(store));
 
     onMounted(async () => {
-      const token = localStorage.getItem('token');
+      const token = getAccessToken();
 
       if (!token) {
         // TODO: change to env variable
@@ -52,7 +53,7 @@ export default defineComponent({
           credentials: 'include',
         }).then((res) => res.json());
 
-        localStorage.setItem('token', accessToken);
+        setAccessToken(accessToken);
         loading.value = false;
       } else {
         try {
@@ -64,7 +65,7 @@ export default defineComponent({
               credentials: 'include',
             }).then((res) => res.json());
 
-            localStorage.setItem('token', accessToken);
+            setAccessToken(accessToken);
           }
           loading.value = false;
         } catch (error) {

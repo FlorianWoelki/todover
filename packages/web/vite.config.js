@@ -8,7 +8,7 @@ import pkg from './package.json';
 export default defineConfig({
   plugins: [Vue(), ViteComponents(), svgLoader()],
   optimizeDeps: {
-    include: ['@apollo/client/core'],
+    include: ['@apollo/client/core', '@apollo/client/link/context'],
     exclude: ['@apollo/client'],
   },
   resolve: {

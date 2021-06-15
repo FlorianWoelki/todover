@@ -22,7 +22,7 @@ export type Mutations<S = State> = {
   [Mutation.TOGGLE_TODO_STATUS](state: S, { id }: { id: string }): void;
   [Mutation.REMOVE_TODO](state: S, { id }: { id: string }): void;
   [Mutation.REMOVE_LIST](state: S, { id }: { id: string }): void;
-  [Mutation.SET_ME](state: S, { value }: { value: Me }): void;
+  [Mutation.SET_ME](state: S, { value }: { value: Me | undefined }): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -66,7 +66,7 @@ export const mutations: MutationTree<State> & Mutations = {
       state.lists.splice(index, 1);
     }
   },
-  [Mutation.SET_ME](state: State, { value }) {
-    state.me = value;
+  [Mutation.SET_ME](state: State, value) {
+    state.me = value?.value ?? undefined;
   },
 };

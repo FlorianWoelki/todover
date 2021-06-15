@@ -1,20 +1,28 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
+import { setContext } from '@apollo/client/link/context';
 import { Store } from 'vuex';
+import { getAccessToken } from './accessToken';
 import { State } from './store';
 
-const httpLink = (store: Store<State>) =>
-  createHttpLink({
-    uri: import.meta.env.VITE_GRAPHQL_API as string,
-    credentials: 'include',
+const httpLink = createHttpLink({
+  uri: import.meta.env.VITE_GRAPHQL_API as string,
+  credentials: 'include',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = getAccessToken() ?? '';
+  return {
     headers: {
-      authorization: localStorage.getItem('token') ? `bearer ${localStorage.getItem('token')}` : '',
+      ...headers,
+      authorization: token ? `bearer ${token}` : '',
     },
-  });
+  };
+});
 
 const cache = new InMemoryCache();
 
 export const apolloClient = (store: Store<State>) =>
   new ApolloClient({
-    link: httpLink(store),
+    link: authLink.concat(httpLink),
     cache,
   });

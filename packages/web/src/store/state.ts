@@ -26,7 +26,7 @@ export interface Me {
 export interface State {
   todos: Todo[];
   lists: List[];
-  me: Me;
+  me?: Me;
 }
 
 export const state: State = {
