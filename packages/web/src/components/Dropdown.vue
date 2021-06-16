@@ -1,0 +1,51 @@
+<template>
+  <transition
+    enter-active-class="transition duration-100 ease-out"
+    enter-from-class="transform scale-95 opacity-0"
+    enter-to-class="transform scale-100 opacity-100"
+    leave-active-class="transition duration-75 ease-in"
+    leave-from-class="transform scale-100 opacity-100"
+    leave-to-class="transform scale-95 opacity-0"
+  >
+    <div
+      v-if="!dropdownHidden"
+      class="absolute inset-x-0 top-0 z-50 py-2 mt-10 ml-auto bg-gray-800 rounded-md shadow-lg w-52"
+    >
+      <slot :itemClasses="itemClasses"></slot>
+    </div>
+  </transition>
+
+  <div
+    v-if="!dropdownHidden"
+    class="fixed inset-0 z-40 cursor-default"
+    @click="emitCloseDropdownEvent"
+  ></div>
+</template>
+
+<script lang="ts">
+import { computed, defineComponent } from 'vue';
+
+export default defineComponent({
+  emits: ['close'],
+  props: {
+    dropdownHidden: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(_, { emit }) {
+    const emitCloseDropdownEvent = (): void => {
+      emit('close');
+    };
+
+    const itemClasses = computed(
+      () => 'px-4 py-2 transition duration-100 ease-in-out cursor-pointer hover:bg-gray-900'
+    );
+
+    return {
+      emitCloseDropdownEvent,
+      itemClasses,
+    };
+  },
+});
+</script>
