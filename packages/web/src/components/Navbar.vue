@@ -19,12 +19,21 @@
     >
       <p class="z-50" @click="dropdownHidden = !dropdownHidden">{{ user.me.email }}</p>
 
-      <div
-        v-if="!dropdownHidden"
-        class="absolute inset-x-0 top-0 z-50 p-4 mt-10 ml-auto bg-gray-800 rounded-md shadow-lg w-52"
+      <transition
+        enter-active-class="transition duration-100 ease-out"
+        enter-from-class="transform scale-95 opacity-0"
+        enter-to-class="transform scale-100 opacity-100"
+        leave-active-class="transition duration-75 ease-in"
+        leave-from-class="transform scale-100 opacity-100"
+        leave-to-class="transform scale-95 opacity-0"
       >
-        <p class="cursor-pointer" @click="handleLogout">Logout</p>
-      </div>
+        <div
+          v-if="!dropdownHidden"
+          class="absolute inset-x-0 top-0 z-50 p-4 mt-10 ml-auto bg-gray-800 rounded-md shadow-lg w-52"
+        >
+          <p class="cursor-pointer" @click="handleLogout">Logout</p>
+        </div>
+      </transition>
 
       <div
         v-if="!dropdownHidden"
