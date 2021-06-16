@@ -29,9 +29,14 @@
       >
         <div
           v-if="!dropdownHidden"
-          class="absolute inset-x-0 top-0 z-50 p-4 mt-10 ml-auto bg-gray-800 rounded-md shadow-lg w-52"
+          class="absolute inset-x-0 top-0 z-50 py-2 mt-10 ml-auto bg-gray-800 rounded-md shadow-lg w-52"
         >
-          <p class="cursor-pointer" @click="handleLogout">Logout</p>
+          <p
+            class="px-4 py-2 transition duration-100 ease-in-out cursor-pointer hover:bg-gray-900"
+            @click="handleLogout"
+          >
+            Logout
+          </p>
         </div>
       </transition>
 
