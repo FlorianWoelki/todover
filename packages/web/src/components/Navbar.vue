@@ -14,16 +14,23 @@
     </div>
     <div
       v-else
-      class="relative px-4 py-2 text-sm bg-transparent rounded cursor-default hover:bg-gray-800"
+      class="relative px-4 py-2 text-sm transition duration-100 ease-in-out bg-transparent rounded cursor-pointer hover:bg-gray-800"
       :class="{ 'bg-gray-800': !dropdownHidden }"
-      @mouseenter="dropdownHidden = false"
-      @mouseleave="dropdownHidden = true"
     >
-      <p>{{ user.me.email }}</p>
+      <p class="z-50" @click="dropdownHidden = !dropdownHidden">{{ user.me.email }}</p>
 
-      <div v-if="!dropdownHidden" class="absolute inset-x-0 top-0 p-4 mt-8 bg-gray-900 rounded-md">
+      <div
+        v-if="!dropdownHidden"
+        class="absolute inset-x-0 top-0 z-50 p-4 mt-10 ml-auto bg-gray-800 rounded-md shadow-lg w-52"
+      >
         <p class="cursor-pointer" @click="handleLogout">Logout</p>
       </div>
+
+      <div
+        v-if="!dropdownHidden"
+        class="fixed inset-0 z-40 cursor-default"
+        @click="dropdownHidden = true"
+      ></div>
     </div>
   </div>
 </template>
