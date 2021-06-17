@@ -26,6 +26,7 @@
 import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
+  name: 'Dropdown',
   emits: ['close'],
   props: {
     dropdownHidden: {

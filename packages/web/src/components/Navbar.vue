@@ -33,10 +33,8 @@ import gql from 'graphql-tag';
 import { useStore } from 'vuex';
 import { getAccessToken, setAccessToken } from '../accessToken';
 import { Mutation, State } from '../store';
-import Dropdown from './Dropdown.vue';
 
 export default defineComponent({
-  components: { Dropdown },
   setup() {
     const store = useStore<State>();
     const loggedIn = ref<boolean>(getAccessToken() !== '');
