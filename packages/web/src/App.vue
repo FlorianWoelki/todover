@@ -1,5 +1,8 @@
 <template>
-  <div v-if="loading" class="flex flex-col items-center justify-center w-full h-full space-y-4">
+  <div
+    v-if="$store.state.loading"
+    class="flex flex-col items-center justify-center w-full h-full space-y-4"
+  >
     <svg
       class="w-16 h-16 text-red-600 animate-spin"
       xmlns="http://www.w3.org/2000/svg"
@@ -29,54 +32,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, provide, ref } from '@vue/runtime-core';
+import { defineComponent, provide } from '@vue/runtime-core';
 import { DefaultApolloClient } from '@vue/apollo-composable';
 import { useStore } from 'vuex';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { apolloClient } from './apollo-client';
 import { State } from './store';
-import { getAccessToken, setAccessToken } from './accessToken';
 
 export default defineComponent({
   setup() {
     const store = useStore<State>();
-    const loading = ref<boolean>(true);
     provide(DefaultApolloClient, apolloClient(store));
-
-    onMounted(async () => {
-      const token = getAccessToken();
-
-      if (!token) {
-        // TODO: change to env variable
-        const { accessToken } = await fetch('http://localhost:4000/refresh_token', {
-          method: 'POST',
-          credentials: 'include',
-        }).then((res) => res.json());
-
-        setAccessToken(accessToken);
-        loading.value = false;
-      } else {
-        try {
-          const { exp } = jwtDecode<JwtPayload>(token);
-          if (exp && Date.now() >= exp * 1000) {
-            // TODO: change to env variable
-            const { accessToken } = await fetch('http://localhost:4000/refresh_token', {
-              method: 'POST',
-              credentials: 'include',
-            }).then((res) => res.json());
-
-            setAccessToken(accessToken);
-          }
-          loading.value = false;
-        } catch (error) {
-          console.log('refresh token expired', error);
-        }
-      }
-    });
-
-    return {
-      loading,
-    };
   },
 });
 </script>

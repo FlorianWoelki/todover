@@ -26,10 +26,12 @@ export interface Me {
 export interface State {
   todos: Todo[];
   lists: List[];
+  loading: boolean;
   me?: Me;
 }
 
 export const state: State = {
+  loading: true,
   me: {
     email: undefined,
   },
