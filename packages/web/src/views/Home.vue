@@ -181,6 +181,8 @@ import RefreshIcon from '../assets/icons/refresh.svg';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
 import { Todo } from '../store/state';
+import { useQuery, useResult } from '@vue/apollo-composable';
+import gql from 'graphql-tag';
 
 export default defineComponent({
   components: {
@@ -395,7 +397,26 @@ export default defineComponent({
       );
     };
 
+    const { result } = useQuery(gql`
+      query lists {
+        lists {
+          id
+          name
+          todos {
+            listId
+            name
+          }
+        }
+      }
+    `);
+
+    const test = useResult(result, null, (data) => {
+      console.log('lists', data);
+      return data;
+    });
+
     return {
+      test,
       weeklyTodos,
       dailyTodos,
       selectedTodoItem,
