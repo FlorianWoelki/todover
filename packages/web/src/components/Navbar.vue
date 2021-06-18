@@ -16,10 +16,15 @@
       v-else
       class="relative px-4 py-2 text-sm transition duration-100 ease-in-out bg-transparent rounded cursor-pointer hover:bg-gray-800"
       :class="{ 'bg-gray-800': !dropdownHidden }"
+      @click="dropdownHidden = !dropdownHidden"
     >
-      <p class="z-50" @click="dropdownHidden = !dropdownHidden">{{ user.me.email }}</p>
+      <p class="z-50">{{ user.me.email }}</p>
 
-      <dropdown #="{ itemClasses }" :dropdownHidden="dropdownHidden" @close="dropdownHidden = true">
+      <dropdown
+        #="{ itemClasses }"
+        :dropdownHidden="dropdownHidden"
+        @close.stop="dropdownHidden = true"
+      >
         <p :class="itemClasses" @click="handleLogout">Logout</p>
       </dropdown>
     </div>

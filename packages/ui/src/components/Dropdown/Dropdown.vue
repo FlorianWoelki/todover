@@ -35,8 +35,8 @@ export default defineComponent({
     },
   },
   setup(_, { emit }) {
-    const emitCloseDropdownEvent = (): void => {
-      emit('close');
+    const emitCloseDropdownEvent = (event: MouseEvent): void => {
+      emit('close', event);
     };
 
     const itemClasses = computed(
