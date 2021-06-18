@@ -5,6 +5,7 @@
     :value="modelValue"
     class="w-full py-1 placeholder-gray-300 bg-transparent focus:outline-none"
     @keydown.enter="blurInputField"
+    @blur="blurInputField"
     @input="updateModelValue"
   />
 </template>
