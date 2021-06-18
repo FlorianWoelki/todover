@@ -14,23 +14,35 @@
           <div class="flex items-center space-x-6">
             <div class="space-x-2">
               <input
+                ref="dailyRepetitionEl"
                 type="checkbox"
                 value="daily"
                 :checked="todoItem.repetition === 'daily'"
-                @change="handleCheckboxChange($event, 'daily')"
+                @change="propagateRepetitionChange('daily')"
                 class="text-red-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0"
               />
-              <label class="text-sm text-gray-500">Daily</label>
+              <label
+                class="text-sm text-gray-500"
+                @click="propagateRepetitionChange('daily', true)"
+              >
+                Daily
+              </label>
             </div>
             <div class="space-x-2">
               <input
+                ref="weeklyRepetitionEl"
                 type="checkbox"
                 value="weekly"
                 :checked="todoItem.repetition === 'weekly'"
-                @change="handleCheckboxChange($event, 'weekly')"
+                @change="propagateRepetitionChange('weekly')"
                 class="text-red-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0"
               />
-              <label class="text-sm text-gray-500">Weekly</label>
+              <label
+                class="text-sm text-gray-500"
+                @click="propagateRepetitionChange('weekly', true)"
+              >
+                Weekly
+              </label>
             </div>
           </div>
         </div>
@@ -49,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/runtime-core';
+import { defineComponent, PropType, ref } from '@vue/runtime-core';
 import { Todo, TodoRepetition } from '../store/state';
 import XIcon from '@/assets/icons/x.svg';
 
@@ -65,21 +77,31 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const dailyRepetitionEl = ref<HTMLInputElement | null>(null);
+    const weeklyRepetitionEl = ref<HTMLInputElement | null>(null);
+
     const hideButton = (): void => {
       emit('hideButton');
     };
 
-    const handleCheckboxChange = (event: InputEvent, type: TodoRepetition) => {
-      const target = event.target as HTMLInputElement;
+    const propagateRepetitionChange = (type: TodoRepetition, invert = false): void => {
+      if (!dailyRepetitionEl.value || !weeklyRepetitionEl.value) {
+        return;
+      }
+
       if (type === 'weekly') {
-        props.todoItem.repetition = target.checked ? 'weekly' : undefined;
+        props.todoItem.repetition =
+          weeklyRepetitionEl.value.checked !== invert ? 'weekly' : undefined;
       } else if (type === 'daily') {
-        props.todoItem.repetition = target.checked ? 'daily' : undefined;
+        props.todoItem.repetition =
+          dailyRepetitionEl.value.checked !== invert ? 'daily' : undefined;
       }
     };
 
     return {
-      handleCheckboxChange,
+      weeklyRepetitionEl,
+      dailyRepetitionEl,
+      propagateRepetitionChange,
       hideButton,
     };
   },
