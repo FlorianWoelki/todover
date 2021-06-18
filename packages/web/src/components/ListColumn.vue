@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!hide"
-    class="relative space-y-8 border-l border-r border-gray-100"
+    class="relative space-y-8 overflow-y-auto border-l border-r border-gray-100"
     :class="
       isCustomTitle
         ? 'text-gray-600'
