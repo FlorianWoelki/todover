@@ -34,10 +34,11 @@
 <script lang="ts">
 import { useMutation, useQuery, useResult } from '@vue/apollo-composable';
 import { defineComponent, ref } from '@vue/runtime-core';
-import gql from 'graphql-tag';
 import { useStore } from 'vuex';
 import { getAccessToken, setAccessToken } from '../accessToken';
+import mutations from '@/graphql/mutations';
 import { Mutation, State } from '../store';
+import queries from '../graphql/queries';
 
 export default defineComponent({
   setup() {
@@ -46,11 +47,7 @@ export default defineComponent({
 
     const dropdownHidden = ref<boolean>(true);
 
-    const { mutate: logout } = useMutation(gql`
-      mutation logout {
-        logout
-      }
-    `);
+    const { mutate: logout } = useMutation(mutations.logout);
 
     const handleLogout = (): void => {
       logout().then(() => {
@@ -60,15 +57,7 @@ export default defineComponent({
       });
     };
 
-    const { result } = useQuery(
-      gql`
-        query Me {
-          me {
-            email
-          }
-        }
-      `
-    );
+    const { result } = useQuery(queries.me);
 
     const user = useResult(result, null, (data) => {
       store.commit(Mutation.SET_ME, { value: data.me });

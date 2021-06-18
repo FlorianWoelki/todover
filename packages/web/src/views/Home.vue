@@ -182,7 +182,7 @@ import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
 import { Todo } from '../store/state';
 import { useQuery, useResult } from '@vue/apollo-composable';
-import gql from 'graphql-tag';
+import queries from '@/graphql/queries';
 
 export default defineComponent({
   components: {
@@ -397,18 +397,7 @@ export default defineComponent({
       );
     };
 
-    const { result } = useQuery(gql`
-      query lists {
-        lists {
-          id
-          name
-          todos {
-            listId
-            name
-          }
-        }
-      }
-    `);
+    const { result } = useQuery(queries.lists);
 
     const test = useResult(result, null, (data) => {
       console.log('lists', data);

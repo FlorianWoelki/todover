@@ -60,21 +60,18 @@
 
 <script lang="ts">
 import { useMutation } from '@vue/apollo-composable';
-import gql from 'graphql-tag';
 import { computed, defineComponent, ref } from 'vue';
 import Logo from '@/assets/logo.svg';
 import { isEmailValid } from '../util/validation';
-import { useStore } from 'vuex';
-import { Mutation } from '../store';
 import { useRouter } from 'vue-router';
 import { setAccessToken } from '../accessToken';
+import mutations from '@/graphql/mutations';
 
 export default defineComponent({
   components: {
     Logo,
   },
   setup() {
-    const store = useStore();
     const router = useRouter();
 
     const email = ref<string>('');
@@ -82,13 +79,7 @@ export default defineComponent({
     const showError = ref<boolean>(false);
     const loginLoading = ref<boolean>(false);
 
-    const { mutate: login } = useMutation(gql`
-      mutation login($email: String!, $password: String!) {
-        login(email: $email, password: $password) {
-          accessToken
-        }
-      }
-    `);
+    const { mutate: login } = useMutation(mutations.login);
 
     const loginButtonDisabled = computed((): boolean => {
       return (
