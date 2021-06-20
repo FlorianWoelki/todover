@@ -11,6 +11,7 @@ export enum Mutation {
   REMOVE_LIST = 'REMOVE_LIST',
   SET_ME = 'SET_ME',
   SET_LOADING = 'SET_LOADING',
+  SET_LISTS = 'SET_LISTS',
 }
 
 export type Mutations<S = State> = {
@@ -25,6 +26,7 @@ export type Mutations<S = State> = {
   [Mutation.REMOVE_LIST](state: S, { id }: { id: string }): void;
   [Mutation.SET_ME](state: S, { value }: { value: Me | undefined }): void;
   [Mutation.SET_LOADING](state: S, value: boolean): void;
+  [Mutation.SET_LISTS](state: S, value: List[]): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -73,5 +75,8 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [Mutation.SET_LOADING](state: State, value) {
     state.loading = value;
+  },
+  [Mutation.SET_LISTS](state: State, value) {
+    state.lists = value;
   },
 };

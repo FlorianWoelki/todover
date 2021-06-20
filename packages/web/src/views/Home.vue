@@ -168,7 +168,7 @@
 
 <script lang="ts">
 import '@/assets/styles/transitions.css';
-import { computed, defineComponent, ref } from '@vue/runtime-core';
+import { computed, defineComponent, onMounted, ref, watch } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 import ChevronLeftIcon from '../assets/icons/chevron-left.svg';
 import ChevronDoubleLeftIcon from '../assets/icons/chevron-double-left.svg';
@@ -397,15 +397,13 @@ export default defineComponent({
       );
     };
 
-    const { result } = useQuery(queries.lists);
+    const { result: fetchedLists } = useQuery(queries.lists);
 
-    const test = useResult(result, null, (data) => {
-      console.log('lists', data);
-      return data;
+    watch(fetchedLists, () => {
+      store.commit(Mutation.SET_LISTS, fetchedLists.value.lists);
     });
 
     return {
-      test,
       weeklyTodos,
       dailyTodos,
       selectedTodoItem,
