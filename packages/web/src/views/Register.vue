@@ -41,15 +41,22 @@
 import { computed, defineComponent, ref } from 'vue';
 import Logo from '@/assets/logo.svg';
 import { isEmailValid } from '../util/validation';
+import { useRouter } from 'vue-router';
+import { useMutation } from '@vue/apollo-composable';
+import mutations from '../graphql/mutations';
 
 export default defineComponent({
   components: {
     Logo,
   },
   setup() {
+    const router = useRouter();
+
     const email = ref<string>('');
     const password = ref<string>('');
     const repeatPassword = ref<string>('');
+    const showError = ref<boolean>(false);
+    const signupLoading = ref<boolean>(false);
 
     const signupButtonDisabled = computed((): boolean => {
       return (
@@ -60,13 +67,33 @@ export default defineComponent({
       );
     });
 
-    const handleSignUp = (): void => {};
+    const { mutate: register } = useMutation(mutations.register);
+
+    const handleSignUp = (): void => {
+      if (signupButtonDisabled.value) {
+        return;
+      }
+
+      signupLoading.value = true;
+
+      register({ email: email.value, password: password.value })
+        .then((result) => {
+          if (result.data) {
+            router.push('/login');
+          }
+        })
+        .catch(() => {
+          signupLoading.value = false;
+          showError.value = false;
+        });
+    };
 
     return {
       email,
       password,
       repeatPassword,
       signupButtonDisabled,
+      showError,
       handleSignUp,
     };
   },
