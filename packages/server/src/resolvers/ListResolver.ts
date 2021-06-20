@@ -66,6 +66,6 @@ export class ListResolver {
       throw new AuthenticationError('You are not logged in');
     }
 
-    return prisma.todo.create({ data });
+    return prisma.todo.create({ data: { ...data, userId: payload.userId } });
   }
 }
