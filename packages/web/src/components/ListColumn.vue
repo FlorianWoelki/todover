@@ -52,7 +52,7 @@
 
       <div
         v-if="!isCustomTitle"
-        class="absolute bottom-0 right-0 mr-8 font-bold tracking-tighter text-gray-100 text-7xl"
+        class="absolute bottom-0 right-0 mr-8 font-bold tracking-tighter text-gray-100 pointer-events-none text-7xl"
       >
         {{ printedDay }}
       </div>
