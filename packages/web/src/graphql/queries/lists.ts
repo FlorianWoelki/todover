@@ -5,10 +5,6 @@ export const lists = gql`
     lists {
       id
       name
-      todos {
-        listId
-        name
-      }
     }
   }
 `;

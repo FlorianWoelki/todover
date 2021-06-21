@@ -16,6 +16,7 @@ export enum Mutation {
 }
 
 export type Mutations<S = State> = {
+  [Mutation.CREATE_LIST](state: S, value: List): void;
   [Mutation.ADD_TODO](state: S, { value }: { value: Todo }): void;
   [Mutation.UPDATE_LIST_TITLE](
     state: S,
@@ -55,8 +56,8 @@ export const mutations: MutationTree<State> & Mutations = {
       filteredTodosWithId[0].done = !filteredTodosWithId[0].done;
     }
   },
-  [Mutation.CREATE_LIST](state: State) {
-    state.lists.push({ id: `someid${state.lists.length + 1}`, name: 'Unnamed' } as List);
+  [Mutation.CREATE_LIST](state: State, value) {
+    state.lists = state.lists.concat(value);
   },
   [Mutation.REMOVE_TODO](state: State, { id }) {
     const index = state.todos.findIndex((todo) => todo.id === id);

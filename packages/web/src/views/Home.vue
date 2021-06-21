@@ -181,8 +181,9 @@ import RefreshIcon from '../assets/icons/refresh.svg';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
 import { Todo } from '../store/state';
-import { useQuery, useResult } from '@vue/apollo-composable';
+import { useMutation, useQuery, useResult } from '@vue/apollo-composable';
 import queries from '@/graphql/queries';
+import mutations from '../graphql/mutations';
 
 export default defineComponent({
   components: {
@@ -361,8 +362,13 @@ export default defineComponent({
       });
     };
 
+    const { mutate: createListMutation } = useMutation(mutations.createList);
     const createNewList = (): void => {
-      store.commit(Mutation.CREATE_LIST);
+      createListMutation({ name: 'Unnamed' }).then((result) => {
+        if (result.data) {
+          store.commit(Mutation.CREATE_LIST, result.data.createList);
+        }
+      });
     };
 
     const lists = computed(() => store.getters.mappedLists);
