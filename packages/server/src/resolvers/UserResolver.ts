@@ -41,6 +41,11 @@ export class UserResolver {
     @Arg('email') email: string,
     @Arg('password') password: string
   ): Promise<User> {
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      throw new UserInputError('Specified `email` already exists');
+    }
+
     const hashedPassword = await hash(password, SALT);
 
     const user = prisma.user.create({
