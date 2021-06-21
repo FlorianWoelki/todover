@@ -398,9 +398,13 @@ export default defineComponent({
     };
 
     const { result: fetchedLists } = useQuery(queries.lists);
-
     watch(fetchedLists, () => {
       store.commit(Mutation.SET_LISTS, fetchedLists.value.lists);
+    });
+
+    const { result: fetchedTodos } = useQuery(queries.todos);
+    watch(fetchedTodos, () => {
+      store.commit(Mutation.SET_TODOS, fetchedTodos.value.todos);
     });
 
     return {

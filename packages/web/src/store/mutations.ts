@@ -12,6 +12,7 @@ export enum Mutation {
   SET_ME = 'SET_ME',
   SET_LOADING = 'SET_LOADING',
   SET_LISTS = 'SET_LISTS',
+  SET_TODOS = 'SET_TODOS',
 }
 
 export type Mutations<S = State> = {
@@ -27,6 +28,7 @@ export type Mutations<S = State> = {
   [Mutation.SET_ME](state: S, { value }: { value: Me | undefined }): void;
   [Mutation.SET_LOADING](state: S, value: boolean): void;
   [Mutation.SET_LISTS](state: S, value: List[]): void;
+  [Mutation.SET_TODOS](state: S, value: Todo[]): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -78,5 +80,20 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [Mutation.SET_LISTS](state: State, value) {
     state.lists = value;
+  },
+  [Mutation.SET_TODOS](state: State, value) {
+    const newValue = value.map((todo) => {
+      // need to parse string because date comes in the format of a string from the backend
+      if (todo.date && typeof todo.date === 'string') {
+        const newTodo = {
+          ...todo,
+          date: new Date(todo.date),
+        };
+        return newTodo;
+      }
+
+      return todo;
+    });
+    state.todos = newValue;
   },
 };
