@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center justify-center w-full h-screen -mt-12">
-    <Logo class="w-48 mb-2" />
+    <Logo class="w-40 mb-2" />
     <h1 class="mb-8 text-3xl font-bold tracking-wide text-center text-gray-700">
       Sign in to your account
     </h1>
