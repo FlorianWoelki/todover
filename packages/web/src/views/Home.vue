@@ -302,10 +302,12 @@ export default defineComponent({
       store.commit(Mutation.TOGGLE_TODO_STATUS, { id: todoId });
     };
 
-    const { mutate: updateTodo } = useMutation(mutations.updateTodo);
+    const { mutate: updateTodoMutation } = useMutation(mutations.updateTodo);
+    const { mutate: moveToListMutation } = useMutation(mutations.moveToList);
     const updateListOfTodoItem = (e: any) => {
+      console.log(e);
       if (!isNaN(new Date(e.newListId).getTime())) {
-        updateTodo({
+        updateTodoMutation({
           id: e.todoItem.id,
           data: { date: new Date(e.newListId), listId: null },
         }).then((result) => {
@@ -317,9 +319,16 @@ export default defineComponent({
           }
         });
       } else {
-        store.commit(Mutation.UPDATE_TODO, {
-          id: e.todoItem.id,
-          value: { date: undefined, repetition: undefined, listId: e.newListId },
+        moveToListMutation({
+          todoId: e.todoItem.id,
+          listId: e.newListId,
+        }).then((result) => {
+          if (result.data) {
+            store.commit(Mutation.UPDATE_TODO, {
+              id: e.todoItem.id,
+              value: { date: undefined, repetition: undefined, listId: e.newListId },
+            });
+          }
         });
       }
     };
