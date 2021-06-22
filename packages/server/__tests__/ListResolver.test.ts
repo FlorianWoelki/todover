@@ -58,6 +58,15 @@ const ADD_TODO_TO_LIST = gql`
   }
 `;
 
+const UPDATE_LIST = gql`
+  mutation updateList($id: String!, $data: UpdateListInput!) {
+    updateList(id: $id, data: $data) {
+      id
+      name
+    }
+  }
+`;
+
 beforeAll(async () => {
   server = (await constructTestServer(prisma)).server;
   await createUser(prisma);
@@ -96,6 +105,26 @@ describe('Mutations', () => {
     expect(res.data?.createList.name).toBe('Test List');
     expect(res.data?.createList.todos).toHaveLength(0);
     list = res.data?.createList;
+  });
+
+  it('updateList', async () => {
+    const mutate = createTestClient(server).mutate;
+    const name = 'Updated list title';
+
+    const res = await mutate({
+      mutation: UPDATE_LIST,
+      variables: {
+        id: list.id,
+        data: {
+          name,
+        },
+      },
+    });
+
+    expect(res.errors).toBeUndefined();
+    expect(res.data?.updateList.id).toBe(list.id);
+    expect(res.data?.updateList.name).toBe(name);
+    list.name = res.data?.updateList.name;
   });
 
   it('deleteList', async () => {
