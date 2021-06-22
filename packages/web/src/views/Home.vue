@@ -256,17 +256,31 @@ export default defineComponent({
       });
     };
 
+    const { mutate: addTodoWithDate } = useMutation(mutations.addTodoWithDate);
     const insertNewTodo = (value: string, date: Date, listId?: string): void => {
       newTodoItemInputField.value = '';
 
-      store.commit(Mutation.ADD_TODO, {
-        value: {
-          id: 'someunqiueid' + value,
-          name: value,
-          date: !listId ? date : undefined,
-          listId: listId,
-        } as Todo,
-      });
+      if (!listId) {
+        addTodoWithDate({ data: { name: value, date } }).then((result) => {
+          if (result.data) {
+            store.commit(Mutation.ADD_TODO, {
+              value: {
+                id: result.data.addTodoWithDate.id,
+                name: value,
+                date,
+              } as Todo,
+            });
+          }
+        });
+      } else {
+        store.commit(Mutation.ADD_TODO, {
+          value: {
+            id: 'someunqiueid' + value,
+            name: value,
+            listId: listId,
+          } as Todo,
+        });
+      }
     };
 
     const days = computed((): any[] => {
