@@ -3,6 +3,7 @@ import { register } from './register';
 import { logout } from './logout';
 import { createList } from './createList';
 import { deleteList } from './deleteList';
+import { updateList } from './updateList';
 
 export default {
   login,
@@ -10,4 +11,5 @@ export default {
   register,
   createList,
   deleteList,
+  updateList,
 };

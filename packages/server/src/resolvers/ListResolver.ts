@@ -15,6 +15,7 @@ import { MyContext } from '../MyContext';
 import { Todo } from '../entities/Todo';
 import { AuthenticationError } from 'apollo-server-errors';
 import { AddTodoToListInput } from './input/AddTodoToListInput';
+import { UpdateListInput } from './input/UpdateListInput';
 
 @Resolver(() => List)
 export class ListResolver {
@@ -61,11 +62,28 @@ export class ListResolver {
 
   @Mutation(() => Todo)
   @UseMiddleware(isAuth)
-  addTodoToList(@Ctx() { prisma, payload }: MyContext, @Arg('data') data: AddTodoToListInput) {
+  addTodoToList(
+    @Ctx() { prisma, payload }: MyContext,
+    @Arg('data') data: AddTodoToListInput
+  ): Promise<PrismaTodo> {
     if (!payload) {
       throw new AuthenticationError('You are not logged in');
     }
 
     return prisma.todo.create({ data: { ...data, userId: payload.userId } });
+  }
+
+  @Mutation(() => List)
+  @UseMiddleware(isAuth)
+  updateList(
+    @Ctx() { prisma, payload }: MyContext,
+    @Arg('id') id: string,
+    @Arg('data') data: UpdateListInput
+  ): Promise<PrismaList> {
+    if (!payload) {
+      throw new AuthenticationError('You are not logged in');
+    }
+
+    return prisma.list.update({ where: { id }, data });
   }
 }

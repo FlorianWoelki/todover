@@ -184,6 +184,7 @@ import { Todo } from '../store/state';
 import { useMutation, useQuery, useResult } from '@vue/apollo-composable';
 import queries from '@/graphql/queries';
 import mutations from '../graphql/mutations';
+import { updateList } from '../graphql/mutations/updateList';
 
 export default defineComponent({
   components: {
@@ -355,10 +356,15 @@ export default defineComponent({
       );
     };
 
+    const { mutate: updateListMutation } = useMutation(mutations.updateList);
     const updateListTitle = (newValue: string, listId: string): void => {
-      store.commit(Mutation.UPDATE_LIST_TITLE, {
-        newValue,
-        listId,
+      updateListMutation({ id: listId, data: { name: newValue } }).then((result) => {
+        if (result.data) {
+          store.commit(Mutation.UPDATE_LIST_TITLE, {
+            newValue,
+            listId,
+          });
+        }
       });
     };
 
