@@ -7,6 +7,7 @@ import { updateList } from './updateList';
 import { updateTodo } from './updateTodo';
 import { moveToList } from './moveToList';
 import { addTodoWithDate } from './addTodoWithDate';
+import { addTodoToList } from './addTodoToList';
 
 export default {
   login,
@@ -18,4 +19,5 @@ export default {
   updateTodo,
   moveToList,
   addTodoWithDate,
+  addTodoToList,
 };
