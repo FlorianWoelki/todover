@@ -302,11 +302,19 @@ export default defineComponent({
       store.commit(Mutation.TOGGLE_TODO_STATUS, { id: todoId });
     };
 
+    const { mutate: updateTodo } = useMutation(mutations.updateTodo);
     const updateListOfTodoItem = (e: any) => {
       if (!isNaN(new Date(e.newListId).getTime())) {
-        store.commit(Mutation.UPDATE_TODO, {
+        updateTodo({
           id: e.todoItem.id,
-          value: { date: new Date(e.newListId), listId: undefined },
+          data: { date: new Date(e.newListId), listId: null },
+        }).then((result) => {
+          if (result.data) {
+            store.commit(Mutation.UPDATE_TODO, {
+              id: e.todoItem.id,
+              value: { date: new Date(e.newListId), listId: undefined },
+            });
+          }
         });
       } else {
         store.commit(Mutation.UPDATE_TODO, {
