@@ -377,8 +377,13 @@ export default defineComponent({
       store.commit(Mutation.REMOVE_TODO, { id });
     };
 
+    const { mutate: deleteListMutation } = useMutation(mutations.deleteList);
     const removeList = (id: string): void => {
-      store.commit(Mutation.REMOVE_LIST, { id });
+      deleteListMutation({ id }).then((result) => {
+        if (result.data) {
+          store.commit(Mutation.REMOVE_LIST, { id });
+        }
+      });
     };
 
     const dailyTodos = (day: string): Todo[] => {

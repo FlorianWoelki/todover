@@ -70,6 +70,7 @@ export const mutations: MutationTree<State> & Mutations = {
     const notInListTodos = state.todos.filter((todo) => todo.listId !== id);
     state.todos = notInListTodos;
     if (index > -1) {
+      state.lists = [...state.lists];
       state.lists.splice(index, 1);
     }
   },
