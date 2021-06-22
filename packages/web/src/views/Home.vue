@@ -181,10 +181,9 @@ import RefreshIcon from '../assets/icons/refresh.svg';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
 import { Todo } from '../store/state';
-import { useMutation, useQuery, useResult } from '@vue/apollo-composable';
+import { useMutation, useQuery } from '@vue/apollo-composable';
 import queries from '@/graphql/queries';
 import mutations from '../graphql/mutations';
-import { updateList } from '../graphql/mutations/updateList';
 
 export default defineComponent({
   components: {
@@ -324,7 +323,6 @@ export default defineComponent({
     const { mutate: updateTodoMutation } = useMutation(mutations.updateTodo);
     const { mutate: moveToListMutation } = useMutation(mutations.moveToList);
     const updateListOfTodoItem = (e: any) => {
-      console.log(e);
       if (!isNaN(new Date(e.newListId).getTime())) {
         updateTodoMutation({
           id: e.todoItem.id,
