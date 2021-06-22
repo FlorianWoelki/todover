@@ -75,6 +75,9 @@ export class TodoResolver {
       throw new AuthenticationError('You are not logged in');
     }
 
-    return prisma.todo.update({ where: { id: todoId }, data: { listId, date: null } });
+    return prisma.todo.update({
+      where: { id: todoId },
+      data: { listId, date: null, repetition: null },
+    });
   }
 }
