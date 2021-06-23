@@ -327,25 +327,19 @@ export default defineComponent({
         updateTodoMutation({
           id: e.todoItem.id,
           data: { date: new Date(e.newListId), listId: null },
-        }).then((result) => {
-          if (result.data) {
-            store.commit(Mutation.UPDATE_TODO, {
-              id: e.todoItem.id,
-              value: { date: new Date(e.newListId), listId: undefined },
-            });
-          }
+        });
+        store.commit(Mutation.UPDATE_TODO, {
+          id: e.todoItem.id,
+          value: { date: new Date(e.newListId), listId: undefined },
         });
       } else {
         moveToListMutation({
           todoId: e.todoItem.id,
           listId: e.newListId,
-        }).then((result) => {
-          if (result.data) {
-            store.commit(Mutation.UPDATE_TODO, {
-              id: e.todoItem.id,
-              value: { date: undefined, repetition: undefined, listId: e.newListId },
-            });
-          }
+        });
+        store.commit(Mutation.UPDATE_TODO, {
+          id: e.todoItem.id,
+          value: { date: undefined, repetition: undefined, listId: e.newListId },
         });
       }
     };
@@ -392,13 +386,10 @@ export default defineComponent({
 
     const { mutate: updateListMutation } = useMutation(mutations.updateList);
     const updateListTitle = (newValue: string, listId: string): void => {
-      updateListMutation({ id: listId, data: { name: newValue } }).then((result) => {
-        if (result.data) {
-          store.commit(Mutation.UPDATE_LIST_TITLE, {
-            newValue,
-            listId,
-          });
-        }
+      updateListMutation({ id: listId, data: { name: newValue } });
+      store.commit(Mutation.UPDATE_LIST_TITLE, {
+        newValue,
+        listId,
       });
     };
 
@@ -419,11 +410,8 @@ export default defineComponent({
 
     const { mutate: deleteListMutation } = useMutation(mutations.deleteList);
     const removeList = (id: string): void => {
-      deleteListMutation({ id }).then((result) => {
-        if (result.data) {
-          store.commit(Mutation.REMOVE_LIST, { id });
-        }
-      });
+      deleteListMutation({ id });
+      store.commit(Mutation.REMOVE_LIST, { id });
     };
 
     const dailyTodos = (day: string): Todo[] => {
