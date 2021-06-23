@@ -40,6 +40,14 @@ const UPDATE_TODO = gql`
   }
 `;
 
+const REMOVE_TODO = gql`
+  mutation removeTodo($id: String!) {
+    removeTodo(id: $id) {
+      id
+    }
+  }
+`;
+
 const TODOS = gql`
   query todos {
     todos {
@@ -225,6 +233,32 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(description);
     todo.description = description;
+  });
+
+  it('removeTodo', async () => {
+    server = (await constructTestServer(prisma, request)).server;
+    const mutate = createTestClient(server).mutate;
+
+    const date = new Date();
+    const addedTodoResult = await mutate({
+      mutation: ADD_TODO_WITH_DATE,
+      variables: {
+        data: {
+          name: 'Test Todo',
+          date: date.toISOString(),
+        },
+      },
+    });
+
+    const res = await mutate({
+      mutation: REMOVE_TODO,
+      variables: {
+        id: addedTodoResult.data?.addTodoWithDate.id,
+      },
+    });
+
+    expect(res.errors).toBeUndefined();
+    expect(res.data?.removeTodo.id).toBe(addedTodoResult.data?.addTodoWithDate.id);
   });
 });
 
