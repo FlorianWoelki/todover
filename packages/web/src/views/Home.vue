@@ -168,7 +168,7 @@
 
 <script lang="ts">
 import '@/assets/styles/transitions.css';
-import { computed, defineComponent, onMounted, ref, watch } from '@vue/runtime-core';
+import { computed, defineComponent, ref, watch } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 import ChevronLeftIcon from '../assets/icons/chevron-left.svg';
 import ChevronDoubleLeftIcon from '../assets/icons/chevron-double-left.svg';
@@ -207,6 +207,17 @@ export default defineComponent({
     const extraDayIndex = ref(0);
 
     const selectedTodoItem = ref<Todo | null>(null);
+
+    const { mutate: updateTodoMutation } = useMutation(mutations.updateTodo);
+
+    watch(
+      () => selectedTodoItem.value?.repetition,
+      (newValue) => {
+        if (newValue !== undefined) {
+          updateTodoMutation({ id: selectedTodoItem.value?.id, data: { repetition: newValue } });
+        }
+      }
+    );
 
     const setCurrentDate = (date: Date) => {
       currentDate.value = date;
@@ -320,7 +331,6 @@ export default defineComponent({
       store.commit(Mutation.TOGGLE_TODO_STATUS, { id: todoId });
     };
 
-    const { mutate: updateTodoMutation } = useMutation(mutations.updateTodo);
     const { mutate: moveToListMutation } = useMutation(mutations.moveToList);
     const updateListOfTodoItem = (e: any) => {
       if (!isNaN(new Date(e.newListId).getTime())) {

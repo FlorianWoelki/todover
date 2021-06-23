@@ -13,7 +13,7 @@ export interface Todo {
   id: string;
   name: string;
   date?: Date;
-  repetition?: TodoRepetition;
+  repetition: TodoRepetition | null;
   done?: boolean;
   listId?: string;
   description?: string;

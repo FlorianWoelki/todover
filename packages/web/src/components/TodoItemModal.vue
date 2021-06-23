@@ -90,11 +90,9 @@ export default defineComponent({
       }
 
       if (type === 'weekly') {
-        props.todoItem.repetition =
-          weeklyRepetitionEl.value.checked !== invert ? 'weekly' : undefined;
+        props.todoItem.repetition = weeklyRepetitionEl.value.checked !== invert ? 'weekly' : null;
       } else if (type === 'daily') {
-        props.todoItem.repetition =
-          dailyRepetitionEl.value.checked !== invert ? 'daily' : undefined;
+        props.todoItem.repetition = dailyRepetitionEl.value.checked !== invert ? 'daily' : null;
       }
     };
 
