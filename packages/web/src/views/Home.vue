@@ -404,7 +404,9 @@ export default defineComponent({
 
     const lists = computed(() => store.getters.mappedLists);
 
+    const { mutate: deleteTodoMutation } = useMutation(mutations.deleteTodo);
     const removeTodoItem = (id: string): void => {
+      deleteTodoMutation({ id });
       store.commit(Mutation.REMOVE_TODO, { id });
     };
 
