@@ -11,8 +11,8 @@
 
         <div v-if="todoItem.date" class="flex-col items-center mb-4">
           <label class="text-sm text-gray-400">ToDo Repeat?</label>
-          <div class="flex items-center space-x-6">
-            <div class="space-x-2">
+          <div class="flex items-center mt-1 space-x-6">
+            <div class="flex items-center space-x-2">
               <input
                 ref="dailyRepetitionEl"
                 type="checkbox"
@@ -28,7 +28,7 @@
                 Daily
               </label>
             </div>
-            <div class="space-x-2">
+            <div class="flex items-center space-x-2">
               <input
                 ref="weeklyRepetitionEl"
                 type="checkbox"
