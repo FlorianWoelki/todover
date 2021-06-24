@@ -30,7 +30,7 @@
               placeholder="Double click to edit todo"
               @update-item="updateTodoItem(todo.id, { name: $event })"
               @remove-item="removeTodoItem(todo.id)"
-              @click="toggleTodoStatus(todo.id)"
+              @click="toggleTodoStatus(todo.id, todo.done)"
               @open-menu="selectedTodoItem = todo"
             ></todo-item>
             <todo-item
@@ -126,7 +126,7 @@
               :value="todo.name"
               :done="todo.done"
               placeholder="Double click to edit todo"
-              @click="toggleTodoStatus(todo.id)"
+              @click="toggleTodoStatus(todo.id, todo.done)"
               @update-item="updateTodoItem(todo.id, { name: $event })"
               @remove-item="removeTodoItem(todo.id)"
               @open-menu="selectedTodoItem = todo"
@@ -327,8 +327,9 @@ export default defineComponent({
 
     const sizeOfLists = computed((): number => Object.keys(lists.value).length);
 
-    const toggleTodoStatus = (todoId: string): void => {
-      store.commit(Mutation.TOGGLE_TODO_STATUS, { id: todoId });
+    const toggleTodoStatus = (todoId: string, done: boolean): void => {
+      updateTodoMutation({ id: todoId, data: { done: !done } });
+      store.commit(Mutation.SET_TODO_STATUS, { id: todoId, done: !done });
     };
 
     const { mutate: moveToListMutation } = useMutation(mutations.moveToList);
