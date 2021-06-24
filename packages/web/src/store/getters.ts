@@ -18,7 +18,9 @@ export const getters: GetterTree<State, State> & Getters = {
     todos
       .filter((todo) => todo.listId)
       .forEach((todo) => {
-        lists[todo.listId!].push(todo);
+        if (lists[todo.listId!]) {
+          lists[todo.listId!].push(todo);
+        }
       });
 
     return lists;
