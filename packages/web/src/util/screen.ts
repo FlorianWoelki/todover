@@ -6,7 +6,7 @@ const handleResize = () => {
   screenWidth.value = screen.width;
 };
 
-export const isSmallDevice = computed((): boolean => screenWidth.value <= 1024);
+export const isSmallDevice = computed((): boolean => screenWidth.value < 1024);
 
 export const setupEventListener = (): void => {
   onMounted(() => {

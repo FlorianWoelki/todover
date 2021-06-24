@@ -2,7 +2,8 @@
   <div class="flex items-center justify-between px-4 py-2 text-white bg-gray-700 mb-14">
     <div class="flex items-center space-x-4">
       <Logo class="w-28" />
-      <searchbar />
+      <!-- hide for smaller screens until searchbar is implemented -->
+      <searchbar class="hidden md:block" />
     </div>
     <div v-if="!loggedIn || !user" class="flex items-center space-x-4">
       <router-link to="/register" class="px-4 py-2 bg-gray-500 rounded hover:bg-gray-600">
