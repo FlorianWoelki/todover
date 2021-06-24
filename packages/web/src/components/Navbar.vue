@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-between px-4 py-2 text-white bg-gray-700 mb-14">
     <div class="flex items-center space-x-4">
-      <h1 class="text-xl font-bold">todover</h1>
+      <Logo class="w-28" />
       <searchbar />
     </div>
     <div v-if="!loggedIn || !user" class="flex items-center space-x-4">
@@ -39,8 +39,12 @@ import { getAccessToken, setAccessToken } from '../accessToken';
 import mutations from '@/graphql/mutations';
 import { Mutation, State } from '../store';
 import queries from '../graphql/queries';
+import Logo from '@/assets/logo.svg';
 
 export default defineComponent({
+  components: {
+    Logo,
+  },
   setup() {
     const store = useStore<State>();
     const loggedIn = ref<boolean>(getAccessToken() !== '');
