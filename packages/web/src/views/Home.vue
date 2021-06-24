@@ -8,7 +8,7 @@
         <button class="text-red-400 focus:outline-none hover:text-red-500" @click="goWeekBack">
           <chevron-double-left-icon class="w-6 h-6" />
         </button>
-        <cog-icon class="w-6 h-6 text-red-400" />
+        <cog-icon class="w-6 h-6 text-red-200 cursor-not-allowed" />
       </div>
 
       <list-grid :current-date="new Date()" class="w-full h-full">
