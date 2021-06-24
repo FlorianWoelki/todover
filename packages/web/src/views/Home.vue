@@ -30,7 +30,7 @@
               placeholder="Double click to edit todo"
               @update-item="updateTodoItem(todo.id, { name: $event })"
               @remove-item="removeTodoItem(todo.id)"
-              @click="toggleTodoStatus(todo.id, todo.done)"
+              @click="updateTodoItem(todo.id, { done: !todo.done })"
               @open-menu="selectedTodoItem = todo"
             ></todo-item>
             <todo-item
@@ -126,7 +126,7 @@
               :value="todo.name"
               :done="todo.done"
               placeholder="Double click to edit todo"
-              @click="toggleTodoStatus(todo.id, todo.done)"
+              @click="updateTodoItem(todo.id, { done: !todo.done })"
               @update-item="updateTodoItem(todo.id, { name: $event })"
               @remove-item="removeTodoItem(todo.id)"
               @open-menu="selectedTodoItem = todo"
@@ -260,6 +260,7 @@ export default defineComponent({
     };
 
     const updateTodoItem = (todoId: string, value: Partial<Todo>): void => {
+      updateTodoMutation({ id: todoId, data: value });
       store.commit(Mutation.UPDATE_TODO, { id: todoId, value } as {
         id: string;
         value: Todo;
@@ -326,11 +327,6 @@ export default defineComponent({
     };
 
     const sizeOfLists = computed((): number => Object.keys(lists.value).length);
-
-    const toggleTodoStatus = (todoId: string, done: boolean): void => {
-      updateTodoMutation({ id: todoId, data: { done: !done } });
-      store.commit(Mutation.SET_TODO_STATUS, { id: todoId, done: !done });
-    };
 
     const { mutate: moveToListMutation } = useMutation(mutations.moveToList);
     const updateListOfTodoItem = (e: any) => {
@@ -479,7 +475,6 @@ export default defineComponent({
       newTodoItemInputField,
       days,
       lists,
-      toggleTodoStatus,
       isSmallDevice,
       currentListItem,
       goToNextListItem,

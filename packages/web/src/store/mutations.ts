@@ -5,7 +5,6 @@ export enum Mutation {
   ADD_TODO = 'ADD_TODO',
   UPDATE_LIST_TITLE = 'UPDATE_LIST_TITLE',
   UPDATE_TODO = 'UPDATE_TODO',
-  SET_TODO_STATUS = 'SET_TODO_STATUS',
   CREATE_LIST = 'CREATE_LIST',
   REMOVE_TODO = 'REMOVE_TODO',
   REMOVE_LIST = 'REMOVE_LIST',
@@ -23,7 +22,6 @@ export type Mutations<S = State> = {
     { newValue, listId }: { newValue: string; listId: string }
   ): void;
   [Mutation.UPDATE_TODO](state: S, { id, value }: { id: string; value: Partial<Todo> }): void;
-  [Mutation.SET_TODO_STATUS](state: S, { id }: { id: string; done: boolean }): void;
   [Mutation.REMOVE_TODO](state: S, { id }: { id: string }): void;
   [Mutation.REMOVE_LIST](state: S, { id }: { id: string }): void;
   [Mutation.SET_ME](state: S, { value }: { value: Me | undefined }): void;
@@ -48,12 +46,6 @@ export const mutations: MutationTree<State> & Mutations = {
     if (filteredTodosWithId.length === 1) {
       const newTodo = { ...filteredTodosWithId[0], ...value };
       state.todos = [...state.todos.filter((todo) => todo.id !== id), newTodo];
-    }
-  },
-  [Mutation.SET_TODO_STATUS](state: State, { id, done }) {
-    const filteredTodosWithId = state.todos.filter((todo) => todo.id === id);
-    if (filteredTodosWithId.length === 1) {
-      filteredTodosWithId[0].done = done;
     }
   },
   [Mutation.CREATE_LIST](state: State, value) {
