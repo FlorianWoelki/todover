@@ -30,6 +30,89 @@
   "navbar": {
     "registerButton": "Register",
     "loginButton": "Sign in",
-    "logoutButton": "Logout"
+    "logoutButton": "Logout",
+    "search": {
+      "placeholder": "Search ..."
+    }
+  },
+  "days": {
+    "monday": {
+      "name": "Monday",
+      "short": "Mon"
+    },
+    "tuesday": {
+      "name": "Tuesday",
+      "short": "Tue"
+    },
+    "wednesday": {
+      "name": "Wednesday",
+      "short": "Wed"
+    },
+    "thursday": {
+      "name": "Thursday",
+      "short": "Thu"
+    },
+    "friday": {
+      "name": "Friday",
+      "short": "Fri"
+    },
+    "saturday": {
+      "name": "Saturday",
+      "short": "Sat"
+    },
+    "sunday": {
+      "name": "Sunday",
+      "short": "Sun"
+    }
+  },
+  "months": {
+    "january": {
+      "name": "January",
+      "short": "Jan"
+    },
+    "february": {
+      "name": "February",
+      "short": "Feb"
+    },
+    "march": {
+      "name": "March",
+      "short": "Mar"
+    },
+    "april": {
+      "name": "April",
+      "short": "Apr"
+    },
+    "may": {
+      "name": "May",
+      "short": "May"
+    },
+    "june": {
+      "name": "June",
+      "short": "Jun"
+    },
+    "july": {
+      "name": "July",
+      "short": "Jul"
+    },
+    "august": {
+      "name": "August",
+      "short": "Aug"
+    },
+    "september": {
+      "name": "September",
+      "short": "Sep"
+    },
+    "october": {
+      "name": "October",
+      "short": "Oct"
+    },
+    "november": {
+      "name": "November",
+      "short": "Nov"
+    },
+    "december": {
+      "name": "December",
+      "short": "Dec"
+    }
   }
 }

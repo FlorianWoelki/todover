@@ -87,40 +87,49 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from '@vue/runtime-core';
+import { translate } from '@todover/i18n/src/i18n';
 
 export default defineComponent({
   name: 'Datepicker',
   emits: ['select-date'],
   setup(_, { emit }) {
     const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+      translate('months.january.name'),
+      translate('months.february.name'),
+      translate('months.march.name'),
+      translate('months.april.name'),
+      translate('months.may.name'),
+      translate('months.june.name'),
+      translate('months.july.name'),
+      translate('months.august.name'),
+      translate('months.september.name'),
+      translate('months.october.name'),
+      translate('months.november.name'),
+      translate('months.december.name'),
     ];
     const monthShortNames = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
+      translate('months.january.short'),
+      translate('months.february.short'),
+      translate('months.march.short'),
+      translate('months.april.short'),
+      translate('months.may.short'),
+      translate('months.june.short'),
+      translate('months.july.short'),
+      translate('months.august.short'),
+      translate('months.september.short'),
+      translate('months.october.short'),
+      translate('months.november.short'),
+      translate('months.december.short'),
     ];
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const days = [
+      translate('days.sunday.short'),
+      translate('days.monday.short'),
+      translate('days.tuesday.short'),
+      translate('days.wednesday.short'),
+      translate('days.thursday.short'),
+      translate('days.friday.short'),
+      translate('days.saturday.short'),
+    ];
 
     const datepickerValue = ref('');
     const month = ref(0);

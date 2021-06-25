@@ -2,8 +2,8 @@
   <div class="relative mx-auto text-gray-600">
     <input
       type="text"
-      class="h-10 px-3 pr-16 text-sm bg-white border-2 border-gray-300 rounded-lg transition duration-100 ease-in-out focus:border-red-400 focus:ring-2 focus:ring-red-400 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0"
-      placeholder="Search ..."
+      class="h-10 px-3 pr-16 text-sm transition duration-100 ease-in-out bg-white border-2 border-gray-300 rounded-lg focus:border-red-400 focus:ring-2 focus:ring-red-400 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0"
+      :placeholder="$t('navbar.search.placeholder')"
     />
     <button type="submit" class="absolute top-0 right-0 mt-3 mr-4">
       <svg
