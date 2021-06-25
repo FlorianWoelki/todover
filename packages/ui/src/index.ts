@@ -12,12 +12,10 @@ export { Datepicker, HideButton, TitleInput, Searchbar, InputField, TDButton, Dr
 
 function install(app: App): void {
   for (const comp of components) {
-    switch (true) {
-      case typeof comp.install === 'function':
-        comp.install(app);
-        break;
-      default:
-        app.component(comp.name, comp);
+    if (comp.name) {
+      app.component(comp.name, comp);
+    } else {
+      console.error(comp, ' has no name!');
     }
   }
 }
