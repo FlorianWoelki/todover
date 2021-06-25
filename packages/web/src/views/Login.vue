@@ -2,25 +2,25 @@
   <div class="flex flex-col items-center justify-center w-full h-screen -mt-12">
     <Logo class="w-40 mb-2" />
     <h1 class="mb-8 text-3xl font-bold tracking-wide text-center text-gray-700">
-      Sign in to your account
+      {{ $t('login.header') }}
     </h1>
     <router-link
       to="/register"
       class="mb-4 text-sm text-right text-gray-400 underline transition duration-100 ease-in-out hover:text-gray-500"
     >
-      No account? No problem!
+      {{ $t('login.registerLink') }}
     </router-link>
 
     <div class="w-full max-w-lg px-10 py-8 space-y-6 bg-white rounded-lg shadow">
       <input-field
         v-model="email"
-        label="Email address"
+        :label="$t('login.emailLabel')"
         type="email"
         @keydown.enter="handleSignIn"
       />
       <input-field
         v-model="password"
-        label="Password"
+        :label="$t('login.passwordLabel')"
         type="password"
         @keydown.enter="handleSignIn"
       />
@@ -51,10 +51,10 @@
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
           ></path>
         </svg>
-        Sign in
+        {{ $t('login.signInButton') }}
       </td-button>
     </div>
-    <p v-if="showError" class="mt-4 text-red-500">Wrong email address or password</p>
+    <p v-if="showError" class="mt-4 text-red-500">{{ $t('login.error') }}</p>
   </div>
 </template>
 

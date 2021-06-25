@@ -7,10 +7,10 @@
     </div>
     <div v-if="!loggedIn || !user" class="flex items-center space-x-4">
       <router-link to="/register" class="px-4 py-2 bg-gray-500 rounded hover:bg-gray-600">
-        Register
+        {{ $t('navbar.registerButton') }}
       </router-link>
       <router-link to="/login" class="px-4 py-2 bg-transparent rounded hover:bg-gray-800">
-        Sign in
+        {{ $t('navbar.loginButton') }}
       </router-link>
     </div>
     <div
@@ -26,7 +26,7 @@
         :dropdownHidden="dropdownHidden"
         @close.stop="dropdownHidden = true"
       >
-        <p :class="itemClasses" @click="handleLogout">Logout</p>
+        <p :class="itemClasses" @click="handleLogout">{{ $t('navbar.logoutButton') }}</p>
       </dropdown>
     </div>
   </div>

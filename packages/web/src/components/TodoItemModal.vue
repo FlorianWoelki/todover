@@ -10,7 +10,7 @@
         </div>
 
         <div v-if="todoItem.date" class="flex-col items-center mb-4">
-          <label class="text-sm text-gray-400">ToDo Repeat?</label>
+          <label class="text-sm text-gray-400">{{ $t('todoItemModal.repetition.label') }}</label>
           <div class="flex items-center mt-1 space-x-6">
             <div class="flex items-center space-x-2">
               <input
@@ -25,7 +25,7 @@
                 class="text-sm text-gray-500"
                 @click="propagateRepetitionChange('daily', true)"
               >
-                Daily
+                {{ $t('todoItemModal.repetition.daily') }}
               </label>
             </div>
             <div class="flex items-center space-x-2">
@@ -41,18 +41,20 @@
                 class="text-sm text-gray-500"
                 @click="propagateRepetitionChange('weekly', true)"
               >
-                Weekly
+                {{ $t('todoItemModal.repetition.weekly') }}
               </label>
             </div>
           </div>
         </div>
 
-        <label for="todo-description" class="text-sm text-gray-400">ToDo Description</label>
+        <label for="todo-description" class="text-sm text-gray-400">
+          {{ $t('todoItemModal.description.label') }}
+        </label>
         <textarea
           id="todo-description"
           v-model="todoItem.description"
           class="w-full h-full px-3 py-2 mt-1 text-gray-500 placeholder-gray-300 bg-white border-gray-300 rounded appearance-none focus:shadow-none focus:border-transparent focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50"
-          placeholder="Enter your todo description..."
+          :placeholder="$t('todoItemModal.description.placeholder')"
           rows="5"
         ></textarea>
       </div>

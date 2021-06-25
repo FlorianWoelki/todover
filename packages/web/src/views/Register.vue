@@ -2,31 +2,31 @@
   <div class="flex flex-col items-center justify-center w-full h-screen -mt-12">
     <Logo class="w-40 mb-2" />
     <h1 class="mb-8 text-3xl font-bold tracking-wide text-center text-gray-700">
-      Create a new account
+      {{ $t('register.header') }}
     </h1>
     <router-link
       to="/login"
       class="mb-4 text-sm text-right text-gray-400 underline transition duration-100 ease-in-out hover:text-gray-500"
     >
-      Have an account? No problem!
+      {{ $t('register.loginLink') }}
     </router-link>
 
     <div class="w-full max-w-lg px-10 py-8 space-y-6 bg-white rounded-lg shadow">
       <input-field
         v-model="email"
-        label="Email address"
+        :label="$t('register.emailLabel')"
         type="email"
         @keydown.enter="handleSignUp"
       />
       <input-field
         v-model="password"
-        label="Password"
+        :label="$t('register.passwordLabel')"
         type="password"
         @keydown.enter="handleSignUp"
       />
       <input-field
         v-model="repeatPassword"
-        label="Repeat password"
+        :label="$t('register.passwordRepeatLabel')"
         type="password"
         @keydown.enter="handleSignUp"
       />
@@ -57,7 +57,7 @@
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
           ></path>
         </svg>
-        Create account
+        {{ $t('register.registerButton') }}
       </td-button>
     </div>
     <p v-if="showError.visible" class="mt-4 text-red-500">{{ showError.message }}</p>

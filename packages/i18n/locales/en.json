@@ -1,3 +1,35 @@
 {
-  "hello": "Hello World"
+  "todoItemModal": {
+    "description": {
+      "label": "ToDo Description",
+      "placeholder": "Enter your todo description..."
+    },
+    "repetition": {
+      "label": "ToDo Repeat?",
+      "weekly": "Weekly",
+      "daily": "Daily"
+    }
+  },
+  "emptyTodoPlaceholder": "Double click to edit todo",
+  "login": {
+    "header": "Sign in to your account",
+    "registerLink": "No account? No problem!",
+    "signInButton": "Sign in",
+    "error": "Wrong email address or password",
+    "passwordLabel": "Password",
+    "emailLabel": "Email address"
+  },
+  "register": {
+    "header": "Create a new account",
+    "loginLink": "Have an account? No problem!",
+    "emailLabel": "Email address",
+    "passwordLabel": "Password",
+    "passwordRepeatLabel": "Repeat Password",
+    "registerButton": "Create account"
+  },
+  "navbar": {
+    "registerButton": "Register",
+    "loginButton": "Sign in",
+    "logoutButton": "Logout"
+  }
 }
