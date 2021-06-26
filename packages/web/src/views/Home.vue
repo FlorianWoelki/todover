@@ -322,7 +322,7 @@ export default defineComponent({
       return days;
     });
 
-    const todosAtDate = (date: Date): Todo[] | undefined => {
+    const todosAtDate = (date: Date): Todo[] => {
       return store.getters.mappedTodos[date.toDateString()];
     };
 
@@ -453,6 +453,35 @@ export default defineComponent({
     const { result: fetchedTodos } = useQuery(queries.todos);
     watch(fetchedTodos, () => {
       store.commit(Mutation.SET_TODOS, fetchedTodos.value.todos);
+
+      // handle daily todo logic
+      const today = new Date();
+      const yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+      const yesterdayRepeatedTodos = todosAtDate(yesterday).filter(
+        (todo) => todo.repetition === 'daily'
+      );
+      yesterdayRepeatedTodos.forEach((todo) => {
+        updateTodoItem(todo.id, { repetition: null });
+
+        addTodoWithDate({
+          data: {
+            name: todo.name,
+            date: today,
+            description: todo.description,
+            repetition: todo.repetition,
+          },
+        }).then((result) => {
+          if (result.data) {
+            store.commit(Mutation.ADD_TODO, {
+              value: {
+                ...(result.data.addTodoWithDate as Todo),
+                date: today,
+              },
+            });
+          }
+        });
+      });
     });
 
     return {
