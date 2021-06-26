@@ -1,5 +1,5 @@
 import { Field, InputType } from 'type-graphql';
-import { Todo } from '../../entities/Todo';
+import { Todo, TodoRepetition } from '../../entities/Todo';
 
 @InputType()
 export class AddTodoWithDateInput implements Partial<Todo> {
@@ -8,4 +8,10 @@ export class AddTodoWithDateInput implements Partial<Todo> {
 
   @Field()
   date: Date;
+
+  @Field({ nullable: true })
+  repetition?: TodoRepetition;
+
+  @Field({ nullable: true })
+  description?: string;
 }
