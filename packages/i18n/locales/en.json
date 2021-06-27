@@ -11,6 +11,7 @@
     }
   },
   "emptyTodoPlaceholder": "Double click to edit todo",
+  "noLists": "There are no lists :(",
   "login": {
     "header": "Sign in to your account",
     "registerLink": "No account? No problem!",

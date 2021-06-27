@@ -107,7 +107,13 @@
         />
       </div>
 
-      <list-grid class="w-full h-full">
+      <p
+        v-if="Object.keys(lists).length === 0"
+        class="flex items-center justify-center w-full text-lg italic text-gray-300"
+      >
+        {{ $t('noLists') }}
+      </p>
+      <list-grid v-else class="w-full h-full">
         <list-column
           v-for="(todos, listId, i) in lists"
           :key="i"
