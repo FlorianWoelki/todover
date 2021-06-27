@@ -187,7 +187,7 @@ import RefreshIcon from '../assets/icons/refresh.svg';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
 import { State, Todo } from '../store/state';
-import { useMutation, useQuery } from '@vue/apollo-composable';
+import { useMutation, useQuery, useResult } from '@vue/apollo-composable';
 import queries from '@/graphql/queries';
 import mutations from '../graphql/mutations';
 
@@ -215,7 +215,7 @@ export default defineComponent({
     const selectedTodoItem = ref<Todo | null>(null);
 
     const { mutate: updateTodoMutation } = useMutation(mutations.updateTodo);
-    const { result: fetchedTodos } = useQuery(queries.todos);
+    const { result: fetchedTodos, loading: fetchedTodosLoading } = useQuery(queries.todos);
     const { result: fetchedLists } = useQuery(queries.lists);
     const { mutate: addTodoWithDate } = useMutation(mutations.addTodoWithDate);
     const { mutate: addTodoToList } = useMutation(mutations.addTodoToList);
@@ -360,6 +360,9 @@ export default defineComponent({
           id: e.todoItem.id,
           value: { date: new Date(e.newListId), listId: undefined },
         });
+
+        // check past repeated todos because todo can be moved to the past
+        checkPastRepeatedTodo();
       } else {
         moveToListMutation({
           todoId: e.todoItem.id,
@@ -466,18 +469,22 @@ export default defineComponent({
       store.commit(Mutation.SET_LISTS, fetchedLists.value.lists);
     });
 
-    watch(fetchedTodos, () => {
+    watch(fetchedTodosLoading, () => {
       store.commit(Mutation.SET_TODOS, fetchedTodos.value.todos);
+      checkPastRepeatedTodo();
+    });
 
+    const checkPastRepeatedTodo = (): void => {
       // check wether a todo is in the yesterday column
       const today = new Date();
       const todos = store.state.todos;
-      const pastRepeatedTodos = todos.filter(
-        (todo) =>
+      const pastRepeatedTodos = todos.filter((todo) => {
+        return (
           todo.date &&
-          todo.date.getTime() < today.getTime() &&
+          todo.date.setHours(0, 0, 0, 0) - today.setHours(0, 0, 0, 0) < 0 &&
           (todo.repetition === 'daily' || todo.repetition === 'weekly')
-      );
+        );
+      });
 
       pastRepeatedTodos.forEach((todo) => {
         // update yesterday todo item to have no repetition
@@ -507,7 +514,7 @@ export default defineComponent({
           }
         });
       });
-    });
+    };
 
     return {
       weeklyTodos,
