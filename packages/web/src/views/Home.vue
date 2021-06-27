@@ -459,15 +459,23 @@ export default defineComponent({
       const yesterday = new Date();
       yesterday.setDate(today.getDate() - 1);
       const yesterdayRepeatedTodos = todosAtDate(yesterday)?.filter(
-        (todo) => todo.repetition === 'daily'
+        (todo) => todo.repetition === 'daily' || todo.repetition === 'weekly'
       );
+
       yesterdayRepeatedTodos?.forEach((todo) => {
+        // update yesterday todo item to have no repetition
         updateTodoItem(todo.id, { repetition: null });
+
+        // calculate next week date
+        const nextWeekDate = new Date();
+        nextWeekDate.setDate(today.getDate() + 7);
+        // set new inserted todo date based on repetition
+        const date = todo.repetition === 'daily' ? today : nextWeekDate;
 
         addTodoWithDate({
           data: {
             name: todo.name,
-            date: today,
+            date,
             description: todo.description,
             repetition: todo.repetition,
           },
@@ -476,7 +484,7 @@ export default defineComponent({
             store.commit(Mutation.ADD_TODO, {
               value: {
                 ...(result.data.addTodoWithDate as Todo),
-                date: today,
+                date,
               },
             });
           }
