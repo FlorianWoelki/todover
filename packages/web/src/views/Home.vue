@@ -209,7 +209,17 @@ export default defineComponent({
     const selectedTodoItem = ref<Todo | null>(null);
 
     const { mutate: updateTodoMutation } = useMutation(mutations.updateTodo);
+    const { result: fetchedTodos } = useQuery(queries.todos);
+    const { result: fetchedLists } = useQuery(queries.lists);
+    const { mutate: addTodoWithDate } = useMutation(mutations.addTodoWithDate);
+    const { mutate: addTodoToList } = useMutation(mutations.addTodoToList);
+    const { mutate: moveToListMutation } = useMutation(mutations.moveToList);
+    const { mutate: updateListMutation } = useMutation(mutations.updateList);
+    const { mutate: createListMutation } = useMutation(mutations.createList);
+    const { mutate: deleteTodoMutation } = useMutation(mutations.deleteTodo);
+    const { mutate: deleteListMutation } = useMutation(mutations.deleteList);
 
+    // watch selected todo item in modal and update repetition if it was changed
     watch(
       () => selectedTodoItem.value?.repetition,
       (newValue) => {
@@ -267,11 +277,12 @@ export default defineComponent({
       });
     };
 
-    const { mutate: addTodoWithDate } = useMutation(mutations.addTodoWithDate);
-    const { mutate: addTodoToList } = useMutation(mutations.addTodoToList);
+    // inserts a new todo item wether in a specific list or date column
     const insertNewTodo = (value: string, date: Date, listId?: string): void => {
       newTodoItemInputField.value = '';
 
+      // if `listId` is defined then create it in a specific list
+      // else it will be created in the selected date column
       if (!listId) {
         addTodoWithDate({ data: { name: value, date } }).then((result) => {
           if (result.data) {
@@ -299,6 +310,7 @@ export default defineComponent({
       }
     };
 
+    // computes the days of a specific week
     const days = computed((): any[] => {
       const previousDate = new Date(
         currentDate.value.getFullYear(),
@@ -313,6 +325,7 @@ export default defineComponent({
       const clonedDate = new Date(currentDate.value.getTime());
 
       let days: Date[] = [previousDate];
+      // add all dates in the range of a previousDate and the maxDate
       for (let day = clonedDate; day < maxDate; day.setDate(day.getDate() + 1)) {
         const date = new Date(day);
         date.setHours(0, 0, 0, 0);
@@ -328,8 +341,10 @@ export default defineComponent({
 
     const sizeOfLists = computed((): number => Object.keys(lists.value).length);
 
-    const { mutate: moveToListMutation } = useMutation(mutations.moveToList);
+    // updates the list of a specific todo item
     const updateListOfTodoItem = (e: any) => {
+      // check if the `newListId` is a date -> todo moved into date column
+      // if it is not a date -> moving todo into a list
       if (!isNaN(new Date(e.newListId).getTime())) {
         updateTodoMutation({
           id: e.todoItem.id,
@@ -391,7 +406,6 @@ export default defineComponent({
       );
     };
 
-    const { mutate: updateListMutation } = useMutation(mutations.updateList);
     const updateListTitle = (newValue: string, listId: string): void => {
       updateListMutation({ id: listId, data: { name: newValue } });
       store.commit(Mutation.UPDATE_LIST_TITLE, {
@@ -400,7 +414,6 @@ export default defineComponent({
       });
     };
 
-    const { mutate: createListMutation } = useMutation(mutations.createList);
     const createNewList = (): void => {
       createListMutation({ name: 'Unnamed' }).then((result) => {
         if (result.data) {
@@ -411,13 +424,11 @@ export default defineComponent({
 
     const lists = computed(() => store.getters.mappedLists);
 
-    const { mutate: deleteTodoMutation } = useMutation(mutations.deleteTodo);
     const removeTodoItem = (id: string): void => {
       deleteTodoMutation({ id });
       store.commit(Mutation.REMOVE_TODO, { id });
     };
 
-    const { mutate: deleteListMutation } = useMutation(mutations.deleteList);
     const removeList = (id: string): void => {
       deleteListMutation({ id });
       store.commit(Mutation.REMOVE_LIST, { id });
@@ -445,16 +456,14 @@ export default defineComponent({
       );
     };
 
-    const { result: fetchedLists } = useQuery(queries.lists);
     watch(fetchedLists, () => {
       store.commit(Mutation.SET_LISTS, fetchedLists.value.lists);
     });
 
-    const { result: fetchedTodos } = useQuery(queries.todos);
     watch(fetchedTodos, () => {
       store.commit(Mutation.SET_TODOS, fetchedTodos.value.todos);
 
-      // handle daily todo logic
+      // check wether a todo is in the yesterday column
       const today = new Date();
       const yesterday = new Date();
       yesterday.setDate(today.getDate() - 1);
