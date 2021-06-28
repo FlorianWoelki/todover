@@ -10,27 +10,23 @@
           @blur="searchbarFocused = false"
         />
 
-        <div
-          v-if="searchbarFocused"
-          class="absolute top-0 left-0 z-50 p-2 mt-10 space-y-1 bg-white rounded-md shadow-md w-80"
+        <transition
+          enter-active-class="transition duration-100 ease-out"
+          enter-from-class="transform scale-95 opacity-0"
+          enter-to-class="transform scale-100 opacity-100"
+          leave-active-class="transition duration-75 ease-in"
+          leave-from-class="transform scale-100 opacity-100"
+          leave-to-class="transform scale-95 opacity-0"
         >
-          <!-- <p class="text-gray-400">No results</p> -->
           <div
-            class="px-4 py-2 transition duration-100 ease-in-out rounded-md cursor-pointer hover:bg-gray-100"
+            v-if="searchbarFocused"
+            class="absolute top-0 left-0 z-50 p-2 mt-10 space-y-1 bg-white rounded-md shadow-md w-80"
           >
-            <p class="flex items-center space-x-2 text-gray-900">
-              <span>Hello World</span>
-              <refresh-icon class="w-4 h-4 text-gray-400"></refresh-icon>
-            </p>
-            <p class="text-sm text-gray-600">Description: "Test something"</p>
+            <!-- <p class="text-gray-400">No results</p> -->
+            <search-result name="Hello World" description="Test something" />
+            <search-result name="New Test result" repeated />
           </div>
-          <div
-            class="px-4 py-2 transition duration-100 ease-in-out rounded-md cursor-pointer hover:bg-gray-100"
-          >
-            <p class="text-gray-900">Hello World</p>
-            <p class="text-sm text-gray-600">Description: "Test something"</p>
-          </div>
-        </div>
+        </transition>
       </div>
     </div>
     <div v-if="!loggedIn || !user" class="flex items-center space-x-4">
@@ -68,18 +64,18 @@ import { getAccessToken, setAccessToken } from '../accessToken';
 import mutations from '@/graphql/mutations';
 import { Mutation, State } from '../store';
 import queries from '../graphql/queries';
+import SearchResult from '@/components/SearchResult.vue';
 import Logo from '@/assets/logo.svg';
-import RefreshIcon from '@/assets/icons/refresh.svg';
 
 export default defineComponent({
   components: {
     Logo,
-    RefreshIcon,
+    SearchResult,
   },
   setup() {
     const store = useStore<State>();
     const loggedIn = ref<boolean>(getAccessToken() !== '');
-    const searchbarFocused = ref<boolean>(true);
+    const searchbarFocused = ref<boolean>(false);
 
     const dropdownHidden = ref<boolean>(true);
 
