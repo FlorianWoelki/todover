@@ -6,6 +6,7 @@
       <div class="relative">
         <searchbar
           class="hidden md:block"
+          @input="handleSearch"
           @focus="searchbarFocused = true"
           @blur="searchbarFocused = false"
         />
@@ -20,11 +21,18 @@
         >
           <div
             v-if="searchbarFocused"
-            class="absolute top-0 left-0 z-50 p-2 mt-10 space-y-1 bg-white rounded-md shadow-md w-80"
+            class="absolute top-0 left-0 z-50 p-4 mt-10 space-y-1 bg-white rounded-md shadow-md w-80"
           >
-            <!-- <p class="text-gray-400">No results</p> -->
-            <search-result name="Hello World" description="Test something" />
-            <search-result name="New Test result" repeated />
+            <p v-if="searchResults.length === 0" class="text-gray-400">No results</p>
+            <div v-else class="space-y-1">
+              <search-result
+                v-for="(searchResult, index) in searchResults"
+                :key="index"
+                :name="searchResult.name"
+                :description="searchResult.description"
+                :repeated="searchResult.repetition"
+              />
+            </div>
           </div>
         </transition>
       </div>
@@ -66,6 +74,7 @@ import { Mutation, State } from '../store';
 import queries from '../graphql/queries';
 import SearchResult from '@/components/SearchResult.vue';
 import Logo from '@/assets/logo.svg';
+import { Todo } from '../store/state';
 
 export default defineComponent({
   components: {
@@ -76,6 +85,7 @@ export default defineComponent({
     const store = useStore<State>();
     const loggedIn = ref<boolean>(getAccessToken() !== '');
     const searchbarFocused = ref<boolean>(false);
+    const searchResults = ref<Todo[]>([]);
 
     const dropdownHidden = ref<boolean>(true);
 
@@ -98,10 +108,26 @@ export default defineComponent({
       return data;
     });
 
+    const handleSearch = (e: InputEvent): void => {
+      const value = (e.target as HTMLInputElement).value.toLowerCase();
+      if (value.length === 0) {
+        searchResults.value = [];
+      } else {
+        const todos = store.state.todos;
+        const filteredByName = todos.filter((todo) => todo.name.toLowerCase().includes(value));
+        const filteredByDescription = todos.filter((todo) =>
+          todo.description?.toLowerCase().includes(value)
+        );
+        searchResults.value = [...filteredByName, ...filteredByDescription];
+      }
+    };
+
     return {
+      handleSearch,
+      handleLogout,
+      searchResults,
       searchbarFocused,
       user,
-      handleLogout,
       loggedIn,
       dropdownHidden,
     };

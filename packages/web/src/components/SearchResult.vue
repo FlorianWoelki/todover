@@ -29,7 +29,7 @@ export default defineComponent({
       type: String,
     },
     repeated: {
-      type: Boolean,
+      type: [Boolean, String],
       default: false,
     },
   },
