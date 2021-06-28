@@ -53,7 +53,7 @@
         <textarea
           id="todo-description"
           v-model="todoItem.description"
-          class="w-full h-full px-3 py-2 mt-1 text-gray-500 placeholder-gray-300 bg-white border-gray-300 rounded appearance-none focus:shadow-none focus:border-transparent focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50"
+          class="w-full h-full px-3 py-2 mt-1 text-gray-500 placeholder-gray-300 transition duration-100 ease-in-out bg-white border-gray-300 rounded appearance-none focus:shadow-none focus:border-transparent focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50"
           :placeholder="$t('todoItemModal.description.placeholder')"
           rows="5"
         ></textarea>

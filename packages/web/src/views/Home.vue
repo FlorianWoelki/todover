@@ -396,7 +396,10 @@ export default defineComponent({
       isCalendarVisible.value = false;
 
       if (selectedTodoItem.value) {
-        store.commit(Mutation.UPDATE_TODO, { ...selectedTodoItem.value });
+        updateTodoItem(selectedTodoItem.value.id, {
+          name: selectedTodoItem.value.name,
+          description: selectedTodoItem.value.description,
+        });
       }
       selectedTodoItem.value = null;
     };

@@ -19,7 +19,7 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({ addTypename: false });
 
 export const apolloClient = (store: Store<State>) =>
   new ApolloClient({
