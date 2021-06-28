@@ -34,14 +34,11 @@
 <script lang="ts">
 import { defineComponent, provide } from '@vue/runtime-core';
 import { DefaultApolloClient } from '@vue/apollo-composable';
-import { useStore } from 'vuex';
 import { apolloClient } from './apollo-client';
-import { State } from './store';
 
 export default defineComponent({
   setup() {
-    const store = useStore<State>();
-    provide(DefaultApolloClient, apolloClient(store));
+    provide(DefaultApolloClient, apolloClient);
   },
 });
 </script>
