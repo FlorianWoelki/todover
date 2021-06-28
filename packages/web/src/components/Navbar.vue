@@ -3,7 +3,35 @@
     <div class="flex items-center space-x-4">
       <Logo class="w-28" />
       <!-- hide for smaller screens until searchbar is implemented -->
-      <searchbar class="hidden md:block" />
+      <div class="relative">
+        <searchbar
+          class="hidden md:block"
+          @focus="searchbarFocused = true"
+          @blur="searchbarFocused = false"
+        />
+
+        <div
+          v-if="searchbarFocused"
+          class="absolute top-0 left-0 z-50 p-2 mt-10 space-y-1 bg-white rounded-md shadow-md w-80"
+        >
+          <!-- <p class="text-gray-400">No results</p> -->
+          <div
+            class="px-4 py-2 transition duration-100 ease-in-out rounded-md cursor-pointer hover:bg-gray-100"
+          >
+            <p class="flex items-center space-x-2 text-gray-900">
+              <span>Hello World</span>
+              <refresh-icon class="w-4 h-4 text-gray-400"></refresh-icon>
+            </p>
+            <p class="text-sm text-gray-600">Description: "Test something"</p>
+          </div>
+          <div
+            class="px-4 py-2 transition duration-100 ease-in-out rounded-md cursor-pointer hover:bg-gray-100"
+          >
+            <p class="text-gray-900">Hello World</p>
+            <p class="text-sm text-gray-600">Description: "Test something"</p>
+          </div>
+        </div>
+      </div>
     </div>
     <div v-if="!loggedIn || !user" class="flex items-center space-x-4">
       <router-link to="/register" class="px-4 py-2 bg-gray-500 rounded hover:bg-gray-600">
@@ -41,14 +69,17 @@ import mutations from '@/graphql/mutations';
 import { Mutation, State } from '../store';
 import queries from '../graphql/queries';
 import Logo from '@/assets/logo.svg';
+import RefreshIcon from '@/assets/icons/refresh.svg';
 
 export default defineComponent({
   components: {
     Logo,
+    RefreshIcon,
   },
   setup() {
     const store = useStore<State>();
     const loggedIn = ref<boolean>(getAccessToken() !== '');
+    const searchbarFocused = ref<boolean>(true);
 
     const dropdownHidden = ref<boolean>(true);
 
@@ -72,6 +103,7 @@ export default defineComponent({
     });
 
     return {
+      searchbarFocused,
       user,
       handleLogout,
       loggedIn,
