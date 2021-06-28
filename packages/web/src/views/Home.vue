@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-full font-sans antialiased">
-    <div class="flex mb-4 h-1/2">
+    <div class="flex mb-4 h-1/2" style="min-height: calc(50% - 1.5rem)">
       <div class="flex flex-col items-center space-y-4">
         <button class="text-red-500 focus:outline-none hover:text-red-600" @click="goToPrevDayItem">
           <chevron-left-icon class="w-10 h-10" />
@@ -123,6 +123,7 @@
           @end="updateListOfTodoItem"
           @remove-list="removeList(listId)"
           @update-list-title="updateListTitle($event, listId)"
+          style="min-height: 300px"
         >
           <template #draggable>
             <todo-item
