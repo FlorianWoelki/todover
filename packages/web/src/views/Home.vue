@@ -188,7 +188,7 @@ import RefreshIcon from '../assets/icons/refresh.svg';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
 import { State, Todo } from '../store/state';
-import { useMutation, useQuery, useResult } from '@vue/apollo-composable';
+import { useMutation, useQuery } from '@vue/apollo-composable';
 import queries from '@/graphql/queries';
 import mutations from '../graphql/mutations';
 
@@ -213,8 +213,6 @@ export default defineComponent({
     const currentDate = ref(new Date());
     const extraDayIndex = ref(0);
 
-    const selectedTodoItem = ref<Todo | null>(null);
-
     const { mutate: updateTodoMutation } = useMutation(mutations.updateTodo);
     const { result: fetchedTodos, loading: fetchedTodosLoading } = useQuery(queries.todos);
     const { result: fetchedLists } = useQuery(queries.lists);
@@ -225,6 +223,22 @@ export default defineComponent({
     const { mutate: createListMutation } = useMutation(mutations.createList);
     const { mutate: deleteTodoMutation } = useMutation(mutations.deleteTodo);
     const { mutate: deleteListMutation } = useMutation(mutations.deleteList);
+
+    const selectedTodoItem = computed<Todo | undefined>({
+      set(newTodo) {
+        store.commit(Mutation.SET_SELECTED_TODO_ITEM, newTodo);
+      },
+      get() {
+        return store.state.selectedTodoItem;
+      },
+    });
+
+    watch(
+      () => store.state.selectedTodoItem,
+      (newValue) => {
+        selectedTodoItem.value = newValue;
+      }
+    );
 
     // watch selected todo item in modal and update repetition if it was changed
     watch(
@@ -401,7 +415,7 @@ export default defineComponent({
           description: selectedTodoItem.value.description,
         });
       }
-      selectedTodoItem.value = null;
+      selectedTodoItem.value = undefined;
     };
 
     const dayOfYear = (date: Date) =>

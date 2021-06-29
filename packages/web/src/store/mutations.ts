@@ -12,6 +12,7 @@ export enum Mutation {
   SET_LOADING = 'SET_LOADING',
   SET_LISTS = 'SET_LISTS',
   SET_TODOS = 'SET_TODOS',
+  SET_SELECTED_TODO_ITEM = 'SET_SELECTED_TODO_ITEM',
 }
 
 export type Mutations<S = State> = {
@@ -28,6 +29,7 @@ export type Mutations<S = State> = {
   [Mutation.SET_LOADING](state: S, value: boolean): void;
   [Mutation.SET_LISTS](state: S, value: List[]): void;
   [Mutation.SET_TODOS](state: S, value: Todo[]): void;
+  [Mutation.SET_SELECTED_TODO_ITEM](state: S, value: Todo): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -89,5 +91,8 @@ export const mutations: MutationTree<State> & Mutations = {
       return todo;
     });
     state.todos = newValue;
+  },
+  [Mutation.SET_SELECTED_TODO_ITEM](state: State, value) {
+    state.selectedTodoItem = value;
   },
 };

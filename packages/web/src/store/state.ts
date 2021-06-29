@@ -27,6 +27,7 @@ export interface State {
   todos: Todo[];
   lists: List[];
   loading: boolean;
+  selectedTodoItem?: Todo;
   me?: Me;
 }
 

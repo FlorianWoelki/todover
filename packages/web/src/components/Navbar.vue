@@ -5,10 +5,9 @@
       <!-- hide for smaller screens until searchbar is implemented -->
       <div class="relative">
         <searchbar
-          class="hidden md:block"
+          class="z-20 hidden md:block"
           @input="handleSearch"
           @focus="searchbarFocused = true"
-          @blur="searchbarFocused = false"
         />
 
         <transition
@@ -31,6 +30,7 @@
                 :name="searchResult.name"
                 :description="searchResult.description"
                 :repeated="searchResult.repetition"
+                @click="setSelectedTodoItem(searchResult)"
               />
             </div>
           </div>
@@ -61,6 +61,14 @@
         <p :class="itemClasses" @click="handleLogout">{{ $t('navbar.logoutButton') }}</p>
       </dropdown>
     </div>
+
+    <!-- Div element that will be there for the blur event of the searchbar because the click on a search result triggers the blur event -->
+    <div
+      v-if="searchbarFocused"
+      tabindex="-1"
+      class="fixed inset-0 z-10"
+      @click="searchbarFocused = false"
+    ></div>
   </div>
 </template>
 
@@ -122,7 +130,13 @@ export default defineComponent({
       }
     };
 
+    const setSelectedTodoItem = (todo: Todo): void => {
+      searchbarFocused.value = false;
+      store.commit(Mutation.SET_SELECTED_TODO_ITEM, todo);
+    };
+
     return {
+      setSelectedTodoItem,
       handleSearch,
       handleLogout,
       searchResults,
