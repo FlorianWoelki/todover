@@ -4,7 +4,11 @@
       <Logo class="w-28" />
       <!-- hide for smaller screens until searchbar is implemented -->
       <div class="relative">
-        <searchbar v-model="searchInput" class="z-20 hidden md:block" @focus="focusSearchInput" />
+        <searchbar
+          v-model="searchbar.input"
+          class="z-20 hidden md:block"
+          @focus="focusSearchInput"
+        />
 
         <transition
           enter-active-class="transition duration-100 ease-out"
@@ -15,13 +19,13 @@
           leave-to-class="transform scale-95 opacity-0"
         >
           <div
-            v-if="searchbarFocused"
+            v-if="searchbar.focused"
             class="absolute top-0 left-0 z-50 p-4 mt-10 space-y-1 bg-white rounded-md shadow-md w-80"
           >
-            <p v-if="searchResults.length === 0" class="text-gray-400">No results</p>
+            <p v-if="searchbar.results.length === 0" class="text-gray-400">No results</p>
             <div v-else class="space-y-1">
               <search-result
-                v-for="(searchResult, index) in searchResults"
+                v-for="(searchResult, index) in searchbar.results"
                 :key="index"
                 :name="searchResult.name"
                 :description="searchResult.description"
@@ -60,17 +64,17 @@
 
     <!-- Div element that will be there for the blur event of the searchbar because the click on a search result triggers the blur event -->
     <div
-      v-if="searchbarFocused"
+      v-if="searchbar.focused"
       tabindex="-1"
       class="fixed inset-0 z-10"
-      @click="searchbarFocused = false"
+      @click="searchbar.focused = false"
     ></div>
   </div>
 </template>
 
 <script lang="ts">
 import { useMutation, useQuery, useResult } from '@vue/apollo-composable';
-import { defineComponent, ref, watch } from '@vue/runtime-core';
+import { defineComponent, reactive, ref, watch } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 import { getAccessToken, setAccessToken } from '../accessToken';
 import mutations from '@/graphql/mutations';
@@ -80,6 +84,12 @@ import SearchResult from '@/components/SearchResult.vue';
 import Logo from '@/assets/logo.svg';
 import { Todo } from '../store/state';
 
+interface ISearchbar {
+  focused: boolean;
+  results: Todo[];
+  input: string;
+}
+
 export default defineComponent({
   components: {
     Logo,
@@ -88,9 +98,11 @@ export default defineComponent({
   setup() {
     const store = useStore<State>();
     const loggedIn = ref<boolean>(getAccessToken() !== '');
-    const searchbarFocused = ref<boolean>(false);
-    const searchResults = ref<Todo[]>([]);
-    const searchInput = ref<string>('');
+    const searchbar = reactive<ISearchbar>({
+      focused: false,
+      results: [],
+      input: '',
+    });
 
     const dropdownHidden = ref<boolean>(true);
 
@@ -113,30 +125,33 @@ export default defineComponent({
       return data;
     });
 
-    watch(searchInput, () => checkSearchResults());
+    watch(
+      () => searchbar.input,
+      () => checkSearchResults()
+    );
 
     const checkSearchResults = (): void => {
-      if (searchInput.value.length === 0) {
-        searchResults.value = [];
+      if (searchbar.input.length === 0) {
+        searchbar.results = [];
       } else {
         const todos = store.state.todos;
         const filteredByName = todos.filter((todo) =>
-          todo.name.toLowerCase().includes(searchInput.value.toLowerCase())
+          todo.name.toLowerCase().includes(searchbar.input.toLowerCase())
         );
         const filteredByDescription = todos.filter((todo) =>
-          todo.description?.toLowerCase().includes(searchInput.value.toLowerCase())
+          todo.description?.toLowerCase().includes(searchbar.input.toLowerCase())
         );
-        searchResults.value = [...filteredByName, ...filteredByDescription];
+        searchbar.results = [...filteredByName, ...filteredByDescription];
       }
     };
 
     const setSelectedTodoItem = (todo: Todo): void => {
-      searchbarFocused.value = false;
+      searchbar.focused = false;
       store.commit(Mutation.SET_SELECTED_TODO_ITEM, todo);
     };
 
     const focusSearchInput = (): void => {
-      searchbarFocused.value = true;
+      searchbar.focused = true;
       checkSearchResults();
     };
 
@@ -144,9 +159,7 @@ export default defineComponent({
       focusSearchInput,
       setSelectedTodoItem,
       handleLogout,
-      searchInput,
-      searchResults,
-      searchbarFocused,
+      searchbar,
       user,
       loggedIn,
       dropdownHidden,
