@@ -4,11 +4,7 @@
       <Logo class="w-28" />
       <!-- hide for smaller screens until searchbar is implemented -->
       <div class="relative">
-        <searchbar
-          class="z-20 hidden md:block"
-          @input="handleSearch"
-          @focus="searchbarFocused = true"
-        />
+        <searchbar v-model="searchInput" class="z-20 hidden md:block" @focus="focusSearchInput" />
 
         <transition
           enter-active-class="transition duration-100 ease-out"
@@ -74,7 +70,7 @@
 
 <script lang="ts">
 import { useMutation, useQuery, useResult } from '@vue/apollo-composable';
-import { defineComponent, ref } from '@vue/runtime-core';
+import { defineComponent, ref, watch } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 import { getAccessToken, setAccessToken } from '../accessToken';
 import mutations from '@/graphql/mutations';
@@ -94,6 +90,7 @@ export default defineComponent({
     const loggedIn = ref<boolean>(getAccessToken() !== '');
     const searchbarFocused = ref<boolean>(false);
     const searchResults = ref<Todo[]>([]);
+    const searchInput = ref<string>('');
 
     const dropdownHidden = ref<boolean>(true);
 
@@ -116,15 +113,18 @@ export default defineComponent({
       return data;
     });
 
-    const handleSearch = (e: InputEvent): void => {
-      const value = (e.target as HTMLInputElement).value.toLowerCase();
-      if (value.length === 0) {
+    watch(searchInput, () => checkSearchResults());
+
+    const checkSearchResults = (): void => {
+      if (searchInput.value.length === 0) {
         searchResults.value = [];
       } else {
         const todos = store.state.todos;
-        const filteredByName = todos.filter((todo) => todo.name.toLowerCase().includes(value));
+        const filteredByName = todos.filter((todo) =>
+          todo.name.toLowerCase().includes(searchInput.value.toLowerCase())
+        );
         const filteredByDescription = todos.filter((todo) =>
-          todo.description?.toLowerCase().includes(value)
+          todo.description?.toLowerCase().includes(searchInput.value.toLowerCase())
         );
         searchResults.value = [...filteredByName, ...filteredByDescription];
       }
@@ -135,10 +135,16 @@ export default defineComponent({
       store.commit(Mutation.SET_SELECTED_TODO_ITEM, todo);
     };
 
+    const focusSearchInput = (): void => {
+      searchbarFocused.value = true;
+      checkSearchResults();
+    };
+
     return {
+      focusSearchInput,
       setSelectedTodoItem,
-      handleSearch,
       handleLogout,
+      searchInput,
       searchResults,
       searchbarFocused,
       user,
