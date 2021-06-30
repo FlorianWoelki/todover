@@ -101,8 +101,8 @@
           class="w-10 h-10"
           @click="goToPrevListItem"
           :class="{
-            'text-red-500': currentListItem > 0,
-            'text-gray-400': currentListItem <= 0,
+            'text-red-500 cursor-pointer': currentListItem > 0,
+            'text-gray-300 cursor-not-allowed': currentListItem <= 0,
           }"
         />
       </div>
@@ -154,8 +154,8 @@
           class="w-10 h-10"
           @click="goToNextListItem"
           :class="{
-            'text-red-500': currentListItem + 1 < sizeOfLists,
-            'text-gray-400': currentListItem + 1 >= sizeOfLists,
+            'text-red-500 cursor-pointer': currentListItem + 1 < sizeOfLists,
+            'text-gray-300 cursor-not-allowed': currentListItem + 1 >= sizeOfLists,
           }"
         />
       </div>

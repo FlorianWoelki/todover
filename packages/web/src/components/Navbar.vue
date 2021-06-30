@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-between px-4 py-2 text-white bg-gray-700 mb-14">
-    <div class="flex items-center space-x-4">
-      <Logo class="w-28" />
+    <div class="flex items-center sm:space-x-4">
+      <Logo class="hidden w-28 sm:block" />
 
       <div class="relative">
         <searchbar

@@ -3,7 +3,7 @@
     <input
       v-bind="$attrs"
       type="text"
-      class="h-10 px-3 pr-2 text-sm transition duration-100 ease-in-out bg-gray-200 border-2 border-gray-400 rounded-lg md:pr-16 focus:border-red-400 focus:ring-2 focus:ring-red-400 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0 focus:bg-white"
+      class="h-10 px-3 pr-16 text-sm transition duration-100 ease-in-out bg-gray-200 border-2 border-gray-400 rounded-lg focus:border-red-400 focus:ring-2 focus:ring-red-400 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0 focus:bg-white"
       :placeholder="$t('navbar.search.placeholder')"
       :value="modelValue"
       @input="emitModelValue"
