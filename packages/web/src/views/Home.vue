@@ -58,8 +58,8 @@
           </template>
           <template #default="{ date }">
             <todo-item
-              v-model="newTodoItemInputField"
               no-dbl-click
+              :loading="isNewTodoItemInserting(date.toISOString())"
               @update-item="insertNewTodo($event, date)"
             ></todo-item>
           </template>
@@ -142,7 +142,7 @@
           <template #default="{ date }">
             <todo-item
               no-dbl-click
-              v-model="newTodoItemInputField"
+              :loading="isNewTodoItemInserting(listId)"
               @update-item="insertNewTodo($event, date, listId)"
             ></todo-item>
           </template>
@@ -208,7 +208,8 @@ export default defineComponent({
 
     const store = useStore<State>();
 
-    const newTodoItemInputField = ref('');
+    const newTodoItemInputField = ref<string>('');
+    const newTodoInsertingInput = ref<string>('');
     const currentListItem = ref(0);
     const currentDate = ref(new Date());
     const extraDayIndex = ref(0);
@@ -303,9 +304,11 @@ export default defineComponent({
       // if `listId` is defined then create it in a specific list
       // else it will be created in the selected date column
       if (!listId) {
+        newTodoInsertingInput.value = date.toISOString();
         addTodoWithDate({ data: { name: value, date } }).then((result) => {
           if (result.data) {
             newTodoItemInputField.value = '';
+            newTodoInsertingInput.value = '';
             store.commit(Mutation.ADD_TODO, {
               value: {
                 id: result.data.addTodoWithDate.id,
@@ -316,9 +319,11 @@ export default defineComponent({
           }
         });
       } else {
+        newTodoInsertingInput.value = listId;
         addTodoToList({ data: { name: value, listId } }).then((result) => {
           if (result.data) {
             newTodoItemInputField.value = '';
+            newTodoInsertingInput.value = '';
             store.commit(Mutation.ADD_TODO, {
               value: {
                 id: result.data.addTodoToList.id,
@@ -329,6 +334,11 @@ export default defineComponent({
           }
         });
       }
+    };
+
+    // returns a boolean which determine if this new todo item is inserting
+    const isNewTodoItemInserting = (input: string): boolean => {
+      return newTodoInsertingInput.value === input;
     };
 
     // computes the days of a specific week
@@ -535,6 +545,7 @@ export default defineComponent({
     };
 
     return {
+      isNewTodoItemInserting,
       weeklyTodos,
       dailyTodos,
       selectedTodoItem,
