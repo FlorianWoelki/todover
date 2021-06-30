@@ -2,11 +2,12 @@
   <div class="flex items-center justify-between px-4 py-2 text-white bg-gray-700 mb-14">
     <div class="flex items-center space-x-4">
       <Logo class="w-28" />
-      <!-- hide for smaller screens until searchbar is implemented -->
+
       <div class="relative">
         <searchbar
+          v-if="loggedIn && user"
           v-model="searchbar.input"
-          class="z-20 hidden md:block"
+          class="z-20 md:block"
           @focus="focusSearchInput"
         />
 
@@ -20,9 +21,9 @@
         >
           <div
             v-if="searchbar.focused"
-            class="absolute top-0 left-0 z-50 p-4 mt-10 space-y-1 bg-white rounded-md shadow-md w-80"
+            class="absolute top-0 left-0 z-50 w-56 p-4 mt-10 space-y-1 bg-white rounded-md shadow-md md:w-80"
           >
-            <p v-if="searchbar.results.length === 0" class="text-gray-400">No results</p>
+            <p v-if="searchbar.results.length === 0" class="px-4 py-2 text-gray-400">No results</p>
             <div v-else class="space-y-1">
               <search-result
                 v-for="(searchResult, index) in searchbar.results"
@@ -51,7 +52,8 @@
       :class="{ 'bg-gray-800': !dropdownHidden }"
       @click="dropdownHidden = !dropdownHidden"
     >
-      <p class="z-50">{{ user.me.email }}</p>
+      <p class="z-50 hidden md:block">{{ user.me.email }}</p>
+      <menu-icon class="z-50 w-6 h-6 md:hidden"></menu-icon>
 
       <dropdown
         #="{ itemClasses }"
@@ -83,6 +85,7 @@ import queries from '../graphql/queries';
 import SearchResult from '@/components/SearchResult.vue';
 import Logo from '@/assets/logo.svg';
 import { Todo } from '../store/state';
+import MenuIcon from '../assets/icons/menu-alt3.svg';
 
 interface ISearchbar {
   focused: boolean;
@@ -94,6 +97,7 @@ export default defineComponent({
   components: {
     Logo,
     SearchResult,
+    MenuIcon,
   },
   setup() {
     const store = useStore<State>();
