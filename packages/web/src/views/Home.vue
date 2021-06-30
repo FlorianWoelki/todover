@@ -58,8 +58,8 @@
           </template>
           <template #default="{ date }">
             <todo-item
+              v-model="newTodoItemInputField"
               no-dbl-click
-              :value="newTodoItemInputField"
               @update-item="insertNewTodo($event, date)"
             ></todo-item>
           </template>
@@ -142,7 +142,7 @@
           <template #default="{ date }">
             <todo-item
               no-dbl-click
-              :value="newTodoItemInputField"
+              v-model="newTodoItemInputField"
               @update-item="insertNewTodo($event, date, listId)"
             ></todo-item>
           </template>
@@ -300,13 +300,12 @@ export default defineComponent({
 
     // inserts a new todo item wether in a specific list or date column
     const insertNewTodo = (value: string, date: Date, listId?: string): void => {
-      newTodoItemInputField.value = '';
-
       // if `listId` is defined then create it in a specific list
       // else it will be created in the selected date column
       if (!listId) {
         addTodoWithDate({ data: { name: value, date } }).then((result) => {
           if (result.data) {
+            newTodoItemInputField.value = '';
             store.commit(Mutation.ADD_TODO, {
               value: {
                 id: result.data.addTodoWithDate.id,
@@ -319,6 +318,7 @@ export default defineComponent({
       } else {
         addTodoToList({ data: { name: value, listId } }).then((result) => {
           if (result.data) {
+            newTodoItemInputField.value = '';
             store.commit(Mutation.ADD_TODO, {
               value: {
                 id: result.data.addTodoToList.id,
