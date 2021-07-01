@@ -215,15 +215,29 @@ export default defineComponent({
     const extraDayIndex = ref(0);
 
     const { mutate: updateTodoMutation } = useMutation(mutations.updateTodo);
-    const { result: fetchedTodos, loading: fetchedTodosLoading } = useQuery(queries.todos);
-    const { result: fetchedLists } = useQuery(queries.lists);
-    const { mutate: addTodoWithDate } = useMutation(mutations.addTodoWithDate);
-    const { mutate: addTodoToList } = useMutation(mutations.addTodoToList);
+    const {
+      result: fetchedTodos,
+      loading: fetchedTodosLoading,
+      onError: onFetchedTodosError,
+    } = useQuery(queries.todos);
+    const { result: fetchedLists, onError: onFetchedListsError } = useQuery(queries.lists);
+    const { mutate: addTodoWithDateMutation } = useMutation(mutations.addTodoWithDate);
+    const { mutate: addTodoToListMutation } = useMutation(mutations.addTodoToList);
     const { mutate: moveToListMutation } = useMutation(mutations.moveToList);
     const { mutate: updateListMutation } = useMutation(mutations.updateList);
     const { mutate: createListMutation } = useMutation(mutations.createList);
     const { mutate: deleteTodoMutation } = useMutation(mutations.deleteTodo);
     const { mutate: deleteListMutation } = useMutation(mutations.deleteList);
+
+    // handle error of fetched todos to set them to an empty arry
+    onFetchedTodosError(() => {
+      fetchedTodos.value = { todos: [] };
+    });
+
+    // handle error of fetched lists to set them to an empty arry
+    onFetchedListsError(() => {
+      fetchedLists.value = { lists: [] };
+    });
 
     const selectedTodoItem = computed<Todo | undefined>({
       set(newTodo) {
@@ -305,7 +319,20 @@ export default defineComponent({
       // else it will be created in the selected date column
       if (!listId) {
         newTodoInsertingInput.value = date.toISOString();
-        addTodoWithDate({ data: { name: value, date } }).then((result) => {
+        if (!store.state.me) {
+          newTodoItemInputField.value = '';
+          newTodoInsertingInput.value = '';
+          store.commit(Mutation.ADD_TODO, {
+            value: {
+              id: `todo-${Math.random()}`,
+              name: value,
+              date,
+            } as Todo,
+          });
+          return;
+        }
+
+        addTodoWithDateMutation({ data: { name: value, date } }).then((result) => {
           if (result.data) {
             newTodoItemInputField.value = '';
             newTodoInsertingInput.value = '';
@@ -320,7 +347,20 @@ export default defineComponent({
         });
       } else {
         newTodoInsertingInput.value = listId;
-        addTodoToList({ data: { name: value, listId } }).then((result) => {
+        if (!store.state.me) {
+          newTodoItemInputField.value = '';
+          newTodoInsertingInput.value = '';
+          store.commit(Mutation.ADD_TODO, {
+            value: {
+              id: `todo-${Math.random()}`,
+              name: value,
+              listId: listId,
+            } as Todo,
+          });
+          return;
+        }
+
+        addTodoToListMutation({ data: { name: value, listId } }).then((result) => {
           if (result.data) {
             newTodoItemInputField.value = '';
             newTodoInsertingInput.value = '';
@@ -377,10 +417,13 @@ export default defineComponent({
       // check if the `newListId` is a date -> todo moved into date column
       // if it is not a date -> moving todo into a list
       if (!isNaN(new Date(e.newListId).getTime())) {
-        updateTodoMutation({
-          id: e.todoItem.id,
-          data: { date: new Date(e.newListId), listId: null },
-        });
+        if (store.state.me) {
+          updateTodoMutation({
+            id: e.todoItem.id,
+            data: { date: new Date(e.newListId), listId: null },
+          });
+        }
+
         store.commit(Mutation.UPDATE_TODO, {
           id: e.todoItem.id,
           value: { date: new Date(e.newListId), listId: undefined },
@@ -389,10 +432,13 @@ export default defineComponent({
         // check past repeated todos because todo can be moved to the past
         checkPastRepeatedTodo();
       } else {
-        moveToListMutation({
-          todoId: e.todoItem.id,
-          listId: e.newListId,
-        });
+        if (store.state.me) {
+          moveToListMutation({
+            todoId: e.todoItem.id,
+            listId: e.newListId,
+          });
+        }
+
         store.commit(Mutation.UPDATE_TODO, {
           id: e.todoItem.id,
           value: { date: undefined, repetition: undefined, listId: e.newListId },
@@ -452,6 +498,11 @@ export default defineComponent({
     };
 
     const createNewList = (): void => {
+      if (!store.state.me) {
+        store.commit(Mutation.CREATE_LIST, { id: `list-${Math.random()}`, name: 'Unnamed' });
+        return;
+      }
+
       createListMutation({ name: 'Unnamed' }).then((result) => {
         if (result.data) {
           store.commit(Mutation.CREATE_LIST, result.data.createList);
@@ -524,7 +575,17 @@ export default defineComponent({
         // set new inserted todo date based on repetition
         const date = todo.repetition === 'daily' ? today : nextWeekDate;
 
-        addTodoWithDate({
+        if (!store.state.me) {
+          store.commit(Mutation.ADD_TODO, {
+            value: {
+              ...todo,
+              date,
+            },
+          });
+          return;
+        }
+
+        addTodoWithDateMutation({
           data: {
             name: todo.name,
             date,

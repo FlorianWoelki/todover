@@ -33,9 +33,7 @@ export interface State {
 
 export const state: State = {
   loading: true,
-  me: {
-    email: undefined,
-  },
+  me: undefined,
   todos: [],
   lists: [],
 };
