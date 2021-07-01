@@ -42,7 +42,7 @@
               no-dbl-click
               disabled
             >
-              <refresh-icon class="w-5 h-5 text-gray-300"></refresh-icon>
+              <refresh-icon class="w-8 h-8 text-gray-300"></refresh-icon>
             </todo-item>
             <todo-item
               v-for="(todo, j) in weeklyTodos(day)"
