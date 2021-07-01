@@ -12,6 +12,7 @@
   },
   "emptyTodoPlaceholder": "Double click to edit todo",
   "noLists": "There are no lists :(",
+  "preview": "Preview - No saving!",
   "login": {
     "header": "Sign in to your account",
     "registerLink": "No account? No problem!",

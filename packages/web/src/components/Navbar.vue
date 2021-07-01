@@ -10,7 +10,7 @@
           class="z-20 md:block"
           @focus="focusSearchInput"
         />
-        <p v-else class="text-sm text-gray-300">Preview</p>
+        <p v-else class="text-sm text-gray-300">{{ $t('preview') }}</p>
 
         <transition
           enter-active-class="transition duration-100 ease-out"
