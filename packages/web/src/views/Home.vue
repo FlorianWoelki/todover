@@ -490,7 +490,10 @@ export default defineComponent({
     };
 
     const updateListTitle = (newValue: string, listId: string): void => {
-      updateListMutation({ id: listId, data: { name: newValue } });
+      if (store.state.me) {
+        updateListMutation({ id: listId, data: { name: newValue } });
+      }
+
       store.commit(Mutation.UPDATE_LIST_TITLE, {
         newValue,
         listId,
@@ -513,12 +516,18 @@ export default defineComponent({
     const lists = computed(() => store.getters.mappedLists);
 
     const removeTodoItem = (id: string): void => {
-      deleteTodoMutation({ id });
+      if (store.state.me) {
+        deleteTodoMutation({ id });
+      }
+
       store.commit(Mutation.REMOVE_TODO, { id });
     };
 
     const removeList = (id: string): void => {
-      deleteListMutation({ id });
+      if (store.state.me) {
+        deleteListMutation({ id });
+      }
+
       store.commit(Mutation.REMOVE_LIST, { id });
     };
 
