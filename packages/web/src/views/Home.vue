@@ -259,7 +259,7 @@ export default defineComponent({
     watch(
       () => selectedTodoItem.value?.repetition,
       (newValue) => {
-        if (newValue !== undefined) {
+        if (newValue !== undefined && store.state.me) {
           updateTodoMutation({ id: selectedTodoItem.value?.id, data: { repetition: newValue } });
         }
       }
@@ -306,7 +306,10 @@ export default defineComponent({
     };
 
     const updateTodoItem = (todoId: string, value: Partial<Todo>): void => {
-      updateTodoMutation({ id: todoId, data: value });
+      if (store.state.me) {
+        updateTodoMutation({ id: todoId, data: value });
+      }
+
       store.commit(Mutation.UPDATE_TODO, { id: todoId, value } as {
         id: string;
         value: Todo;
