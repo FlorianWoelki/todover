@@ -11,6 +11,10 @@ const password = '123';
 export const createUser = async (prisma: PrismaClient): Promise<void> => {
   const userExists = await prisma.user.findUnique({ where: { email } });
   if (userExists) {
+    const settingsExists = await prisma.setting.findUnique({ where: { userId: userExists.id } });
+    if (settingsExists) {
+      await prisma.setting.delete({ where: { userId: userExists.id } });
+    }
     await prisma.user.delete({ where: { email } });
   }
 
@@ -25,7 +29,10 @@ export const createUser = async (prisma: PrismaClient): Promise<void> => {
 export const cleanupUser = async (prisma: PrismaClient): Promise<void> => {
   const userExists = await prisma.user.findUnique({ where: { email } });
   if (userExists) {
-    await prisma.setting.delete({ where: { userId: userExists.id } });
+    const settingsExists = await prisma.setting.findUnique({ where: { userId: userExists.id } });
+    if (settingsExists) {
+      await prisma.setting.delete({ where: { userId: userExists.id } });
+    }
     await prisma.user.delete({ where: { email } });
   }
 };
