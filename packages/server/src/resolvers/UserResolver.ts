@@ -105,8 +105,8 @@ export class UserResolver {
     return true;
   }
 
-  @FieldResolver(() => Setting)
-  settings(@Root() user: User, @Ctx() { prisma }: MyContext) {
+  @FieldResolver(() => Setting, { nullable: true })
+  settings(@Root() user: User, @Ctx() { prisma }: MyContext): Promise<Setting | null> {
     return prisma.setting.findUnique({ where: { userId: user.id } });
   }
 }

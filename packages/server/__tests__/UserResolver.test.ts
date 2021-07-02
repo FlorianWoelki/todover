@@ -39,6 +39,9 @@ const ME = gql`
   query me {
     me {
       email
+      settings {
+        language
+      }
     }
   }
 `;
@@ -121,6 +124,7 @@ describe('Queries', () => {
     });
 
     expect(res.errors).toBeUndefined();
+    expect(res.data?.me.settings).toBeNull();
     expect(res.data?.me.email).toBe('test@test.de');
   });
 });
