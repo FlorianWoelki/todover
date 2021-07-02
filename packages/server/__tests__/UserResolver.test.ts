@@ -46,6 +46,15 @@ const ME = gql`
   }
 `;
 
+const UPDATE_SETTINGS = gql`
+  mutation updateSettings($language: String!) {
+    updateSettings(language: $language) {
+      userId
+      language
+    }
+  }
+`;
+
 beforeAll(async () => {
   server = (await constructTestServer(prisma)).server;
 });
@@ -89,10 +98,27 @@ describe('Mutations', () => {
     expect(token).not.toBeUndefined();
     request = { headers: { authorization: `bearer ${token}` } };
   });
+
+  it('updateSettings - change language', async () => {
+    server = (await constructTestServer(prisma, request)).server;
+    const mutate = createTestClient(server).mutate;
+
+    const res = await mutate({
+      mutation: UPDATE_SETTINGS,
+      variables: {
+        language: 'de',
+      },
+    });
+
+    expect(res.errors).toBeUndefined();
+    expect(res.data?.updateSettings.userId).toBeDefined();
+    expect(res.data?.updateSettings.language).toBe('de');
+  });
 });
 
 describe('Queries', () => {
   it('me - without being logged in', async () => {
+    server = (await constructTestServer(prisma)).server;
     const query = createTestClient(server).query;
 
     const res = await query({
@@ -124,7 +150,7 @@ describe('Queries', () => {
     });
 
     expect(res.errors).toBeUndefined();
-    expect(res.data?.me.settings).toBeNull();
+    expect(res.data?.me.settings).toMatchObject({ language: 'de' });
     expect(res.data?.me.email).toBe('test@test.de');
   });
 });

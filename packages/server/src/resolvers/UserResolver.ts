@@ -109,4 +109,23 @@ export class UserResolver {
   settings(@Root() user: User, @Ctx() { prisma }: MyContext): Promise<Setting | null> {
     return prisma.setting.findUnique({ where: { userId: user.id } });
   }
+
+  @Mutation(() => Setting)
+  @UseMiddleware(isAuth)
+  async updateSettings(
+    @Ctx() { prisma, payload }: MyContext,
+    @Arg('language') language: string
+  ): Promise<Setting | null> {
+    if (!payload) {
+      return null;
+    }
+
+    // can be solved with triggers... not possible atm with prisma
+    const settings = await prisma.setting.findUnique({ where: { userId: payload.userId } });
+    if (!settings) {
+      return prisma.setting.create({ data: { userId: payload.userId, language } });
+    }
+
+    return prisma.setting.update({ where: { userId: payload.userId }, data: { language } });
+  }
 }

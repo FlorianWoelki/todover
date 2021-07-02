@@ -25,6 +25,7 @@ export const createUser = async (prisma: PrismaClient): Promise<void> => {
 export const cleanupUser = async (prisma: PrismaClient): Promise<void> => {
   const userExists = await prisma.user.findUnique({ where: { email } });
   if (userExists) {
+    await prisma.setting.delete({ where: { userId: userExists.id } });
     await prisma.user.delete({ where: { email } });
   }
 };
