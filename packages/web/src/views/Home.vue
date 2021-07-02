@@ -8,7 +8,12 @@
         <button class="text-red-400 focus:outline-none hover:text-red-500" @click="goWeekBack">
           <chevron-double-left-icon class="w-6 h-6" />
         </button>
-        <cog-icon class="w-6 h-6 text-red-200 cursor-not-allowed" />
+        <button
+          class="text-red-400 focus:outline-none hover:text-red-500"
+          @click="showSettingsModal = true"
+        >
+          <cog-icon class="w-6 h-6" />
+        </button>
       </div>
 
       <list-grid :current-date="new Date()" class="w-full h-full">
@@ -170,7 +175,14 @@
     ></todo-item-modal>
   </transition>
 
-  <hide-button v-if="selectedTodoItem || isCalendarVisible" @click="hideHideButton" />
+  <transition name="fade-in">
+    <settings-modal v-if="showSettingsModal" @hide-button="hideHideButton"></settings-modal>
+  </transition>
+
+  <hide-button
+    v-if="showSettingsModal || selectedTodoItem || isCalendarVisible"
+    @click="hideHideButton"
+  />
 </template>
 
 <script lang="ts">
@@ -213,6 +225,7 @@ export default defineComponent({
     const currentListItem = ref(0);
     const currentDate = ref(new Date());
     const extraDayIndex = ref(0);
+    const showSettingsModal = ref<boolean>(false);
 
     const { mutate: updateTodoMutation } = useMutation(mutations.updateTodo);
     const {
@@ -467,6 +480,7 @@ export default defineComponent({
 
     const hideHideButton = (): void => {
       isCalendarVisible.value = false;
+      showSettingsModal.value = false;
 
       if (selectedTodoItem.value) {
         updateTodoItem(selectedTodoItem.value.id, {
@@ -618,6 +632,7 @@ export default defineComponent({
     };
 
     return {
+      showSettingsModal,
       isNewTodoItemInserting,
       weeklyTodos,
       dailyTodos,
