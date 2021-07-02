@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 let request: Partial<Request>;
 let server: ApolloServer;
 
-const randomAccessToken = sign({ userId: 1 }, process.env.ACCESS_TOKEN_SECRET!, {
+const randomAccessToken = sign({ userId: -1 }, process.env.ACCESS_TOKEN_SECRET!, {
   expiresIn: '15m',
 });
 const unauthorizedRequest = {
