@@ -1,4 +1,14 @@
-import { Arg, Ctx, Int, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
+import {
+  Arg,
+  Ctx,
+  FieldResolver,
+  Int,
+  Mutation,
+  Query,
+  Resolver,
+  Root,
+  UseMiddleware,
+} from 'type-graphql';
 import { hash, compare } from 'bcryptjs';
 import { User } from '../entities/User';
 import { MyContext } from '../MyContext';
@@ -8,8 +18,9 @@ import { sendRefreshToken } from '../sendRefreshToken';
 import { isAuth } from '../isAuth';
 import { revokeRefreshToken } from '../utils/revokeRefreshToken';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
+import { Setting } from '../entities/Setting';
 
-@Resolver()
+@Resolver(() => User)
 export class UserResolver {
   @Query(() => User)
   @UseMiddleware(isAuth)
@@ -92,5 +103,10 @@ export class UserResolver {
   logout(@Ctx() { res }: MyContext): boolean {
     sendRefreshToken(res, '');
     return true;
+  }
+
+  @FieldResolver(() => Setting)
+  settings(@Root() user: User, @Ctx() { prisma }: MyContext) {
+    return prisma.setting.findUnique({ where: { userId: user.id } });
   }
 }

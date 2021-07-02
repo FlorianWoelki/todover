@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id           Int    @id @default(autoincrement())
-  email        String @unique @db.VarChar(255)
-  password     String @unique @db.VarChar(255)
-  tokenVersion Int    @default(0)
+  id           Int       @id @default(autoincrement())
+  email        String    @unique @db.VarChar(255)
+  password     String    @unique @db.VarChar(255)
+  tokenVersion Int       @default(0)
   todos        Todo[]
   lists        List[]
+  settings     Setting?
 }
 
 model List {
@@ -35,4 +36,10 @@ model Todo {
   list        List?     @relation(fields: [listId], references: [id])
   listId      String?
   description String?
+}
+
+model Setting {
+  userId   Int    @id
+  language String @default("en")
+  user     User   @relation(fields: [userId], references: [id])
 }
