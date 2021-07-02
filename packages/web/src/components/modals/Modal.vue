@@ -3,15 +3,13 @@
     <div class="flex items-center justify-center h-full">
       <div class="w-full max-w-xl px-6 py-4 bg-white rounded" @click.stop>
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-xl">{{ $t('settings.title') }}</h2>
+          <slot name="title"></slot>
           <button class="text-gray-500 hover:text-gray-600 focus:outline-none" @click="hideButton">
             <x-icon class="w-4 h-4"></x-icon>
           </button>
         </div>
 
-        <div class="flex items-center space-x-4">
-          <p>Language</p>
-        </div>
+        <slot></slot>
       </div>
     </div>
   </div>
