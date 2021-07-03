@@ -27,6 +27,7 @@
 import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
+  inheritAttrs: false,
   name: 'Dropdown',
   emits: ['close'],
   props: {
