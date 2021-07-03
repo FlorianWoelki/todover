@@ -4,6 +4,9 @@ export const me = gql`
   query Me {
     me {
       email
+      settings {
+        language
+      }
     }
   }
 `;

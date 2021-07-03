@@ -19,8 +19,13 @@ export interface Todo {
   description?: string;
 }
 
+export interface Settings {
+  language: string;
+}
+
 export interface Me {
   email?: string;
+  settings?: Settings;
 }
 
 export interface State {

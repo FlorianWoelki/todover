@@ -58,7 +58,7 @@
 
       <dropdown
         #="{ itemClasses }"
-        class="bg-gray-800"
+        class="ml-auto bg-gray-800 w-52"
         :dropdownHidden="dropdownHidden"
         @close.stop="dropdownHidden = true"
       >

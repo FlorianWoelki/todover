@@ -9,7 +9,7 @@
   >
     <div
       v-if="!dropdownHidden"
-      class="absolute inset-x-0 top-0 z-50 py-2 mt-10 ml-auto rounded-md shadow-lg w-52"
+      class="absolute inset-x-0 top-0 z-50 py-2 mt-10 rounded-md shadow-lg"
       v-bind="$attrs"
     >
       <slot :itemClasses="itemClasses"></slot>
