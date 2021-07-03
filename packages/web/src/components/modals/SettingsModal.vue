@@ -11,7 +11,8 @@
           class="px-4 py-2 text-gray-600 transition duration-100 ease-in-out bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200"
           @click="dropdownHidden = false"
         >
-          English
+          {{ currentLanguage.name }}
+          <span class="text-gray-500">({{ currentLanguage.slug }})</span>
         </div>
 
         <dropdown
@@ -36,7 +37,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
+import { useStore } from 'vuex';
+import { State } from '../../store';
 
 interface Language {
   slug: string;
@@ -46,6 +49,7 @@ interface Language {
 
 export default defineComponent({
   setup() {
+    const store = useStore<State>();
     const validLanguages: Language[] = [
       {
         slug: 'en',
@@ -59,9 +63,18 @@ export default defineComponent({
     ];
     const dropdownHidden = ref<boolean>(true);
 
+    const currentLanguage = computed(
+      (): Language => {
+        return !store.state.me?.settings
+          ? validLanguages.filter((lang) => lang.default)[0]
+          : validLanguages.filter((lang) => lang.slug === store.state.me?.settings?.language)[0];
+      }
+    );
+
     return {
       dropdownHidden,
       validLanguages,
+      currentLanguage,
     };
   },
 });
