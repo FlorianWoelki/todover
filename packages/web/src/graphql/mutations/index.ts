@@ -9,8 +9,10 @@ import { moveToList } from './list/moveToList';
 import { addTodoWithDate } from './todo/addTodoWithDate';
 import { addTodoToList } from './todo/addTodoToList';
 import { deleteTodo } from './todo/deleteTodo';
+import { updateSettings } from './user/updateSettings';
 
 export default {
+  updateSettings,
   login,
   logout,
   register,

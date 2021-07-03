@@ -119,6 +119,7 @@ export default defineComponent({
     const handleLogout = (): void => {
       logout().then(() => {
         store.commit(Mutation.SET_ME, undefined);
+        store.commit(Mutation.UPDATE_SETTINGS, undefined);
         store.commit(Mutation.SET_LISTS, []);
         store.commit(Mutation.SET_TODOS, []);
         setAccessToken('');
@@ -130,6 +131,7 @@ export default defineComponent({
 
     const user = useResult(result, null, (data) => {
       store.commit(Mutation.SET_ME, { value: data.me });
+      store.commit(Mutation.UPDATE_SETTINGS, data.me.settings);
       return data;
     });
 

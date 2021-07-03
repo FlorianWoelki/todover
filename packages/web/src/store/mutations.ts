@@ -1,5 +1,5 @@
 import { MutationTree } from 'vuex';
-import { List, Me, State, Todo } from './state';
+import { List, Me, Settings, State, Todo } from './state';
 
 export enum Mutation {
   ADD_TODO = 'ADD_TODO',
@@ -13,6 +13,7 @@ export enum Mutation {
   SET_LISTS = 'SET_LISTS',
   SET_TODOS = 'SET_TODOS',
   SET_SELECTED_TODO_ITEM = 'SET_SELECTED_TODO_ITEM',
+  UPDATE_SETTINGS = 'UPDATE_SETTINGS',
 }
 
 export type Mutations<S = State> = {
@@ -30,6 +31,7 @@ export type Mutations<S = State> = {
   [Mutation.SET_LISTS](state: S, value: List[]): void;
   [Mutation.SET_TODOS](state: S, value: Todo[]): void;
   [Mutation.SET_SELECTED_TODO_ITEM](state: S, value: Todo): void;
+  [Mutation.UPDATE_SETTINGS](state: S, value: Settings): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -94,5 +96,8 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [Mutation.SET_SELECTED_TODO_ITEM](state: State, value) {
     state.selectedTodoItem = value;
+  },
+  [Mutation.UPDATE_SETTINGS](state: State, value) {
+    state.userSettings = value;
   },
 };

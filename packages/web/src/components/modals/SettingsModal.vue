@@ -26,6 +26,7 @@
             :key="index"
             class="text-gray-800 hover:bg-gray-100"
             :class="itemClasses"
+            @click="selectLanguage(language)"
           >
             {{ language.name }}
             <span class="text-gray-500">({{ language.slug }})</span>
@@ -37,9 +38,11 @@
 </template>
 
 <script lang="ts">
+import { useMutation } from '@vue/apollo-composable';
 import { computed, defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
-import { State } from '../../store';
+import mutations from '../../graphql/mutations';
+import { Mutation, State } from '../../store';
 
 interface Language {
   slug: string;
@@ -65,13 +68,23 @@ export default defineComponent({
 
     const currentLanguage = computed(
       (): Language => {
-        return !store.state.me?.settings
+        return !store.state.userSettings
           ? validLanguages.filter((lang) => lang.default)[0]
-          : validLanguages.filter((lang) => lang.slug === store.state.me?.settings?.language)[0];
+          : validLanguages.filter((lang) => lang.slug === store.state.userSettings?.language)[0];
       }
     );
 
+    const { mutate: updateSettingsMutation } = useMutation(mutations.updateSettings);
+    const selectLanguage = (language: Language): void => {
+      if (store.state.me) {
+        updateSettingsMutation({ language: language.slug });
+      }
+      store.commit(Mutation.UPDATE_SETTINGS, { language: language.slug });
+      dropdownHidden.value = true;
+    };
+
     return {
+      selectLanguage,
       dropdownHidden,
       validLanguages,
       currentLanguage,

@@ -25,7 +25,6 @@ export interface Settings {
 
 export interface Me {
   email?: string;
-  settings?: Settings;
 }
 
 export interface State {
@@ -34,6 +33,7 @@ export interface State {
   loading: boolean;
   selectedTodoItem?: Todo;
   me?: Me;
+  userSettings?: Settings;
 }
 
 export const state: State = {
