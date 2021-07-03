@@ -77,7 +77,7 @@ export default defineComponent({
     const { mutate: updateSettingsMutation } = useMutation(mutations.updateSettings);
     const selectLanguage = (language: Language): void => {
       if (store.state.me) {
-        updateSettingsMutation({ language: language.slug });
+        updateSettingsMutation({ data: { language: language.slug } });
       }
       store.commit(Mutation.UPDATE_SETTINGS, { language: language.slug });
       dropdownHidden.value = true;
