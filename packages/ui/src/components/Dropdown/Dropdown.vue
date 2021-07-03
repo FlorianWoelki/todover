@@ -9,7 +9,8 @@
   >
     <div
       v-if="!dropdownHidden"
-      class="absolute inset-x-0 top-0 z-50 py-2 mt-10 ml-auto bg-gray-800 rounded-md shadow-lg w-52"
+      class="absolute inset-x-0 top-0 z-50 py-2 mt-10 ml-auto rounded-md shadow-lg w-52"
+      v-bind="$attrs"
     >
       <slot :itemClasses="itemClasses"></slot>
     </div>
@@ -40,7 +41,7 @@ export default defineComponent({
     };
 
     const itemClasses = computed(
-      () => 'px-4 py-2 transition duration-100 ease-in-out cursor-pointer hover:bg-gray-900'
+      () => 'px-4 py-2 transition duration-100 ease-in-out cursor-pointer'
     );
 
     return {

@@ -58,10 +58,13 @@
 
       <dropdown
         #="{ itemClasses }"
+        class="bg-gray-800"
         :dropdownHidden="dropdownHidden"
         @close.stop="dropdownHidden = true"
       >
-        <p :class="itemClasses" @click="handleLogout">{{ $t('navbar.logoutButton') }}</p>
+        <p class="hover:bg-gray-900" :class="itemClasses" @click="handleLogout">
+          {{ $t('navbar.logoutButton') }}
+        </p>
       </dropdown>
     </div>
 
