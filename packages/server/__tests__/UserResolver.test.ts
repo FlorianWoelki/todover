@@ -47,8 +47,8 @@ const ME = gql`
 `;
 
 const UPDATE_SETTINGS = gql`
-  mutation updateSettings($language: String!) {
-    updateSettings(language: $language) {
+  mutation updateSettings($data: UpdateSettingsInput!) {
+    updateSettings(data: $data) {
       userId
       language
     }
@@ -99,20 +99,39 @@ describe('Mutations', () => {
     request = { headers: { authorization: `bearer ${token}` } };
   });
 
-  it('updateSettings - change language', async () => {
+  it('updateSettings - change language to de', async () => {
     server = (await constructTestServer(prisma, request)).server;
     const mutate = createTestClient(server).mutate;
 
     const res = await mutate({
       mutation: UPDATE_SETTINGS,
       variables: {
-        language: 'de',
+        data: {
+          language: 'de',
+        },
       },
     });
 
     expect(res.errors).toBeUndefined();
     expect(res.data?.updateSettings.userId).toBeDefined();
     expect(res.data?.updateSettings.language).toBe('de');
+  });
+
+  it('updateSettings - change language to invalid slug', async () => {
+    server = (await constructTestServer(prisma, request)).server;
+    const mutate = createTestClient(server).mutate;
+
+    const res = await mutate({
+      mutation: UPDATE_SETTINGS,
+      variables: {
+        data: {
+          language: 'hello',
+        },
+      },
+    });
+
+    expect(res.errors).toBeDefined();
+    expect(res.data).toBeNull();
   });
 });
 

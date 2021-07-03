@@ -19,6 +19,7 @@ import { isAuth } from '../isAuth';
 import { revokeRefreshToken } from '../utils/revokeRefreshToken';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
 import { Setting } from '../entities/Setting';
+import { UpdateSettingsInput } from './input/UpdateSettingsInput';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -114,7 +115,7 @@ export class UserResolver {
   @UseMiddleware(isAuth)
   async updateSettings(
     @Ctx() { prisma, payload }: MyContext,
-    @Arg('language') language: string
+    @Arg('data') data: UpdateSettingsInput
   ): Promise<Setting | null> {
     if (!payload) {
       return null;
@@ -123,9 +124,9 @@ export class UserResolver {
     // can be solved with triggers... not possible atm with prisma
     const settings = await prisma.setting.findUnique({ where: { userId: payload.userId } });
     if (!settings) {
-      return prisma.setting.create({ data: { userId: payload.userId, language } });
+      return prisma.setting.create({ data: { userId: payload.userId, ...data } });
     }
 
-    return prisma.setting.update({ where: { userId: payload.userId }, data: { language } });
+    return prisma.setting.update({ where: { userId: payload.userId }, data });
   }
 }
