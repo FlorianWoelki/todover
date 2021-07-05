@@ -106,8 +106,14 @@ export default defineComponent({
         return;
       }
 
-      if (inputField.value.inputField.value.length > 0) {
-        emit('updateItem', inputField.value.inputField.value);
+      if (inputField.value.inputField.value) {
+        if (inputField.value.inputField.value.length > 0) {
+          emit('updateItem', inputField.value.inputField.value);
+        }
+      } else {
+        if (inputField.value.inputField.innerText.length > 0) {
+          emit('updateItem', inputField.value.inputField.innerText);
+        }
       }
 
       disabled.value = true;
