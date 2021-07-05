@@ -134,7 +134,6 @@ export default defineComponent({
     const user = useResult(result, null, (data) => {
       if (data.me.settings) {
         locale.value = data.me.settings.language;
-        console.log(locale.value);
       }
 
       store.commit(Mutation.SET_ME, { value: data.me });

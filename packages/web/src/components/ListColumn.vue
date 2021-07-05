@@ -104,13 +104,13 @@ export default defineComponent({
     const isOldDay = computed((): boolean => activeItem - 1 - props.extraDayIndex >= props.index);
 
     const currentDay = computed((): string =>
-      columnDate.value ? days[mod(columnDate.value.getDay(), days.length)] : ''
+      columnDate.value ? days()[mod(columnDate.value.getDay(), days().length)] : ''
     );
 
     const printedDate = computed((): string =>
       columnDate.value
         ? `${printedDay.value}.
-          ${months[columnDate.value.getMonth()]}
+          ${months()[columnDate.value.getMonth()]}
           ${columnDate.value.getFullYear()}`
         : ''
     );

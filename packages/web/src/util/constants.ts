@@ -2,7 +2,7 @@ import { translate } from '@todover/i18n/src/i18n';
 
 export const staticItemClass = 'static-item';
 
-export const days = [
+export const days = () => [
   translate('days.sunday.name'),
   translate('days.monday.name'),
   translate('days.tuesday.name'),
@@ -12,7 +12,7 @@ export const days = [
   translate('days.saturday.name'),
 ];
 
-export const months = [
+export const months = () => [
   translate('months.january.name'),
   translate('months.february.name'),
   translate('months.march.name'),
