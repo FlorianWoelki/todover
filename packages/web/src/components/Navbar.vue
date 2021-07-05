@@ -90,6 +90,7 @@ import SearchResult from '@/components/SearchResult.vue';
 import Logo from '@/assets/logo.svg';
 import { Todo } from '../store/state';
 import MenuIcon from '../assets/icons/menu-alt3.svg';
+import { useI18n } from 'vue-i18n';
 
 interface ISearchbar {
   focused: boolean;
@@ -104,6 +105,7 @@ export default defineComponent({
     MenuIcon,
   },
   setup() {
+    const { locale } = useI18n({ useScope: 'global' });
     const store = useStore<State>();
     const loggedIn = ref<boolean>(getAccessToken() !== '');
     const searchbar = reactive<ISearchbar>({
@@ -130,6 +132,11 @@ export default defineComponent({
     const { result } = useQuery(queries.me);
 
     const user = useResult(result, null, (data) => {
+      if (data.me.settings) {
+        locale.value = data.me.settings.language;
+        console.log(locale.value);
+      }
+
       store.commit(Mutation.SET_ME, { value: data.me });
       store.commit(Mutation.UPDATE_SETTINGS, data.me.settings);
       return data;

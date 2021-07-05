@@ -1,0 +1,124 @@
+{
+  "todoItemModal": {
+    "description": {
+      "label": "ToDo Beschreibung",
+      "placeholder": "Gebe deine Beschreibung ein..."
+    },
+    "repetition": {
+      "label": "ToDo wiederholen?",
+      "weekly": "Wöchentlich",
+      "daily": "Täglich"
+    }
+  },
+  "emptyTodoPlaceholder": "Doppelt klicken",
+  "noLists": "Es existieren keine Listen :(",
+  "preview": "Preview - Kein Speichern!",
+  "helpTranslating": "Willst du helfen zu übersetzen?",
+  "settings": {
+    "title": "Einstellungen"
+  },
+  "login": {
+    "header": "Dein Account einloggen",
+    "registerLink": "Kein Account? Kein Problem!",
+    "signInButton": "Einloggen",
+    "error": "Falsche E-Mail Adresse oder falsches Passwort",
+    "passwordLabel": "Passwort",
+    "emailLabel": "E-Mail Adresse"
+  },
+  "register": {
+    "header": "Erstellen eines Accounts",
+    "loginLink": "Du hast ein Account? Kein Problem!",
+    "emailLabel": "E-Mail Adresse",
+    "passwordLabel": "Passwort",
+    "passwordRepeatLabel": "Passwort wiederholen",
+    "registerButton": "Account erstellen"
+  },
+  "navbar": {
+    "registerButton": "Registrieren",
+    "loginButton": "Einloggen",
+    "logoutButton": "Ausloggen",
+    "search": {
+      "placeholder": "Suchen ..."
+    }
+  },
+  "days": {
+    "monday": {
+      "name": "Montag",
+      "short": "Mo"
+    },
+    "tuesday": {
+      "name": "Dienstag",
+      "short": "Di"
+    },
+    "wednesday": {
+      "name": "Mittwoch",
+      "short": "Mi"
+    },
+    "thursday": {
+      "name": "Donnerstag",
+      "short": "Do"
+    },
+    "friday": {
+      "name": "Freitag",
+      "short": "Fr"
+    },
+    "saturday": {
+      "name": "Samstag",
+      "short": "Sa"
+    },
+    "sunday": {
+      "name": "Sonntag",
+      "short": "So"
+    }
+  },
+  "months": {
+    "january": {
+      "name": "Januar",
+      "short": "Jan"
+    },
+    "february": {
+      "name": "Februar",
+      "short": "Feb"
+    },
+    "march": {
+      "name": "März",
+      "short": "Mär"
+    },
+    "april": {
+      "name": "April",
+      "short": "Apr"
+    },
+    "may": {
+      "name": "Mai",
+      "short": "Mai"
+    },
+    "june": {
+      "name": "Juni",
+      "short": "Jun"
+    },
+    "july": {
+      "name": "Juli",
+      "short": "Jul"
+    },
+    "august": {
+      "name": "August",
+      "short": "Aug"
+    },
+    "september": {
+      "name": "September",
+      "short": "Sep"
+    },
+    "october": {
+      "name": "Oktober",
+      "short": "Okt"
+    },
+    "november": {
+      "name": "November",
+      "short": "Nov"
+    },
+    "december": {
+      "name": "Dezember",
+      "short": "Dez"
+    }
+  }
+}
