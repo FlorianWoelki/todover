@@ -108,7 +108,7 @@ export default defineComponent({
 
       signupLoading.value = true;
 
-      register({ email: email.value, password: password.value })
+      register({ data: { email: email.value, password: password.value } })
         .then((result) => {
           if (result.data) {
             router.push('/login');

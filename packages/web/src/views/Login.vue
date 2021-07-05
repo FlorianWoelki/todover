@@ -97,7 +97,7 @@ export default defineComponent({
 
       loginLoading.value = true;
 
-      login({ email: email.value, password: password.value })
+      login({ data: { email: email.value, password: password.value } })
         .then((result) => {
           if (result.data) {
             setAccessToken(result.data.login.accessToken);
