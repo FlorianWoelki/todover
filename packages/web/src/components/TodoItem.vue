@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex items-center justify-between px-2 mx-4 bg-white border-b border-gray-200 border-dashed rounded hover:bg-gray-100 focus-within:bg-gray-100"
+    class="relative flex items-start justify-between px-2 mx-4 bg-white border-b border-gray-200 border-dashed rounded hover:bg-gray-100 focus-within:bg-gray-100"
     :class="{ [staticItemClass]: noDblClick, [dragClasses]: true }"
     :draggable="!noDblClick"
     @click="noDblClick ? focusInputField() : handleOnClick($event)"
@@ -59,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, ref } from '@vue/runtime-core';
+import { defineComponent, nextTick, ref } from '@vue/runtime-core';
 import { staticItemClass, dragAndDropDataId } from '@/util/constants';
 
 export default defineComponent({
