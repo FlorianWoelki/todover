@@ -20,6 +20,7 @@ import { revokeRefreshToken } from '../utils/revokeRefreshToken';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
 import { Setting } from '../entities/Setting';
 import { UpdateSettingsInput } from './input/UpdateSettingsInput';
+import { UserInput } from './input/UserInput';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -48,20 +49,16 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  async register(
-    @Ctx() { prisma }: MyContext,
-    @Arg('email') email: string,
-    @Arg('password') password: string
-  ): Promise<User> {
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+  async register(@Ctx() { prisma }: MyContext, @Arg('data') data: UserInput): Promise<User> {
+    const existingUser = await prisma.user.findUnique({ where: { email: data.email } });
     if (existingUser) {
       throw new UserInputError('Specified `email` already exists');
     }
 
-    const hashedPassword = await hash(password, SALT);
+    const hashedPassword = await hash(data.password, SALT);
 
     const user = prisma.user.create({
-      data: { email: email.toLowerCase(), password: hashedPassword },
+      data: { email: data.email.toLowerCase(), password: hashedPassword },
     });
     return user;
   }
@@ -69,15 +66,14 @@ export class UserResolver {
   @Mutation(() => LoginResponse, { nullable: true })
   async login(
     @Ctx() { prisma, res }: MyContext,
-    @Arg('email') email: string,
-    @Arg('password') password: string
+    @Arg('data') data: UserInput
   ): Promise<LoginResponse | null> {
-    const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
+    const user = await prisma.user.findUnique({ where: { email: data.email.toLowerCase() } });
     if (!user) {
       throw new UserInputError('Invalid credentials input');
     }
 
-    const isValid = await compare(password, user.password);
+    const isValid = await compare(data.password, user.password);
     if (!isValid) {
       throw new UserInputError('Invalid credentials input');
     }

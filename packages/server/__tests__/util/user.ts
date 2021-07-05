@@ -38,8 +38,8 @@ export const cleanupUser = async (prisma: PrismaClient): Promise<void> => {
 };
 
 const LOGIN = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation login($data: UserInput!) {
+    login(data: $data) {
       accessToken
     }
   }
@@ -51,8 +51,10 @@ export const login = async (server: ApolloServer): Promise<Partial<Request>> => 
   const res = await mutate({
     mutation: LOGIN,
     variables: {
-      email,
-      password,
+      data: {
+        email,
+        password,
+      },
     },
   });
 

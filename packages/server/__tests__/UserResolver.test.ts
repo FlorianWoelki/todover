@@ -20,16 +20,16 @@ const unauthorizedRequest = {
 };
 
 const REGISTER = gql`
-  mutation register($email: String!, $password: String!) {
-    register(email: $email, password: $password) {
+  mutation register($data: UserInput!) {
+    register(data: $data) {
       email
     }
   }
 `;
 
 const LOGIN = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation login($data: UserInput!) {
+    login(data: $data) {
       accessToken
     }
   }
@@ -73,8 +73,10 @@ describe('Mutations', () => {
     const res = await mutate({
       mutation: REGISTER,
       variables: {
-        email: 'test@test.de',
-        password: '123',
+        data: {
+          email: 'test@test.de',
+          password: '123',
+        },
       },
     });
 
@@ -88,8 +90,10 @@ describe('Mutations', () => {
     const res = await mutate({
       mutation: LOGIN,
       variables: {
-        email: 'test@test.de',
-        password: '123',
+        data: {
+          email: 'test@test.de',
+          password: '123',
+        },
       },
     });
 
