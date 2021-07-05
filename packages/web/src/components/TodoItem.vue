@@ -11,6 +11,7 @@
   >
     <title-input
       ref="inputField"
+      class="text-sm xl:text-base"
       :class="{
         'cursor-pointer': disabled,
         'cursor-text': !disabled || noDblClick,
@@ -19,11 +20,12 @@
       @keydown.enter="blurInputField"
       @blur="blurInputField"
       :disabled="disabled"
+      :hovered="isHovered && !noDblClick"
       v-bind="$attrs"
     ></title-input>
 
-    <div class="relative w-full -mt-4 -ml-4">
-      <div v-if="loading" class="absolute inset-y-0 mx-auto">
+    <div v-if="loading" class="relative w-full -mt-4 -ml-4">
+      <div class="absolute inset-y-0 mx-auto">
         <svg
           class="w-4 h-4 text-red-400 animate-spin"
           xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, ref } from '@vue/runtime-core';
+import { computed, defineComponent, nextTick, ref } from '@vue/runtime-core';
 import { staticItemClass, dragAndDropDataId } from '@/util/constants';
 
 export default defineComponent({

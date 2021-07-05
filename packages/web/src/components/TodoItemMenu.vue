@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-between space-x-2">
+  <div class="z-50 flex items-center justify-between pl-2 space-x-2">
     <button
       type="button"
       class="text-gray-400 hover:text-gray-500 focus:outline-none"
