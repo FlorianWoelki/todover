@@ -5,7 +5,9 @@
     </template>
 
     <div class="flex items-center mb-4 space-x-12">
-      <p class="text-gray-500">Language</p>
+      <p class="text-gray-500">
+        {{ $t('settings.language.label') }}
+      </p>
       <div class="relative w-full">
         <div
           class="px-4 py-2 text-gray-600 transition duration-100 ease-in-out bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200"

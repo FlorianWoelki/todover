@@ -15,7 +15,10 @@
   "preview": "Preview - No saving!",
   "helpTranslating": "Want to help translating?",
   "settings": {
-    "title": "Settings"
+    "title": "Settings",
+    "language": {
+      "label": "Language"
+    }
   },
   "login": {
     "header": "Sign in to your account",
@@ -38,7 +41,8 @@
     "loginButton": "Sign in",
     "logoutButton": "Logout",
     "search": {
-      "placeholder": "Search ..."
+      "placeholder": "Search ...",
+      "noResults": "No results"
     }
   },
   "days": {

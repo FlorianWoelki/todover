@@ -24,7 +24,9 @@
             v-if="searchbar.focused"
             class="absolute top-0 left-0 z-50 w-56 p-4 mt-10 space-y-1 bg-white rounded-md shadow-md md:w-80"
           >
-            <p v-if="searchbar.results.length === 0" class="px-4 py-2 text-gray-400">No results</p>
+            <p v-if="searchbar.results.length === 0" class="px-4 py-2 text-gray-400">
+              {{ $t('navbar.search.noResults') }}
+            </p>
             <div v-else class="space-y-1">
               <search-result
                 v-for="(searchResult, index) in searchbar.results"

@@ -15,7 +15,10 @@
   "preview": "Preview - Kein Speichern!",
   "helpTranslating": "Willst du helfen zu übersetzen?",
   "settings": {
-    "title": "Einstellungen"
+    "title": "Einstellungen",
+    "language": {
+      "label": "Sprache"
+    }
   },
   "login": {
     "header": "Dein Account einloggen",
@@ -38,7 +41,8 @@
     "loginButton": "Einloggen",
     "logoutButton": "Ausloggen",
     "search": {
-      "placeholder": "Suchen ..."
+      "placeholder": "Suchen ...",
+      "noResults": "Keine Ergebnisse"
     }
   },
   "days": {
