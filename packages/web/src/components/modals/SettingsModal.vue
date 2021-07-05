@@ -4,7 +4,7 @@
       <h2 class="text-xl">{{ $t('settings.title') }}</h2>
     </template>
 
-    <div class="flex items-center space-x-12">
+    <div class="flex items-center mb-4 space-x-12">
       <p class="text-gray-500">Language</p>
       <div class="relative w-full">
         <div
@@ -34,6 +34,14 @@
         </dropdown>
       </div>
     </div>
+
+    <a
+      target="_blank"
+      href="https://github.com/FlorianWoelki/todover/blob/main/README.md#want-to-help-translating"
+      class="text-gray-400 transition duration-100 ease-in-out hover:text-gray-500"
+    >
+      {{ $t('helpTranslating') }}
+    </a>
   </modal>
 </template>
 
