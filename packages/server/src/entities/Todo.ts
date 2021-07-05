@@ -2,7 +2,10 @@ import { Field, ID, ObjectType } from 'type-graphql';
 import { List } from './List';
 import { User } from './User';
 
-export type TodoRepetition = 'weekly' | 'daily';
+export enum TodoRepetition {
+  weekly = 'weekly',
+  daily = 'daily',
+}
 
 @ObjectType()
 export class Todo {

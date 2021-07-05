@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { createTestClient } from 'apollo-server-testing';
 import { Request } from 'express';
-import { Todo } from '../src/entities/Todo';
+import { Todo, TodoRepetition } from '../src/entities/Todo';
 import { constructTestServer } from './util/server';
 import { cleanupUser, createUser, login } from './util/user';
 
@@ -206,7 +206,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.repetition).toBe('weekly');
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(null);
-    todo.repetition = 'weekly';
+    todo.repetition = TodoRepetition.weekly;
   });
 
   it('updateTodo - change description', async () => {
