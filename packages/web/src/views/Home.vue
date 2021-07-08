@@ -91,6 +91,13 @@
     </div>
 
     <div class="flex items-center justify-between p-2 bg-gray-500">
+      <a
+        href="https://github.com/FlorianWoelki/todover"
+        target="_blank"
+        class="flex items-center justify-center text-gray-300 rounded-lg hover:text-gray-100 hover:text-gray-200 focus:outline-none"
+      >
+        <github-logo class="w-8 h-8"></github-logo>
+      </a>
       <div></div>
       <button
         class="flex items-center justify-center text-gray-300 rounded-lg hover:text-gray-100 hover:text-gray-200 focus:outline-none"
@@ -193,6 +200,7 @@ import ChevronLeftIcon from '../assets/icons/chevron-left.svg';
 import ChevronDoubleLeftIcon from '../assets/icons/chevron-double-left.svg';
 import ChevronRightIcon from '../assets/icons/chevron-right.svg';
 import PlusIcon from '../assets/icons/plus.svg';
+import GithubLogo from '../assets/github-logo.svg';
 import ChevronDoubleRightIcon from '../assets/icons/chevron-double-right.svg';
 import CogIcon from '../assets/icons/cog.svg';
 import CalendarIcon from '../assets/icons/calendar.svg';
@@ -206,6 +214,7 @@ import mutations from '../graphql/mutations';
 
 export default defineComponent({
   components: {
+    GithubLogo,
     ChevronLeftIcon,
     ChevronRightIcon,
     ChevronDoubleLeftIcon,
