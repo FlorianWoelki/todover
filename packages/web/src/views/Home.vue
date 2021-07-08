@@ -349,7 +349,7 @@ export default defineComponent({
         }
 
         addTodoWithDateMutation({ data: { name: value, date } }).then((result) => {
-          if (result.data) {
+          if (result?.data) {
             newTodoItemInputField.value = '';
             newTodoInsertingInput.value = '';
             store.commit(Mutation.ADD_TODO, {
@@ -377,7 +377,7 @@ export default defineComponent({
         }
 
         addTodoToListMutation({ data: { name: value, listId } }).then((result) => {
-          if (result.data) {
+          if (result?.data) {
             newTodoItemInputField.value = '';
             newTodoInsertingInput.value = '';
             store.commit(Mutation.ADD_TODO, {
@@ -524,7 +524,7 @@ export default defineComponent({
       }
 
       createListMutation({ name: 'Unnamed' }).then((result) => {
-        if (result.data) {
+        if (result?.data) {
           store.commit(Mutation.CREATE_LIST, result.data.createList);
         }
       });
@@ -619,7 +619,7 @@ export default defineComponent({
             repetition: todo.repetition,
           },
         }).then((result) => {
-          if (result.data) {
+          if (result?.data) {
             store.commit(Mutation.ADD_TODO, {
               value: {
                 ...(result.data.addTodoWithDate as Todo),

@@ -99,7 +99,7 @@ export default defineComponent({
 
       login({ data: { email: email.value, password: password.value } })
         .then((result) => {
-          if (result.data) {
+          if (result?.data) {
             setAccessToken(result.data.login.accessToken);
             router.push('/');
           }

@@ -110,7 +110,7 @@ export default defineComponent({
 
       register({ data: { email: email.value, password: password.value } })
         .then((result) => {
-          if (result.data) {
+          if (result?.data) {
             router.push('/login');
           }
         })
