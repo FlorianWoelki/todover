@@ -29,18 +29,35 @@ todover is being built with the different technologies:
 * TypeScript
 * Prisma, Apollo and GraphQL
 
-## Getting Started
+## Creating your own version
 
-### Prerequisites
+If you are scared of your data and because todover is an open source project, you can always create and install your own version of this application. Feel free to manipulate or redesign it.
 
 ### Installation
 
-## Usage
+Coming Soon.
 
 ## Roadmap
 
+You can find the official projects in the [projects page](https://github.com/FlorianWoelki/todover/projects).
+
+If you want to participate and design the future of todover, feel free to [contribute](https://github.com/FlorianWoelki/todover/blob/main/.github/CONTRIBUTING.md)!
+
 ## Contribution & Pull Requests
+
+If you want to contribute and create pull requests, make sure to read the [contribution guidelines](https://github.com/FlorianWoelki/todover/blob/main/.github/CONTRIBUTING.md).
+
+Every help is appreciated!
 
 ### Want to help translating?
 
+Understanding more than two languages can be challenging. Therefore, if you want to contribute by adding your tongue or fixing a translation issue, just follow this guide:
+
+1. If you want to [clone the project](https://github.com/FlorianWoelki/todover/blob/main/.github/CONTRIBUTING.md), clone and fork it now
+  1. Go to `packages/i18n/locales` and fix the translation issue in the corresponding file 
+  2. Go to `packages/i18n/locales` and add your language file of the type `json`
+3. Commit and create a pull request for your translation
+
 ## License
+
+[MIT](https://opensource.org/licenses/MIT)
