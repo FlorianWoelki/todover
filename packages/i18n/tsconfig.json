@@ -11,7 +11,8 @@
     "types": ["@intlify/vite-plugin-vue-i18n/client"],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
   "exclude": ["node_modules", "dist", "public", "tests"]

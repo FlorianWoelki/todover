@@ -1,11 +1,15 @@
 import { createI18n } from 'vue-i18n';
-import messages from '@intlify/vite-plugin-vue-i18n/messages';
+import en from '../locales/en.json';
+import de from '../locales/de.json';
 
 const i18n = createI18n({
   legacy: false,
   locale: 'en',
   globalInjection: true,
-  messages,
+  messages: {
+    en,
+    de,
+  },
 });
 
 const translate = (key: string): string => {
