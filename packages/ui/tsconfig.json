@@ -9,7 +9,8 @@
     "jsx": "preserve",
     "sourceMap": false,
     "lib": ["esnext", "dom"],
-    "allowJs": true
+    "allowJs": true,
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
   "exclude": ["node_modules", "dist", "scripts"]

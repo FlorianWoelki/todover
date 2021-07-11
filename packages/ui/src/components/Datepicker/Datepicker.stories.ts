@@ -5,7 +5,7 @@ export default {
   component: MyDatepicker,
 };
 
-const Template = (args) => ({
+const Template = () => ({
   components: { MyDatepicker },
   template: '<my-datepicker />',
 });

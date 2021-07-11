@@ -5,7 +5,7 @@ export default {
   component: MyDropdown,
 };
 
-const Template = (args) => ({
+const Template = () => ({
   components: { MyDropdown },
   template: '<my-dropdown><p>Test Item 1</p><p>Test Item 2</p></my-dropdown>',
 });

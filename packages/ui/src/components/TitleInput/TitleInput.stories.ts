@@ -5,7 +5,7 @@ export default {
   component: MyTitleInput,
 };
 
-const Template = (args) => ({
+const Template = () => ({
   components: { MyTitleInput },
   template: '<my-title-input />',
 });

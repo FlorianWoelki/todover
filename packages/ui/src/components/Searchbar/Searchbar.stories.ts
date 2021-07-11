@@ -5,7 +5,7 @@ export default {
   component: MySearchbar,
 };
 
-const Template = (args) => ({
+const Template = () => ({
   components: { MySearchbar },
   template: '<my-searchbar />',
 });

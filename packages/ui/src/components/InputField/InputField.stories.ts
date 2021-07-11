@@ -5,7 +5,7 @@ export default {
   component: MyInputField,
 };
 
-const Template = (args) => ({
+const Template = () => ({
   components: { MyInputField },
   template: '<my-input-field />',
 });
