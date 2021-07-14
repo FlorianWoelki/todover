@@ -9,6 +9,7 @@
     "prisma:generate": "prisma generate",
     "db:push": "prisma db push --preview-feature",
     "build": "tsc",
+    "prestart": "npm run db:push",
     "start": "node dist/index.js",
     "test": "jest -i"
   },
