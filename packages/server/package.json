@@ -8,6 +8,8 @@
     "prisma:introspect": "npx prisma introspect",
     "prisma:generate": "npx prisma generate",
     "db:push": "prisma db push --preview-feature",
+    "build": "tsc",
+    "start": "node dist/index.js",
     "test": "jest -i"
   },
   "keywords": [],
