@@ -2,6 +2,11 @@ FROM node:14.17-alpine AS builder
 
 WORKDIR /usr/src/app
 
+RUN \
+  apk-get update && \
+  apt-get install -y git && \
+  rm -rf /var/lib/apt/lists/*
+
 COPY package*.json ./
 
 RUN npm install
