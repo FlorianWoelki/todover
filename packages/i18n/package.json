@@ -1,5 +1,8 @@
 {
   "name": "@todover/i18n",
   "version": "1.0.0",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "vue-i18n": "^9.1.7"
+  }
 }
