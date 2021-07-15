@@ -4,10 +4,9 @@ FROM node:14.17-alpine AS builder
 # set working directory to /app
 WORKDIR /usr/src/app
 
-# update env, install git, typescript and prisma cli
+# update env, typescript and prisma cli
 RUN \
-  apk-get update && \
-  apt-get install -y git && \
+  apk update && \
   npm install -g typescript --loglevel notice && \
   npm install -g prisma --loglevel notice && \
   rm -rf /var/lib/apt/lists/*
