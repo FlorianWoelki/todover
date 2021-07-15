@@ -1,0 +1,33 @@
+# stage 1 building web project
+FROM node:14.17-alpine AS builder
+
+WORKDIR /usr/src/app
+
+RUN \
+  apk update && \
+  npm install -g lerna --loglevel notice && \
+  rm -rf /var/lib/apt/lists/*
+
+COPY package.json .
+RUN npm install --loglevel notice
+
+COPY packages/i18n ./packages/i18n
+COPY packages/ui ./packages/ui
+COPY packages/web ./packages/web
+
+COPY lerna.json .
+
+RUN lerna bootstrap
+
+RUN npm run --prefix packages/web build
+
+# stage 2 nginx server
+FROM nginx:alpine
+
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+
+COPY --from=builder /usr/src/app/packages/web/dist/ .
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
