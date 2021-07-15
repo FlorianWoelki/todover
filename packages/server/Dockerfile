@@ -5,13 +5,13 @@ WORKDIR /usr/src/app
 RUN \
   apk-get update && \
   apt-get install -y git && \
+  npm install -g typescript --loglevel notice && \
+  npm install -g prisma --loglevel notice && \
   rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
 
-RUN npm install
-RUN npm install -g typescript
-RUN npm install -g prisma
+RUN npm install --loglevel notice
 
 COPY . .
 
