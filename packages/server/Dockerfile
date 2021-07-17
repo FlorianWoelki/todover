@@ -30,4 +30,5 @@ RUN npm run build
 CMD ["npm", "run", "start"]
 
 # expose 4000 port
-EXPOSE 4000
+ENV PORT 4000
+EXPOSE ${PORT}
