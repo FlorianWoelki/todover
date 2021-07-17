@@ -49,6 +49,28 @@ If you want to contribute and create pull requests, make sure to read the [contr
 
 Every help is appreciated!
 
+### Setup environment
+
+You can follow these steps to setup your local development. Make sure you have installed a postgres database with a valid database that you can use for development.
+
+1. Clone the repository
+```sh
+$ git clone https://github.com/FlorianWoelki/todover.git
+$ cd todover
+```
+2. Install all dependencies
+```sh
+$ yarn install
+$ yarn bootstrap
+```
+3. Go into `/packages/server` and create a new `.env` file. Make sure that you copy and fill in all key value pairs of the `.env.example` file
+4. Do the same with the `/packages/web` directory
+5. Start the server and vite development server
+```sh
+$ cd /packages/server && yarn dev
+$ cd /packages/web && yarn dev
+```
+
 ### Want to help translating?
 
 Understanding more than two languages can be challenging. Therefore, if you want to contribute by adding your tongue or fixing a translation issue, just follow this guide:
