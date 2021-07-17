@@ -13,8 +13,9 @@ import { sendRefreshToken } from './sendRefreshToken';
 import { createSchema } from './utils/createSchema';
 
 (async () => {
+  const originHosts = process.env.ORIGINS!.replace(/\s/g, '').split(',');
   const corsOptions: CorsOptions = {
-    origin: 'http://localhost:3000', // TODO: change to env variables
+    origin: originHosts,
     credentials: true,
     optionsSuccessStatus: 204,
   };
