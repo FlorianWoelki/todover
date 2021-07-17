@@ -59,7 +59,8 @@ import { createSchema } from './utils/createSchema';
 
   apolloServer.applyMiddleware({ app, path: '/graphql', cors: corsOptions });
 
-  app.listen(4000, () => {
-    console.log('server started on port 4000');
+  const port = process.env.PORT;
+  app.listen(port, () => {
+    console.log(`server started on port ${port}`);
   });
 })();
