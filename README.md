@@ -35,10 +35,11 @@ If you are scared of your data and because todover is an open source project, yo
 
 ### Installation
 
-The first step of your custom installation is to clone the repository.
+The first step of your custom installation is to clone the repository and install the dependencies.
 ```sh
 $ git clone https://github.com/FlorianWoelki/todover.git
 $ cd todover
+$ yarn && yarn bootstrap
 ```
 
 Now, there are two possibilities to deploy your version of the software.
@@ -64,6 +65,26 @@ $ docker-compose up --build
 Now, you have a running GraphQL server on port `4000`.
 
 **Build Commands**
+
+If you want to deploy your version of the software with commands, you can follow these steps.
+
+Build the frontend:
+```sh
+$ cd /packages/web
+$ yarn build
+```
+
+Build the server:
+```sh
+$ cd /packages/server
+$ yarn build
+```
+
+You could also use lerna to build. This will execute the command `build` in every package:
+```sh
+$ cd /todover
+$ yarn build
+```
 
 ## Roadmap
 
