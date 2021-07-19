@@ -35,7 +35,35 @@ If you are scared of your data and because todover is an open source project, yo
 
 ### Installation
 
-Coming Soon.
+The first step of your custom installation is to clone the repository.
+```sh
+$ git clone https://github.com/FlorianWoelki/todover.git
+$ cd todover
+```
+
+Now, there are two possibilities to deploy your version of the software.
+
+You can use Docker for deployment or deploy it manually with build commands.
+
+**Docker**
+
+Using docker is especially easy because all services are containerized. For deploying and installing the frontend you can use the following to build and run the frontend image:
+```sh
+$ docker build -t todover-web .
+$ docker run --rm -it -p 8080:80 todover-web
+```
+
+With the help of running this container the frontend application will be available at `http://localhost`.
+
+Next, you can build the backend image and run the container via `docker-compose` because we need a postgres database.
+```sh
+$ cd /packages/server
+$ docker-compose up --build
+```
+
+Now, you have a running GraphQL server on port `4000`.
+
+**Build Commands**
 
 ## Roadmap
 
