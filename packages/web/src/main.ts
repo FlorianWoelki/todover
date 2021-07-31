@@ -5,5 +5,10 @@ import { store } from './store';
 import router from './router';
 import App from './App.vue';
 import './index.css';
+import { tryToRefreshAccessToken } from './accessToken';
+
+setInterval(() => {
+  tryToRefreshAccessToken(store);
+}, 1000 * 60);
 
 createApp(App).use(i18n).use(UI).use(router).use(store).mount('#app');
