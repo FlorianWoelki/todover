@@ -35,8 +35,7 @@ export const tryToRefreshAccessToken = async (store: Store<State>): Promise<void
   const token = getAccessToken();
 
   if (!token) {
-    // TODO: change to env variable
-    const { accessToken } = await fetch('http://localhost:4000/refresh_token', {
+    const { accessToken } = await fetch(`${import.meta.env.VITE_BACKEND_API}/refresh_token`, {
       method: 'POST',
       credentials: 'include',
     }).then((res) => res.json());
@@ -47,8 +46,7 @@ export const tryToRefreshAccessToken = async (store: Store<State>): Promise<void
     try {
       const { exp } = jwtDecode<JwtPayload>(token);
       if (exp && Date.now() >= exp * 1000) {
-        // TODO: change to env variable
-        const { accessToken } = await fetch('http://localhost:4000/refresh_token', {
+        const { accessToken } = await fetch(`${import.meta.env.VITE_BACKEND_API}/refresh_token`, {
           method: 'POST',
           credentials: 'include',
         }).then((res) => res.json());

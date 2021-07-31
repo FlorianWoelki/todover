@@ -3,7 +3,7 @@ import { setContext } from '@apollo/client/link/context';
 import { getAccessToken } from './accessToken';
 
 const httpLink = createHttpLink({
-  uri: import.meta.env.VITE_GRAPHQL_API as string,
+  uri: `${import.meta.env.VITE_BACKEND_API}/graphql`,
   credentials: 'include',
 });
 
