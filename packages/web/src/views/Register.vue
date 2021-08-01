@@ -62,6 +62,8 @@
     </div>
     <p v-if="showError.visible" class="mt-4 text-red-500">{{ showError.message }}</p>
   </div>
+
+  <auth-footer></auth-footer>
 </template>
 
 <script lang="ts">

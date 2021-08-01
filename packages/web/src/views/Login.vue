@@ -56,6 +56,8 @@
     </div>
     <p v-if="showError" class="mt-4 text-red-500">{{ $t('login.error') }}</p>
   </div>
+
+  <auth-footer></auth-footer>
 </template>
 
 <script lang="ts">
