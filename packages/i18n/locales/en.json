@@ -40,6 +40,8 @@
     "registerButton": "Register",
     "loginButton": "Sign in",
     "logoutButton": "Logout",
+    "imprintButton": "Imprint",
+    "privacyButton": "Data Privacy",
     "search": {
       "placeholder": "Search ...",
       "noResults": "No results"

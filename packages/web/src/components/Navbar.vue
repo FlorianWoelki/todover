@@ -67,6 +67,15 @@
         <p class="hover:bg-gray-900" :class="itemClasses" @click="handleLogout">
           {{ $t('navbar.logoutButton') }}
         </p>
+
+        <div class="my-2 border-b border-gray-700"></div>
+
+        <p class="text-gray-300 hover:bg-gray-900" :class="itemClasses">
+          {{ $t('navbar.imprintButton') }}
+        </p>
+        <p class="text-gray-300 hover:bg-gray-900" :class="itemClasses">
+          {{ $t('navbar.privacyButton') }}
+        </p>
       </dropdown>
     </div>
 
