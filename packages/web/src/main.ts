@@ -9,6 +9,6 @@ import { tryToRefreshAccessToken } from './accessToken';
 
 setInterval(() => {
   tryToRefreshAccessToken(store);
-}, 1000 * 60);
+}, 1000 * 60 * 15);
 
 createApp(App).use(i18n).use(UI).use(router).use(store).mount('#app');
