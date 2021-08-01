@@ -12,24 +12,29 @@
     </router-link>
 
     <div class="w-full max-w-lg px-10 py-8 space-y-6 bg-white rounded-lg shadow">
-      <input-field
-        v-model="email"
-        :label="$t('register.emailLabel')"
-        type="email"
-        @keydown.enter="handleSignUp"
-      />
-      <input-field
-        v-model="password"
-        :label="$t('register.passwordLabel')"
-        type="password"
-        @keydown.enter="handleSignUp"
-      />
-      <input-field
-        v-model="repeatPassword"
-        :label="$t('register.passwordRepeatLabel')"
-        type="password"
-        @keydown.enter="handleSignUp"
-      />
+      <form class="space-y-4">
+        <input-field
+          v-model="email"
+          :label="$t('register.emailLabel')"
+          type="email"
+          autocomplete
+          @keydown.enter="handleSignUp"
+        />
+        <input-field
+          v-model="password"
+          :label="$t('register.passwordLabel')"
+          type="password"
+          autocomplete
+          @keydown.enter="handleSignUp"
+        />
+        <input-field
+          v-model="repeatPassword"
+          :label="$t('register.passwordRepeatLabel')"
+          type="password"
+          autocomplete
+          @keydown.enter="handleSignUp"
+        />
+      </form>
 
       <td-button
         :disabled="signupButtonDisabled"
