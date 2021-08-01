@@ -70,12 +70,20 @@
 
         <div class="my-2 border-b border-gray-700"></div>
 
-        <p class="text-gray-300 hover:bg-gray-900" :class="itemClasses">
+        <router-link
+          to="/imprint"
+          class="block text-gray-300 hover:bg-gray-900"
+          :class="itemClasses"
+        >
           {{ $t('navbar.imprintButton') }}
-        </p>
-        <p class="text-gray-300 hover:bg-gray-900" :class="itemClasses">
+        </router-link>
+        <router-link
+          to="/dataprivacy"
+          class="block text-gray-300 hover:bg-gray-900"
+          :class="itemClasses"
+        >
           {{ $t('navbar.privacyButton') }}
-        </p>
+        </router-link>
       </dropdown>
     </div>
 

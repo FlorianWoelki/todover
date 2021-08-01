@@ -4,6 +4,8 @@ import { store } from '../store';
 import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
+import Imprint from '../views/Imprint.vue';
+import DataPrivacy from '../views/DataPrivacy.vue';
 
 const history = createWebHistory();
 const routes: RouteRecordRaw[] = [
@@ -21,6 +23,16 @@ const routes: RouteRecordRaw[] = [
     path: '/register',
     name: 'Register',
     component: Register,
+  },
+  {
+    path: '/imprint',
+    name: 'Imprint',
+    component: Imprint,
+  },
+  {
+    path: '/dataprivacy',
+    name: 'DataPrivacy',
+    component: DataPrivacy,
   },
 ];
 
