@@ -41,6 +41,7 @@
         </transition>
       </div>
     </div>
+    <!-- User is not loggedin: show dropdown menu with sign up button -->
     <div v-if="!loggedIn || !user" class="flex items-center space-x-4">
       <router-link to="/register" class="px-4 py-2 bg-gray-500 rounded hover:bg-gray-600">
         {{ $t('navbar.registerButton') }}
@@ -49,6 +50,7 @@
         {{ $t('navbar.loginButton') }}
       </router-link>
     </div>
+    <!-- User is logged in: only show dropdown menu -->
     <div
       v-else
       class="relative px-4 py-2 text-sm transition duration-100 ease-in-out bg-transparent rounded cursor-pointer hover:bg-gray-800"
