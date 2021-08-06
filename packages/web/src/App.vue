@@ -29,14 +29,18 @@
     <navbar v-if="$route.path === '/'" class="font-sans antialiased" />
     <router-view />
   </template>
+
+  <cookie-consent />
 </template>
 
 <script lang="ts">
 import { defineComponent, provide } from '@vue/runtime-core';
 import { DefaultApolloClient } from '@vue/apollo-composable';
 import { apolloClient } from './apollo-client';
+import CookieConsent from './components/CookieConsent.vue';
 
 export default defineComponent({
+  components: { CookieConsent },
   setup() {
     provide(DefaultApolloClient, apolloClient);
   },
