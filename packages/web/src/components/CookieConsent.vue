@@ -73,7 +73,7 @@ export default defineComponent({
 :root {
   --cc-bg: #fff;
   --cc-text: #2d4156;
-  --cc-btn-primary-bg: #2d4156;
+  --cc-btn-primary-bg: #ef4444;
   --cc-btn-primary-text: var(--cc-bg);
   --cc-btn-primary-hover-bg: #1d2e38;
   --cc-btn-secondary-bg: #eaeff2;
