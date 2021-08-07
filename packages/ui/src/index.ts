@@ -6,9 +6,28 @@ import HideButton from './components/HideButton/HideButton';
 import InputField from './components/InputField/InputField.vue';
 import TDButton from './components/TDButton/TDButton.vue';
 import Dropdown from './components/Dropdown/Dropdown.vue';
+import DropdownBorder from './components/Dropdown/DropdownBorder';
 
-const components = [Datepicker, HideButton, TitleInput, Searchbar, InputField, TDButton, Dropdown];
-export { Datepicker, HideButton, TitleInput, Searchbar, InputField, TDButton, Dropdown };
+const components = [
+  Datepicker,
+  HideButton,
+  TitleInput,
+  Searchbar,
+  InputField,
+  TDButton,
+  Dropdown,
+  DropdownBorder,
+];
+export {
+  Datepicker,
+  HideButton,
+  TitleInput,
+  Searchbar,
+  InputField,
+  TDButton,
+  Dropdown,
+  DropdownBorder,
+};
 
 function install(app: App): void {
   for (const comp of components) {

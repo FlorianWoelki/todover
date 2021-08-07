@@ -62,7 +62,7 @@
             {{ $t('navbar.loginButton') }}
           </router-link>
 
-          <div class="my-2 border-b border-gray-700"></div>
+          <dropdown-border></dropdown-border>
 
           <router-link
             to="/imprint"
@@ -102,7 +102,7 @@
           {{ $t('navbar.logoutButton') }}
         </p>
 
-        <div class="my-2 border-b border-gray-700"></div>
+        <dropdown-border></dropdown-border>
 
         <router-link
           to="/imprint"
