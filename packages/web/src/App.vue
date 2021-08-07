@@ -30,7 +30,7 @@
     <router-view />
   </template>
 
-  <cookie-consent />
+  <cookie-consent></cookie-consent>
 </template>
 
 <script lang="ts">
