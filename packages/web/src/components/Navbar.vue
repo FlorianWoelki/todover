@@ -46,10 +46,42 @@
       <router-link to="/register" class="px-4 py-2 bg-gray-500 rounded hover:bg-gray-600">
         {{ $t('navbar.registerButton') }}
       </router-link>
-      <router-link to="/login" class="px-4 py-2 bg-transparent rounded hover:bg-gray-800">
-        {{ $t('navbar.loginButton') }}
-      </router-link>
+      <div
+        class="relative px-4 py-2 text-sm transition duration-100 ease-in-out bg-transparent rounded cursor-pointer hover:bg-gray-800"
+        :class="{ 'bg-gray-800': !dropdownHidden }"
+        @click="dropdownHidden = !dropdownHidden"
+      >
+        <p class="z-50 cursor-pointer">preview@todover.com</p>
+        <dropdown
+          #="{ itemClasses }"
+          class="ml-auto bg-gray-800 w-52"
+          :dropdownHidden="dropdownHidden"
+          @close.stop="dropdownHidden = true"
+        >
+          <router-link to="/login" class="block hover:bg-gray-900" :class="itemClasses">
+            {{ $t('navbar.loginButton') }}
+          </router-link>
+
+          <div class="my-2 border-b border-gray-700"></div>
+
+          <router-link
+            to="/imprint"
+            class="block text-gray-300 hover:bg-gray-900"
+            :class="itemClasses"
+          >
+            {{ $t('navbar.imprintButton') }}
+          </router-link>
+          <router-link
+            to="/dataprivacy"
+            class="block text-gray-300 hover:bg-gray-900"
+            :class="itemClasses"
+          >
+            {{ $t('navbar.privacyButton') }}
+          </router-link>
+        </dropdown>
+      </div>
     </div>
+
     <!-- User is logged in: only show dropdown menu -->
     <div
       v-else
