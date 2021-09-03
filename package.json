@@ -13,7 +13,9 @@
     "db:push": "lerna run db:push --scope=@todover/server --stream",
     "test:server": "lerna run test --scope=@todover/server --stream",
     "cypress:open": "cypress open",
-    "build": "lerna run build --parallel"
+    "build": "lerna run build --parallel",
+    "build:web": "lerna run build --scope=@todover/web --stream",
+    "build:server": "lerna run build --scope=@todover/server --stream"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
