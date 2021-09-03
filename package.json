@@ -7,6 +7,7 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
+    "postinstall": "lerna bootstrap",
     "dev": "lerna run dev",
     "dev:web": "lerna run dev --scope=@todover/web --stream",
     "dev:server": "lerna run dev --scope=@todover/server --stream",
