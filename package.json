@@ -8,7 +8,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "dev": "lerna run dev",
-    "dev:web": "lerna run dev --scope={@todover/web}",
+    "dev:web": "lerna run dev --scope=@todover/web --stream",
+    "dev:server": "lerna run dev --scope=@todover/server --stream",
     "db:push": "lerna run db:push --scope=@todover/server --stream",
     "test:server": "lerna run test --scope=@todover/server --stream",
     "cypress:open": "cypress open",
