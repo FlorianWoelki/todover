@@ -1,7 +1,7 @@
 {
   "name": "@todover/server",
   "version": "1.0.0",
-  "description": "",
+  "description": "The backend for the todover application.",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node src/index.ts",
