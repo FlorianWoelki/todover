@@ -3,6 +3,7 @@ services:
   server:
     env_file:
       - .env
+    image: todover-backend:1
     build:
       context: .
       dockerfile: Dockerfile

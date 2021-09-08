@@ -30,4 +30,5 @@ RUN rm -rf ./*
 
 COPY --from=builder /usr/src/app/packages/web/dist/ .
 
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
