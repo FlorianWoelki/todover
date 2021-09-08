@@ -8,7 +8,6 @@ export default defineComponent({
   setup() {
     const cookieconsent = initCookieConsent();
 
-    console.log(123);
     cookieconsent.run({
       current_lang: 'en',
       autoclear_cookies: true,
