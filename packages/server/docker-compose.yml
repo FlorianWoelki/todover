@@ -2,7 +2,7 @@ version: '3'
 services:
   server:
     env_file:
-      - .env.docker-compose
+      - .env.docker-compose.local
     image: todover-backend:1
     build:
       context: .
