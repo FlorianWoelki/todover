@@ -2,8 +2,17 @@
   "name": "@todover/ui",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "type": "module",
+  "main": "dist/ui.umd.js",
+  "module": "dist/ui.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/my-ui.es.js",
+      "require": "./dist/my-ui.umd.js"
+    },
+    "./": "./"
+  },
+  "typings": "dist/index.d.ts",
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@storybook/addon-actions": "^6.3.4",
@@ -16,14 +25,17 @@
     "babel-loader": "^8.2.2",
     "core-js": "^3.12.1",
     "postcss": "^8.2.15",
+    "rollup-plugin-typescript2": "^0.30.0",
     "tailwindcss": "^2.1.2",
     "vue-loader": "^16.2.0"
   },
-  "dependencies": {
+  "peerDependencies": {
     "vue": "^3.2.10",
     "vue-i18n": "^9.1.6"
   },
   "scripts": {
+    "build": "yarn build:lib",
+    "build:lib": "vite build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   }

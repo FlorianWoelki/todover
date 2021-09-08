@@ -14,12 +14,13 @@ export default defineConfig({
     vueI18n({ include: path.resolve(__dirname, '../i18n/locales/**') }),
   ],
   optimizeDeps: {
-    exclude: ['@vue/apollo-composable'],
+    exclude: ['@todover/i18n', '@todover/ui'],
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+    dedupe: ['vue'],
   },
   define: {
     _APP_VERSION: JSON.stringify(pkg.version),
