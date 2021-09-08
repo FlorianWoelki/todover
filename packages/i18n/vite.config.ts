@@ -21,7 +21,7 @@ export default <UserConfig>{
     },
     minify: false,
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'vue-i18n'],
       output: {
         exports: 'named',
         globals: {

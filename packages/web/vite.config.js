@@ -20,7 +20,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
-    dedupe: ['vue'],
+    dedupe: ['vue', 'vue-i18n'],
   },
   define: {
     _APP_VERSION: JSON.stringify(pkg.version),

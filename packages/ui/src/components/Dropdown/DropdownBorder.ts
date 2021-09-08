@@ -1,4 +1,4 @@
-import { defineComponent, h } from '@vue/runtime-core';
+import { defineComponent, h } from 'vue';
 
 const DropdownBorder = defineComponent({
   name: 'DropdownBorder',

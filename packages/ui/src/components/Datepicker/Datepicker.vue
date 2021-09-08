@@ -86,7 +86,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@vue/runtime-core';
+import { defineComponent, onMounted, ref } from 'vue';
 import { translate } from '@todover/i18n/src/i18n';
 
 export default defineComponent({
