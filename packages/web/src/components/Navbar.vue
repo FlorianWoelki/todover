@@ -158,7 +158,7 @@ export default defineComponent({
     MenuIcon,
   },
   setup() {
-    const { locale } = useI18n({ useScope: 'global' });
+    //const { locale } = useI18n({ useScope: 'global' });
     const store = useStore<State>();
     const loggedIn = ref<boolean>(getAccessToken() !== '');
     const searchbar = reactive<ISearchbar>({
@@ -186,7 +186,7 @@ export default defineComponent({
 
     const user = useResult(result, null, (data) => {
       if (data.me.settings) {
-        locale.value = data.me.settings.language;
+        //locale.value = data.me.settings.language;
       }
 
       store.commit(Mutation.SET_ME, { value: data.me });
