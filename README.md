@@ -50,11 +50,13 @@ You can use Docker for deployment or deploy it manually with build commands.
 
 Using docker is especially easy because all services are containerized. For deploying and installing the frontend you can use the following to build and run the frontend image:
 ```sh
-$ docker build -t todover-web .
-$ docker run --rm -it -p 8080:80 todover-web
+$ docker build -t todover-web -f Dockerfile.web .
+$ docker run -p 3000:80 todover-web
 ```
 
-With the help of running this container the frontend application will be available at `http://localhost`.
+With the help of running this container the frontend application will be available at `http://localhost:3000`.
+
+The image of the frontend is also available [here](https://hub.docker.com/repository/docker/florianwoelki/todover-web).
 
 Next, you can build the backend image and run the container via `docker-compose` because we need a postgres database.
 ```sh
@@ -62,7 +64,15 @@ $ cd /packages/server
 $ docker-compose up --build
 ```
 
-Now, you have a running GraphQL server on port `4000`.
+Now, you have a running GraphQL server on port `http://localhost:4000`.
+
+If you just want a simple image of the todover backend, you can execute the following:
+```sh
+$ cd /packages/server
+$ docker build -t todover-server .
+```
+
+The image of the backend is also available [here](https://hub.docker.com/repository/docker/florianwoelki/todover-server).
 
 **Build Commands**
 
