@@ -1,5 +1,6 @@
 # use node version 14.17.0
 FROM node:14.17-alpine AS builder
+LABEL maintainer="florianwoelki@gmx.de"
 
 ARG PORT=4000
 

@@ -1,5 +1,6 @@
 # stage 1 building web project
 FROM node:14.17-alpine AS builder
+LABEL maintainer="florianwoelki@gmx.de"
 
 WORKDIR /usr/src/app
 
