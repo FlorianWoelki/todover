@@ -20,7 +20,9 @@ COPY lerna.json .
 
 RUN lerna bootstrap
 
-RUN npm run --prefix packages/web build
+#RUN npm run --prefix packages/web build
+# TODO: change to building, right now there is a vite config error
+COPY packages/web/dist ./packages/web/dist
 
 # stage 2 nginx server
 FROM nginx:alpine
