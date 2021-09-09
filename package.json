@@ -16,7 +16,8 @@
     "cypress:open": "cypress open",
     "build": "lerna run build --parallel",
     "build:web": "lerna run build --scope={@todover/i18n,@todover/ui,@todover/web} --stream",
-    "build:server": "lerna run build --scope=@todover/server --stream"
+    "build:server": "lerna run build --scope=@todover/server --stream",
+    "deploy:web": "vercel"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
