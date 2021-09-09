@@ -28,10 +28,10 @@ COPY . .
 RUN npm run prisma:generate
 
 # build the project
-RUN npm run build
+#RUN npm run build
 
 # run the built project with start script
-CMD ["node", "./dist/index.js"]
+CMD ["npm", "run", "start"]
 
 # expose 4000 port
 EXPOSE ${PORT}
