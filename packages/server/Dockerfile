@@ -1,6 +1,8 @@
 # use node version 14.17.0
 FROM node:14.17-alpine AS builder
 
+ARG PORT=4000
+
 # set working directory to /app
 WORKDIR /usr/src/app
 
@@ -12,7 +14,8 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 
 # copy package.json file to working directory
-COPY package*.json ./
+COPY ./package.json ./
+COPY ./package-lock.json ./
 
 # install dependencies
 RUN npm install --loglevel notice
@@ -27,8 +30,7 @@ RUN npm run prisma:generate
 RUN npm run build
 
 # run the built project with start script
-CMD ["npm", "run", "start"]
+CMD ["node", "./dist/index.js"]
 
 # expose 4000 port
-ENV PORT 4000
 EXPOSE ${PORT}
