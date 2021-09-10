@@ -10,7 +10,7 @@
     "db:push": "prisma db push",
     "build": "tsc",
     "prestart": "npm run db:push",
-    "start": "ts-node src/index.ts",
+    "start": "NODE_ENV=production ts-node src/index.ts",
     "test": "jest -i"
   },
   "keywords": [],
