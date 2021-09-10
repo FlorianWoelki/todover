@@ -53,9 +53,12 @@ import { createSchema } from './utils/createSchema';
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   });
 
+  const isProduction = process.env.NODE_ENV === 'production';
   const apolloServer = new ApolloServer({
     schema: await createSchema(),
     context: ({ req, res }): MyContext => ({ res, req, prisma }),
+    introspection: !isProduction,
+    playground: !isProduction,
   });
 
   apolloServer.applyMiddleware({ app, path: '/graphql', cors: corsOptions });
