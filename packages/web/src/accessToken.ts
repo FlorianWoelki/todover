@@ -1,5 +1,8 @@
+import { provideApolloClient, useQuery } from '@vue/apollo-composable';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { Store } from 'vuex';
+import { apolloClient } from './apollo-client';
+import queries from './graphql/queries';
 import { Mutation, State } from './store';
 
 let accessToken = '';
@@ -41,6 +44,8 @@ export const tryToRefreshAccessToken = async (store: Store<State>): Promise<void
     }).then((res) => res.json());
 
     setAccessToken(accessToken);
+
+    await initMe(store);
     store.commit(Mutation.SET_LOADING, false);
   } else {
     try {
@@ -58,4 +63,27 @@ export const tryToRefreshAccessToken = async (store: Store<State>): Promise<void
       console.log('refresh token expired', error);
     }
   }
+};
+
+/**
+ * Initializes me and settings in the Vuex store.
+ * This function prefetches the user, if the user is logged in.
+ *
+ * @param {Store} store - The Vuex store.
+ * @returns {void}
+ */
+const initMe = async (store: Store<State>): Promise<void> => {
+  provideApolloClient(apolloClient);
+  await new Promise<void>((resolve) => {
+    const { onResult } = useQuery(queries.me);
+    onResult(({ data }) => {
+      if (!data) {
+        resolve();
+      } else {
+        store.commit(Mutation.SET_ME, { value: data.me });
+        store.commit(Mutation.UPDATE_SETTINGS, data.me.settings);
+        resolve();
+      }
+    });
+  });
 };

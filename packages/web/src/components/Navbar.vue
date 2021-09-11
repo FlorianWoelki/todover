@@ -41,6 +41,7 @@
         </transition>
       </div>
     </div>
+
     <!-- User is not loggedin: show dropdown menu with sign up button -->
     <div v-if="!loggedIn || !user" class="flex items-center space-x-4">
       <router-link to="/register" class="px-4 py-2 bg-gray-500 rounded hover:bg-gray-600">
@@ -188,9 +189,6 @@ export default defineComponent({
       if (data.me.settings) {
         locale.value = data.me.settings.language;
       }
-
-      store.commit(Mutation.SET_ME, { value: data.me });
-      store.commit(Mutation.UPDATE_SETTINGS, data.me.settings);
       return data;
     });
 
