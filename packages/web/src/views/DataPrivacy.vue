@@ -1,333 +1,202 @@
 <template>
   <div class="flex flex-col items-center h-full max-w-6xl mx-auto font-sans antialiased">
     <div>
-      <h1>Datenschutz&shy;erkl&auml;rung</h1>
-      <h2>1. Datenschutz auf einen Blick</h2>
-      <h3>Allgemeine Hinweise</h3>
+      <h1>Privacy Statement</h1>
+
       <p>
-        Die folgenden Hinweise geben einen einfachen &Uuml;berblick dar&uuml;ber, was mit Ihren
-        personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten
-        sind alle Daten, mit denen Sie pers&ouml;nlich identifiziert werden k&ouml;nnen.
-        Ausf&uuml;hrliche Informationen zum Thema Datenschutz entnehmen Sie unserer unter diesem
-        Text aufgef&uuml;hrten Datenschutzerkl&auml;rung.
-      </p>
-      <h3>Datenerfassung auf dieser Website</h3>
-      <h4>Wer ist verantwortlich f&uuml;r die Datenerfassung auf dieser Website?</h4>
-      <p>
-        Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen
-        Kontaktdaten k&ouml;nnen Sie dem Abschnitt &bdquo;Hinweis zur Verantwortlichen Stelle&ldquo;
-        in dieser Datenschutzerkl&auml;rung entnehmen.
-      </p>
-      <h4>Wie erfassen wir Ihre Daten?</h4>
-      <p>
-        Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es
-        sich z.&nbsp;B. um Daten handeln, die Sie in ein Kontaktformular eingeben.
-      </p>
-      <p>
-        Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch
-        unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z.&nbsp;B. Internetbrowser,
-        Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt
-        automatisch, sobald Sie diese Website betreten.
-      </p>
-      <h4>Wof&uuml;r nutzen wir Ihre Daten?</h4>
-      <p>
-        Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu
-        gew&auml;hrleisten. Andere Daten k&ouml;nnen zur Analyse Ihres Nutzerverhaltens verwendet
-        werden.
-      </p>
-      <h4>Welche Rechte haben Sie bez&uuml;glich Ihrer Daten?</h4>
-      <p>
-        Sie haben jederzeit das Recht, unentgeltlich Auskunft &uuml;ber Herkunft, Empf&auml;nger und
-        Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben au&szlig;erdem ein
-        Recht, die Berichtigung oder L&ouml;schung dieser Daten zu verlangen. Wenn Sie eine
-        Einwilligung zur Datenverarbeitung erteilt haben, k&ouml;nnen Sie diese Einwilligung
-        jederzeit f&uuml;r die Zukunft widerrufen. Au&szlig;erdem haben Sie das Recht, unter
-        bestimmten Umst&auml;nden die Einschr&auml;nkung der Verarbeitung Ihrer personenbezogenen
-        Daten zu verlangen. Des Weiteren steht Ihnen ein Beschwerderecht bei der zust&auml;ndigen
-        Aufsichtsbeh&ouml;rde zu.
-      </p>
-      <p>
-        Hierzu sowie zu weiteren Fragen zum Thema Datenschutz k&ouml;nnen Sie sich jederzeit an uns
-        wenden.
-      </p>
-      <h2>2. Hosting</h2>
-      <h3>Externes Hosting</h3>
-      <p>
-        Diese Website wird bei einem externen Dienstleister gehostet (Hoster). Die personenbezogenen
-        Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters
-        gespeichert. Hierbei kann es sich v. a. um IP-Adressen, Kontaktanfragen, Meta- und
-        Kommunikationsdaten, Vertragsdaten, Kontaktdaten, Namen, Websitezugriffe und sonstige Daten,
-        die &uuml;ber eine Website generiert werden, handeln.
-      </p>
-      <p>
-        Der Einsatz des Hosters erfolgt zum Zwecke der Vertragserf&uuml;llung gegen&uuml;ber unseren
-        potenziellen und bestehenden Kunden (Art. 6 Abs. 1 lit. b DSGVO) und im Interesse einer
-        sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots durch einen
-        professionellen Anbieter (Art. 6 Abs. 1 lit. f DSGVO).
-      </p>
-      <p>
-        Unser Hoster wird Ihre Daten nur insoweit verarbeiten, wie dies zur Erf&uuml;llung seiner
-        Leistungspflichten erforderlich ist und unsere Weisungen in Bezug auf diese Daten befolgen.
-      </p>
-      <p>Wir setzen folgenden Hoster ein:</p>
-      <p>
-        DigitalOcean LLC<br />
-        101 Sixth Ave<br />
-        New York, NY 10013<br />
-        United States
-      </p>
-      <h4>Auftragsverarbeitung</h4>
-      <p>
-        Wir haben einen Vertrag &uuml;ber Auftragsverarbeitung (AVV) mit dem oben genannten Anbieter
-        geschlossen. Hierbei handelt es sich um einen datenschutzrechtlich vorgeschriebenen Vertrag,
-        der gew&auml;hrleistet, dass dieser die personenbezogenen Daten unserer Websitebesucher nur
-        nach unseren Weisungen und unter Einhaltung der DSGVO verarbeitet.
-      </p>
-      <h2>3. Allgemeine Hinweise und Pflicht&shy;informationen</h2>
-      <h3>Datenschutz</h3>
-      <p>
-        Die Betreiber dieser Seiten nehmen den Schutz Ihrer pers&ouml;nlichen Daten sehr ernst. Wir
-        behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen
-        Datenschutzvorschriften sowie dieser Datenschutzerkl&auml;rung.
-      </p>
-      <p>
-        Wenn Sie diese Website benutzen, werden verschiedene personenbezogene Daten erhoben.
-        Personenbezogene Daten sind Daten, mit denen Sie pers&ouml;nlich identifiziert werden
-        k&ouml;nnen. Die vorliegende Datenschutzerkl&auml;rung erl&auml;utert, welche Daten wir
-        erheben und wof&uuml;r wir sie nutzen. Sie erl&auml;utert auch, wie und zu welchem Zweck das
-        geschieht.
-      </p>
-      <p>
-        Wir weisen darauf hin, dass die Daten&uuml;bertragung im Internet (z.&nbsp;B. bei der
-        Kommunikation per E-Mail) Sicherheitsl&uuml;cken aufweisen kann. Ein l&uuml;ckenloser Schutz
-        der Daten vor dem Zugriff durch Dritte ist nicht m&ouml;glich.
-      </p>
-      <h3>Hinweis zur verantwortlichen Stelle</h3>
-      <p>Die verantwortliche Stelle f&uuml;r die Datenverarbeitung auf dieser Website ist:</p>
-      <p>
-        Florian Woelki<br />
-        Sudermannstrasse 6A<br />
-        12621 Berlin
+        At todover, accessible from https://www.todover.com/, one of our main priorities is the
+        privacy of our visitors. This Privacy Policy document contains types of information that is
+        collected and recorded by todover and how we use it.
       </p>
 
       <p>
-        Telefon: +49 1515 8364185<br />
-        E-Mail: FlorianWoelki@gmx.de
-      </p>
-      <p>
-        Verantwortliche Stelle ist die nat&uuml;rliche oder juristische Person, die allein oder
-        gemeinsam mit anderen &uuml;ber die Zwecke und Mittel der Verarbeitung von personenbezogenen
-        Daten (z.&nbsp;B. Namen, E-Mail-Adressen o. &Auml;.) entscheidet.
+        If you have additional questions or require more information about our Privacy Policy, do
+        not hesitate to contact us.
       </p>
 
-      <h3>Speicherdauer</h3>
       <p>
-        Soweit innerhalb dieser Datenschutzerkl&auml;rung keine speziellere Speicherdauer genannt
-        wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck f&uuml;r die
-        Datenverarbeitung entf&auml;llt. Wenn Sie ein berechtigtes L&ouml;schersuchen geltend machen
-        oder eine Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gel&ouml;scht,
-        sofern wir keine anderen rechtlich zul&auml;ssigen Gr&uuml;nde f&uuml;r die Speicherung
-        Ihrer personenbezogenen Daten haben (z.&nbsp;B. steuer- oder handelsrechtliche
-        Aufbewahrungsfristen); im letztgenannten Fall erfolgt die L&ouml;schung nach Fortfall dieser
-        Gr&uuml;nde.
-      </p>
-      <h3>Widerruf Ihrer Einwilligung zur Datenverarbeitung</h3>
-      <p>
-        Viele Datenverarbeitungsvorg&auml;nge sind nur mit Ihrer ausdr&uuml;cklichen Einwilligung
-        m&ouml;glich. Sie k&ouml;nnen eine bereits erteilte Einwilligung jederzeit widerrufen. Die
-        Rechtm&auml;&szlig;igkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom
-        Widerruf unber&uuml;hrt.
-      </p>
-      <h3>
-        Widerspruchsrecht gegen die Datenerhebung in besonderen F&auml;llen sowie gegen
-        Direktwerbung (Art. 21 DSGVO)
-      </h3>
-      <p>
-        WENN DIE DATENVERARBEITUNG AUF GRUNDLAGE VON ART. 6 ABS. 1 LIT. E ODER F DSGVO ERFOLGT,
-        HABEN SIE JEDERZEIT DAS RECHT, AUS GR&Uuml;NDEN, DIE SICH AUS IHRER BESONDEREN SITUATION
-        ERGEBEN, GEGEN DIE VERARBEITUNG IHRER PERSONENBEZOGENEN DATEN WIDERSPRUCH EINZULEGEN; DIES
-        GILT AUCH F&Uuml;R EIN AUF DIESE BESTIMMUNGEN GEST&Uuml;TZTES PROFILING. DIE JEWEILIGE
-        RECHTSGRUNDLAGE, AUF DENEN EINE VERARBEITUNG BERUHT, ENTNEHMEN SIE DIESER
-        DATENSCHUTZERKL&Auml;RUNG. WENN SIE WIDERSPRUCH EINLEGEN, WERDEN WIR IHRE BETROFFENEN
-        PERSONENBEZOGENEN DATEN NICHT MEHR VERARBEITEN, ES SEI DENN, WIR K&Ouml;NNEN ZWINGENDE
-        SCHUTZW&Uuml;RDIGE GR&Uuml;NDE F&Uuml;R DIE VERARBEITUNG NACHWEISEN, DIE IHRE INTERESSEN,
-        RECHTE UND FREIHEITEN &Uuml;BERWIEGEN ODER DIE VERARBEITUNG DIENT DER GELTENDMACHUNG,
-        AUS&Uuml;BUNG ODER VERTEIDIGUNG VON RECHTSANSPR&Uuml;CHEN (WIDERSPRUCH NACH ART. 21 ABS. 1
-        DSGVO).
-      </p>
-      <p>
-        WERDEN IHRE PERSONENBEZOGENEN DATEN VERARBEITET, UM DIREKTWERBUNG ZU BETREIBEN, SO HABEN SIE
-        DAS RECHT, JEDERZEIT WIDERSPRUCH GEGEN DIE VERARBEITUNG SIE BETREFFENDER PERSONENBEZOGENER
-        DATEN ZUM ZWECKE DERARTIGER WERBUNG EINZULEGEN; DIES GILT AUCH F&Uuml;R DAS PROFILING,
-        SOWEIT ES MIT SOLCHER DIREKTWERBUNG IN VERBINDUNG STEHT. WENN SIE WIDERSPRECHEN, WERDEN IHRE
-        PERSONENBEZOGENEN DATEN ANSCHLIESSEND NICHT MEHR ZUM ZWECKE DER DIREKTWERBUNG VERWENDET
-        (WIDERSPRUCH NACH ART. 21 ABS. 2 DSGVO).
-      </p>
-      <h3>Beschwerde&shy;recht bei der zust&auml;ndigen Aufsichts&shy;beh&ouml;rde</h3>
-      <p>
-        Im Falle von Verst&ouml;&szlig;en gegen die DSGVO steht den Betroffenen ein Beschwerderecht
-        bei einer Aufsichtsbeh&ouml;rde, insbesondere in dem Mitgliedstaat ihres gew&ouml;hnlichen
-        Aufenthalts, ihres Arbeitsplatzes oder des Orts des mutma&szlig;lichen Versto&szlig;es zu.
-        Das Beschwerderecht besteht unbeschadet anderweitiger verwaltungsrechtlicher oder
-        gerichtlicher Rechtsbehelfe.
-      </p>
-      <h3>Recht auf Daten&shy;&uuml;bertrag&shy;barkeit</h3>
-      <p>
-        Sie haben das Recht, Daten, die wir auf Grundlage Ihrer Einwilligung oder in Erf&uuml;llung
-        eines Vertrags automatisiert verarbeiten, an sich oder an einen Dritten in einem
-        g&auml;ngigen, maschinenlesbaren Format aush&auml;ndigen zu lassen. Sofern Sie die direkte
-        &Uuml;bertragung der Daten an einen anderen Verantwortlichen verlangen, erfolgt dies nur,
-        soweit es technisch machbar ist.
-      </p>
-      <h3>SSL- bzw. TLS-Verschl&uuml;sselung</h3>
-      <p>
-        Diese Seite nutzt aus Sicherheitsgr&uuml;nden und zum Schutz der &Uuml;bertragung
-        vertraulicher Inhalte, wie zum Beispiel Bestellungen oder Anfragen, die Sie an uns als
-        Seitenbetreiber senden, eine SSL- bzw. TLS-Verschl&uuml;sselung. Eine verschl&uuml;sselte
-        Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von &bdquo;http://&ldquo;
-        auf &bdquo;https://&ldquo; wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
-      </p>
-      <p>
-        Wenn die SSL- bzw. TLS-Verschl&uuml;sselung aktiviert ist, k&ouml;nnen die Daten, die Sie an
-        uns &uuml;bermitteln, nicht von Dritten mitgelesen werden.
-      </p>
-      <h3>Auskunft, L&ouml;schung und Berichtigung</h3>
-      <p>
-        Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf
-        unentgeltliche Auskunft &uuml;ber Ihre gespeicherten personenbezogenen Daten, deren Herkunft
-        und Empf&auml;nger und den Zweck der Datenverarbeitung und ggf. ein Recht auf Berichtigung
-        oder L&ouml;schung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema personenbezogene
-        Daten k&ouml;nnen Sie sich jederzeit an uns wenden.
-      </p>
-      <h3>Recht auf Einschr&auml;nkung der Verarbeitung</h3>
-      <p>
-        Sie haben das Recht, die Einschr&auml;nkung der Verarbeitung Ihrer personenbezogenen Daten
-        zu verlangen. Hierzu k&ouml;nnen Sie sich jederzeit an uns wenden. Das Recht auf
-        Einschr&auml;nkung der Verarbeitung besteht in folgenden F&auml;llen:
-      </p>
-      <ul>
-        <li>
-          Wenn Sie die Richtigkeit Ihrer bei uns gespeicherten personenbezogenen Daten bestreiten,
-          ben&ouml;tigen wir in der Regel Zeit, um dies zu &uuml;berpr&uuml;fen. F&uuml;r die Dauer
-          der Pr&uuml;fung haben Sie das Recht, die Einschr&auml;nkung der Verarbeitung Ihrer
-          personenbezogenen Daten zu verlangen.
-        </li>
-        <li>
-          Wenn die Verarbeitung Ihrer personenbezogenen Daten unrechtm&auml;&szlig;ig
-          geschah/geschieht, k&ouml;nnen Sie statt der L&ouml;schung die Einschr&auml;nkung der
-          Datenverarbeitung verlangen.
-        </li>
-        <li>
-          Wenn wir Ihre personenbezogenen Daten nicht mehr ben&ouml;tigen, Sie sie jedoch zur
-          Aus&uuml;bung, Verteidigung oder Geltendmachung von Rechtsanspr&uuml;chen ben&ouml;tigen,
-          haben Sie das Recht, statt der L&ouml;schung die Einschr&auml;nkung der Verarbeitung Ihrer
-          personenbezogenen Daten zu verlangen.
-        </li>
-        <li>
-          Wenn Sie einen Widerspruch nach Art. 21 Abs. 1 DSGVO eingelegt haben, muss eine
-          Abw&auml;gung zwischen Ihren und unseren Interessen vorgenommen werden. Solange noch nicht
-          feststeht, wessen Interessen &uuml;berwiegen, haben Sie das Recht, die Einschr&auml;nkung
-          der Verarbeitung Ihrer personenbezogenen Daten zu verlangen.
-        </li>
-      </ul>
-      <p>
-        Wenn Sie die Verarbeitung Ihrer personenbezogenen Daten eingeschr&auml;nkt haben,
-        d&uuml;rfen diese Daten &ndash; von ihrer Speicherung abgesehen &ndash; nur mit Ihrer
-        Einwilligung oder zur Geltendmachung, Aus&uuml;bung oder Verteidigung von
-        Rechtsanspr&uuml;chen oder zum Schutz der Rechte einer anderen nat&uuml;rlichen oder
-        juristischen Person oder aus Gr&uuml;nden eines wichtigen &ouml;ffentlichen Interesses der
-        Europ&auml;ischen Union oder eines Mitgliedstaats verarbeitet werden.
-      </p>
-      <h2>4. Datenerfassung auf dieser Website</h2>
-      <h3>Cookies</h3>
-      <p>
-        Unsere Internetseiten verwenden so genannte &bdquo;Cookies&ldquo;. Cookies sind kleine
-        Textdateien und richten auf Ihrem Endger&auml;t keinen Schaden an. Sie werden entweder
-        vor&uuml;bergehend f&uuml;r die Dauer einer Sitzung (Session-Cookies) oder dauerhaft
-        (permanente Cookies) auf Ihrem Endger&auml;t gespeichert. Session-Cookies werden nach Ende
-        Ihres Besuchs automatisch gel&ouml;scht. Permanente Cookies bleiben auf Ihrem Endger&auml;t
-        gespeichert, bis Sie diese selbst l&ouml;schen&nbsp;oder eine automatische L&ouml;schung
-        durch Ihren Webbrowser erfolgt.
-      </p>
-      <p>
-        Teilweise k&ouml;nnen auch Cookies von Drittunternehmen auf Ihrem Endger&auml;t gespeichert
-        werden, wenn Sie unsere Seite betreten (Third-Party-Cookies). Diese erm&ouml;glichen uns
-        oder Ihnen die Nutzung bestimmter Dienstleistungen des Drittunternehmens (z.&nbsp;B. Cookies
-        zur Abwicklung von Zahlungsdienstleistungen).
-      </p>
-      <p>
-        Cookies haben verschiedene Funktionen. Zahlreiche Cookies sind technisch notwendig, da
-        bestimmte Websitefunktionen ohne diese nicht funktionieren w&uuml;rden (z.&nbsp;B. die
-        Warenkorbfunktion oder die Anzeige von Videos). Andere Cookies dienen dazu, das
-        Nutzerverhalten auszuwerten&nbsp;oder Werbung anzuzeigen.
-      </p>
-      <p>
-        Cookies, die zur Durchf&uuml;hrung des elektronischen Kommunikationsvorgangs (notwendige
-        Cookies) oder zur Bereitstellung bestimmter, von Ihnen erw&uuml;nschter Funktionen
-        (funktionale Cookies, z.&nbsp;B. f&uuml;r die Warenkorbfunktion) oder zur Optimierung der
-        Website (z.&nbsp;B. Cookies zur Messung des Webpublikums) erforderlich sind, werden auf
-        Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert, sofern keine andere Rechtsgrundlage
-        angegeben wird. Der Websitebetreiber hat ein berechtigtes Interesse an der Speicherung von
-        Cookies zur technisch fehlerfreien und optimierten Bereitstellung seiner Dienste. Sofern
-        eine Einwilligung zur Speicherung von Cookies abgefragt wurde, erfolgt die Speicherung der
-        betreffenden Cookies ausschlie&szlig;lich auf Grundlage dieser Einwilligung (Art. 6 Abs. 1
-        lit. a DSGVO); die Einwilligung ist jederzeit widerrufbar.
-      </p>
-      <p>
-        Sie k&ouml;nnen Ihren Browser so einstellen, dass Sie &uuml;ber das Setzen von Cookies
-        informiert werden und Cookies nur im Einzelfall erlauben, die Annahme von Cookies f&uuml;r
-        bestimmte F&auml;lle oder generell ausschlie&szlig;en sowie das automatische L&ouml;schen
-        der Cookies beim Schlie&szlig;en des Browsers aktivieren. Bei der Deaktivierung von Cookies
-        kann die Funktionalit&auml;t dieser Website eingeschr&auml;nkt sein.
-      </p>
-      <p>
-        Soweit Cookies von Drittunternehmen oder zu Analysezwecken eingesetzt werden, werden wir Sie
-        hier&uuml;ber im Rahmen dieser Datenschutzerkl&auml;rung gesondert informieren und ggf. eine
-        Einwilligung abfragen.
-      </p>
-      <h3>Anfrage per E-Mail, Telefon oder Telefax</h3>
-      <p>
-        Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive
-        aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der
-        Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht
-        ohne Ihre Einwilligung weiter.
-      </p>
-      <p>
-        Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern
-        Ihre Anfrage mit der Erf&uuml;llung eines Vertrags zusammenh&auml;ngt oder zur
-        Durchf&uuml;hrung vorvertraglicher Ma&szlig;nahmen erforderlich ist. In allen &uuml;brigen
-        F&auml;llen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven
-        Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer
-        Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde.
-      </p>
-      <p>
-        Die von Ihnen an uns per Kontaktanfragen &uuml;bersandten Daten verbleiben bei uns, bis Sie
-        uns zur L&ouml;schung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der
-        Zweck f&uuml;r die Datenspeicherung entf&auml;llt (z.&nbsp;B. nach abgeschlossener
-        Bearbeitung Ihres Anliegens). Zwingende gesetzliche Bestimmungen &ndash; insbesondere
-        gesetzliche Aufbewahrungsfristen &ndash; bleiben unber&uuml;hrt.
-      </p>
-      <h2>5. Plugins und Tools</h2>
-      <h3>Google Web Fonts (lokales Hosting)</h3>
-      <p>
-        Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten so genannte Web Fonts, die
-        von Google bereitgestellt werden. Die Google Fonts sind lokal installiert. Eine Verbindung
-        zu Servern von Google findet dabei nicht statt.
-      </p>
-      <p>
-        Weitere Informationen zu Google Web Fonts finden Sie unter
-        <a href="https://developers.google.com/fonts/faq" target="_blank" rel="noopener noreferrer"
-          >https://developers.google.com/fonts/faq</a
-        >
-        und in der Datenschutzerkl&auml;rung von Google:
-        <a
-          href="https://policies.google.com/privacy?hl=de"
-          target="_blank"
-          rel="noopener noreferrer"
-          >https://policies.google.com/privacy?hl=de</a
+        This Privacy Policy applies only to our online activities and is valid for visitors to our
+        website with regards to the information that they shared and/or collect in todover. This
+        policy is not applicable to any information collected offline or via channels other than
+        this website. Our Privacy Policy was created with the help of the
+        <a href="https://www.termsfeed.com/privacy-policy-generator/"
+          >TermsFeed Privacy Policy Generator</a
         >.
       </p>
-      <p>Quelle: <a href="https://www.e-recht24.de">https://www.e-recht24.de</a></p>
+
+      <h2>Consent</h2>
+
+      <p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
+
+      <h2>Information we collect</h2>
+
+      <p>
+        The personal information that you are asked to provide, and the reasons why you are asked to
+        provide it, will be made clear to you at the point we ask you to provide your personal
+        information.
+      </p>
+      <p>
+        If you contact us directly, we may receive additional information about you such as your
+        name, email address, phone number, the contents of the message and/or attachments you may
+        send us, and any other information you may choose to provide.
+      </p>
+      <p>
+        When you register for an Account, we may ask for your contact information, including items
+        such as name, company name, address, email address, and telephone number.
+      </p>
+
+      <h2>How we use your information</h2>
+
+      <p>We use the information we collect in various ways, including to:</p>
+
+      <ul>
+        <li>Provide, operate, and maintain our website</li>
+        <li>Improve, personalize, and expand our website</li>
+        <li>Understand and analyze how you use our website</li>
+        <li>Develop new products, services, features, and functionality</li>
+        <li>
+          Communicate with you, either directly or through one of our partners, including for
+          customer service, to provide you with updates and other information relating to the
+          website, and for marketing and promotional purposes
+        </li>
+        <li>Send you emails</li>
+        <li>Find and prevent fraud</li>
+      </ul>
+
+      <h2>Log Files</h2>
+
+      <p>
+        todover follows a standard procedure of using log files. These files log visitors when they
+        visit websites. All hosting companies do this and a part of hosting services' analytics. The
+        information collected by log files include internet protocol (IP) addresses, browser type,
+        Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the
+        number of clicks. These are not linked to any information that is personally identifiable.
+        The purpose of the information is for analyzing trends, administering the site, tracking
+        users' movement on the website, and gathering demographic information.
+      </p>
+
+      <h2>Cookies and Web Beacons</h2>
+
+      <p>
+        Like any other website, todover uses 'cookies'. These cookies are used to store information
+        including visitors' preferences, and the pages on the website that the visitor accessed or
+        visited. The information is used to optimize the users' experience by customizing our web
+        page content based on visitors' browser type and/or other information.
+      </p>
+
+      <p>
+        For more general information on cookies, please read
+        <a href="https://www.generateprivacypolicy.com/#cookies"
+          >"Cookies" article from the Privacy Policy Generator</a
+        >.
+      </p>
+
+      <h2>Advertising Partners Privacy Policies</h2>
+
+      <P
+        >You may consult this list to find the Privacy Policy for each of the advertising partners
+        of todover.</P
+      >
+
+      <p>
+        Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web
+        Beacons that are used in their respective advertisements and links that appear on todover,
+        which are sent directly to users' browser. They automatically receive your IP address when
+        this occurs. These technologies are used to measure the effectiveness of their advertising
+        campaigns and/or to personalize the advertising content that you see on websites that you
+        visit.
+      </p>
+
+      <p>
+        Note that todover has no access to or control over these cookies that are used by
+        third-party advertisers.
+      </p>
+
+      <h2>Third Party Privacy Policies</h2>
+
+      <p>
+        todover's Privacy Policy does not apply to other advertisers or websites. Thus, we are
+        advising you to consult the respective Privacy Policies of these third-party ad servers for
+        more detailed information. It may include their practices and instructions about how to
+        opt-out of certain options.
+      </p>
+
+      <p>
+        You can choose to disable cookies through your individual browser options. To know more
+        detailed information about cookie management with specific web browsers, it can be found at
+        the browsers' respective websites.
+      </p>
+
+      <h2>CCPA Privacy Rights (Do Not Sell My Personal Information)</h2>
+
+      <p>Under the CCPA, among other rights, California consumers have the right to:</p>
+      <p>
+        Request that a business that collects a consumer's personal data disclose the categories and
+        specific pieces of personal data that a business has collected about consumers.
+      </p>
+      <p>
+        Request that a business delete any personal data about the consumer that a business has
+        collected.
+      </p>
+      <p>
+        Request that a business that sells a consumer's personal data, not sell the consumer's
+        personal data.
+      </p>
+      <p>
+        If you make a request, we have one month to respond to you. If you would like to exercise
+        any of these rights, please contact us.
+      </p>
+
+      <h2>GDPR Data Protection Rights</h2>
+
+      <p>
+        We would like to make sure you are fully aware of all of your data protection rights. Every
+        user is entitled to the following:
+      </p>
+      <p>
+        The right to access – You have the right to request copies of your personal data. We may
+        charge you a small fee for this service.
+      </p>
+      <p>
+        The right to rectification – You have the right to request that we correct any information
+        you believe is inaccurate. You also have the right to request that we complete the
+        information you believe is incomplete.
+      </p>
+      <p>
+        The right to erasure – You have the right to request that we erase your personal data, under
+        certain conditions.
+      </p>
+      <p>
+        The right to restrict processing – You have the right to request that we restrict the
+        processing of your personal data, under certain conditions.
+      </p>
+      <p>
+        The right to object to processing – You have the right to object to our processing of your
+        personal data, under certain conditions.
+      </p>
+      <p>
+        The right to data portability – You have the right to request that we transfer the data that
+        we have collected to another organization, or directly to you, under certain conditions.
+      </p>
+      <p>
+        If you make a request, we have one month to respond to you. If you would like to exercise
+        any of these rights, please contact us.
+      </p>
+
+      <h2>Children's Information</h2>
+
+      <p>
+        Another part of our priority is adding protection for children while using the internet. We
+        encourage parents and guardians to observe, participate in, and/or monitor and guide their
+        online activity.
+      </p>
+
+      <p>
+        todover does not knowingly collect any Personal Identifiable Information from children under
+        the age of 13. If you think that your child provided this kind of information on our
+        website, we strongly encourage you to contact us immediately and we will do our best efforts
+        to promptly remove such information from our records.
+      </p>
     </div>
   </div>
 </template>
@@ -337,6 +206,6 @@ h1 {
   @apply text-2xl mb-8;
 }
 h2 {
-  @apply text-xl mb-4;
+  @apply text-xl mb-4 mt-8;
 }
 </style>
