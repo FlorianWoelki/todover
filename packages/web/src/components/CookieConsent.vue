@@ -166,6 +166,11 @@ export default defineComponent({
   -moz-appearance: none;
   appearance: none;
 }
+.cc_div a:focus,
+.cc_div button:focus,
+.cc_div input:focus {
+  outline: none;
+}
 .cc_div a {
   text-decoration: underline;
 }
