@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import RefreshIcon from '@/assets/icons/refresh.svg';
+import RefreshIcon from '@/assets/icons/refresh.svg?component';
 
 export default defineComponent({
   components: {

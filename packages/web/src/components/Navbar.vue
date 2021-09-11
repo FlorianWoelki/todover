@@ -140,9 +140,9 @@ import mutations from '@/graphql/mutations';
 import { Mutation, State } from '../store';
 import queries from '../graphql/queries';
 import SearchResult from '@/components/SearchResult.vue';
-import Logo from '@/assets/logo.svg';
+import Logo from '@/assets/logo.svg?component';
 import { Todo } from '../store/state';
-import MenuIcon from '../assets/icons/menu-alt3.svg';
+import MenuIcon from '../assets/icons/menu-alt3.svg?component';
 import { useI18n } from 'vue-i18n';
 
 interface ISearchbar {

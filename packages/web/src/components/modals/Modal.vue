@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/runtime-core';
-import XIcon from '@/assets/icons/x.svg';
+import XIcon from '@/assets/icons/x.svg?component';
 
 export default defineComponent({
   emits: ['hideButton'],

@@ -67,7 +67,7 @@ import { dateKey, activeItemKey } from '@/symbols/day-grid';
 import { mod } from '@/util/math';
 import { staticItemClass, days, dragAndDropDataId, months } from '@/util/constants';
 import { List, Todo } from '../store/state';
-import XIcon from '@/assets/icons/x.svg';
+import XIcon from '@/assets/icons/x.svg?component';
 
 export default defineComponent({
   emits: ['end', 'update-list-title', 'removeList'],

@@ -73,7 +73,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref } from 'vue';
-import Logo from '@/assets/logo.svg';
+import Logo from '@/assets/logo.svg?component';
 import { isEmailValid } from '../util/validation';
 import { useRouter } from 'vue-router';
 import { useMutation } from '@vue/apollo-composable';

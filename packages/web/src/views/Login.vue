@@ -67,7 +67,7 @@
 <script lang="ts">
 import { useMutation } from '@vue/apollo-composable';
 import { computed, defineComponent, ref } from 'vue';
-import Logo from '@/assets/logo.svg';
+import Logo from '@/assets/logo.svg?component';
 import { isEmailValid } from '../util/validation';
 import { useRouter } from 'vue-router';
 import { setAccessToken } from '../accessToken';
