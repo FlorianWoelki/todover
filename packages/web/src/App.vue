@@ -26,7 +26,7 @@
     <p class="text-sm text-gray-900">Loading...</p>
   </div>
   <template v-else>
-    <navbar v-if="$route.path === '/'" class="font-sans antialiased" />
+    <navbar v-if="includeNavbarRoutes.includes($route.path)" class="font-sans antialiased" />
     <router-view />
   </template>
 
@@ -43,6 +43,12 @@ export default defineComponent({
   components: { CookieConsent },
   setup() {
     provide(DefaultApolloClient, apolloClient);
+
+    const includeNavbarRoutes = ['/', '/imprint', '/dataprivacy'];
+
+    return {
+      includeNavbarRoutes,
+    };
   },
 });
 </script>
