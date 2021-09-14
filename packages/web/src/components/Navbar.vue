@@ -7,7 +7,7 @@
         <searchbar
           v-if="loggedIn && user"
           v-model="searchbar.input"
-          class="z-20 md:block"
+          class="md:block"
           @focus="focusSearchInput"
         />
         <p v-else class="text-sm text-gray-300">{{ $t('preview') }}</p>
