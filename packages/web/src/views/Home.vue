@@ -186,10 +186,12 @@
     <settings-modal v-if="showSettingsModal" @hide-button="hideHideButton"></settings-modal>
   </transition>
 
-  <hide-button
-    v-if="showSettingsModal || selectedTodoItem || isCalendarVisible"
-    @click="hideHideButton"
-  />
+  <transition name="fade-in">
+    <hide-button
+      v-if="showSettingsModal || selectedTodoItem || isCalendarVisible"
+      @click="hideHideButton"
+    />
+  </transition>
 </template>
 
 <script lang="ts">

@@ -1,7 +1,7 @@
 <template>
   <div class="absolute inset-0 z-50 h-screen" @click="hideButton">
     <div class="flex items-center justify-center h-full">
-      <div class="w-full max-w-xl px-6 py-4 bg-white rounded" @click.stop>
+      <div class="w-full max-w-xl px-6 py-4 bg-white rounded shadow" @click.stop>
         <div class="flex items-center justify-between mb-4">
           <slot name="title"></slot>
           <button class="text-gray-500 hover:text-gray-600 focus:outline-none" @click="hideButton">
