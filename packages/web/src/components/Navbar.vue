@@ -1,7 +1,9 @@
 <template>
   <div class="flex items-center justify-between px-4 py-2 text-white bg-gray-700 mb-14">
     <div class="flex items-center sm:space-x-4">
-      <Logo class="hidden w-28 sm:block" />
+      <router-link to="/">
+        <Logo class="hidden w-28 sm:block" />
+      </router-link>
 
       <div class="relative">
         <searchbar
