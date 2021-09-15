@@ -2,7 +2,8 @@
   <div class="flex items-center justify-between px-4 py-2 text-white bg-gray-700 mb-14">
     <div class="flex items-center sm:space-x-4">
       <router-link to="/">
-        <Logo class="hidden w-28 sm:block" />
+        <logo class="hidden w-28 sm:block" />
+        <logo-small class="w-8 h-8 -ml-4 sm:hidden" />
       </router-link>
 
       <div class="relative">
@@ -144,6 +145,7 @@ import { Mutation, State } from '../store';
 import queries from '../graphql/queries';
 import SearchResult from '@/components/SearchResult.vue';
 import Logo from '@/assets/logo.svg?component';
+import LogoSmall from '@/assets/logo-small.svg?component';
 import { Todo } from '../store/state';
 import MenuIcon from '../assets/icons/menu-alt3.svg?component';
 import { useI18n } from 'vue-i18n';
@@ -157,6 +159,7 @@ interface ISearchbar {
 export default defineComponent({
   components: {
     Logo,
+    LogoSmall,
     SearchResult,
     MenuIcon,
   },
