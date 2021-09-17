@@ -9,7 +9,7 @@ import cors, { CorsOptions } from 'cors';
 import { verify } from 'jsonwebtoken';
 import { MyContext } from './MyContext';
 import { createAccessToken, createRefreshToken } from './auth';
-import { sendRefreshToken } from './sendRefreshToken';
+import { clearRefreshToken, sendRefreshToken } from './sendRefreshToken';
 import { createSchema } from './utils/createSchema';
 
 (async () => {
@@ -35,6 +35,7 @@ import { createSchema } from './utils/createSchema';
     try {
       payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
     } catch (err) {
+      clearRefreshToken(res);
       console.log(err);
       return res.send({ ok: false, accessToken: '' });
     }
