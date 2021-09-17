@@ -62,25 +62,32 @@
           :dropdownHidden="dropdownHidden"
           @close.stop="dropdownHidden = true"
         >
-          <router-link to="/login" class="block hover:bg-gray-900" :class="itemClasses">
-            {{ $t('navbar.loginButton') }}
+          <router-link
+            to="/login"
+            class="flex items-center space-x-2 hover:bg-gray-900"
+            :class="itemClasses"
+          >
+            <login-icon class="w-4 h-4"></login-icon>
+            <span>{{ $t('navbar.loginButton') }}</span>
           </router-link>
 
           <dropdown-border></dropdown-border>
 
           <router-link
             to="/imprint"
-            class="block text-gray-300 hover:bg-gray-900"
+            class="flex items-center space-x-2 text-gray-300 hover:bg-gray-900"
             :class="itemClasses"
           >
-            {{ $t('navbar.imprintButton') }}
+            <printer-icon class="w-4 h-4"></printer-icon>
+            <span>{{ $t('navbar.imprintButton') }}</span>
           </router-link>
           <router-link
             to="/dataprivacy"
-            class="block text-gray-300 hover:bg-gray-900"
+            class="flex items-center space-x-2 text-gray-300 hover:bg-gray-900"
             :class="itemClasses"
           >
-            {{ $t('navbar.privacyButton') }}
+            <database-icon class="w-4 h-4"></database-icon>
+            <span>{{ $t('navbar.privacyButton') }}</span>
           </router-link>
         </dropdown>
       </div>
@@ -102,25 +109,32 @@
         :dropdownHidden="dropdownHidden"
         @close.stop="dropdownHidden = true"
       >
-        <p class="hover:bg-gray-900" :class="itemClasses" @click="handleLogout">
-          {{ $t('navbar.logoutButton') }}
+        <p
+          class="flex items-center space-x-2 hover:bg-gray-900"
+          :class="itemClasses"
+          @click="handleLogout"
+        >
+          <logout-icon class="w-4 h-4"></logout-icon>
+          <span>{{ $t('navbar.logoutButton') }}</span>
         </p>
 
         <dropdown-border></dropdown-border>
 
         <router-link
           to="/imprint"
-          class="block text-gray-300 hover:bg-gray-900"
+          class="flex items-center space-x-2 text-gray-300 hover:bg-gray-900"
           :class="itemClasses"
         >
-          {{ $t('navbar.imprintButton') }}
+          <printer-icon class="w-4 h-4"></printer-icon>
+          <span>{{ $t('navbar.imprintButton') }}</span>
         </router-link>
         <router-link
           to="/dataprivacy"
-          class="block text-gray-300 hover:bg-gray-900"
+          class="flex items-center space-x-2 text-gray-300 hover:bg-gray-900"
           :class="itemClasses"
         >
-          {{ $t('navbar.privacyButton') }}
+          <database-icon class="w-4 h-4"></database-icon>
+          <span>{{ $t('navbar.privacyButton') }}</span>
         </router-link>
       </dropdown>
     </div>
@@ -147,6 +161,10 @@ import SearchResult from '@/components/SearchResult.vue';
 import Logo from '@/assets/logo.svg?component';
 import LogoSmall from '@/assets/logo-small.svg?component';
 import { Todo } from '../store/state';
+import DatabaseIcon from '../assets/icons/database.svg?component';
+import PrinterIcon from '../assets/icons/printer.svg?component';
+import LogoutIcon from '../assets/icons/logout.svg?component';
+import LoginIcon from '../assets/icons/login.svg?component';
 import MenuIcon from '../assets/icons/menu-alt3.svg?component';
 import { useI18n } from 'vue-i18n';
 
@@ -162,6 +180,10 @@ export default defineComponent({
     LogoSmall,
     SearchResult,
     MenuIcon,
+    DatabaseIcon,
+    PrinterIcon,
+    LogoutIcon,
+    LoginIcon,
   },
   setup() {
     const { locale } = useI18n({ useScope: 'global' });
