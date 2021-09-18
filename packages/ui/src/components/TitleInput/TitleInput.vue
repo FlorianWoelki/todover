@@ -2,7 +2,7 @@
   <div
     v-if="hovered"
     ref="inputField"
-    :contenteditable="!$attrs.disabled"
+    :contenteditable="!inputDisabled"
     v-bind="$attrs"
     class="w-full px-0 py-1 overflow-hidden placeholder-gray-300 bg-transparent border-none focus:outline-none overflow-ellipsis"
     @keydown.enter="blurInputField"
@@ -36,6 +36,10 @@ export default defineComponent({
     },
     modelValue: {
       type: String,
+    },
+    inputDisabled: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props, { emit }) {

@@ -19,7 +19,7 @@
       }"
       @keydown.enter="blurInputField"
       @blur="blurInputField"
-      :disabled="disabled"
+      :input-disabled="disabled"
       :hovered="isHovered && !noDblClick"
       v-bind="$attrs"
     ></title-input>
