@@ -50,7 +50,7 @@
     </div>
 
     <todo-item-menu
-      v-if="isHovered && !noDblClick"
+      v-if="(isHovered && !noDblClick) || (isSmallDevice && !noDblClick)"
       @remove-todo-item="handleRemoveButtonClick"
       @open-menu="handleOpenMenuClick"
     ></todo-item-menu>
@@ -61,6 +61,7 @@
 <script lang="ts">
 import { defineComponent, nextTick, ref } from '@vue/runtime-core';
 import { staticItemClass, dragAndDropDataId } from '@/util/constants';
+import { isSmallDevice } from '@/util/screen';
 
 export default defineComponent({
   emits: ['updateItem', 'click', 'removeItem', 'openMenu'],
@@ -185,6 +186,7 @@ export default defineComponent({
       blurInputField,
       inputField,
       staticItemClass,
+      isSmallDevice,
     };
   },
 });
