@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center h-full max-w-6xl mx-auto font-sans antialiased">
+  <div class="flex flex-col items-center h-full max-w-6xl px-6 mx-auto font-sans antialiased">
     <div>
       <h2>Imprint</h2>
       <h1>Legal Disclosure</h1>

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col items-center h-full max-w-6xl mx-auto font-sans antialiased">
-    <div>
+  <div class="flex flex-col items-center h-full max-w-6xl px-6 mx-auto font-sans antialiased">
+    <div class="pb-12">
       <h1>Privacy Statement</h1>
 
       <p>
