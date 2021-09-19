@@ -1,6 +1,6 @@
 <template>
   <div
-    class="px-4 py-2 transition duration-100 ease-in-out rounded-md cursor-pointer hover:bg-gray-100"
+    class="transition duration-100 ease-in-out rounded-md cursor-pointer sm:px-4 sm:py-2 hover:bg-gray-100"
   >
     <p class="flex items-start space-x-2 text-gray-900">
       <span>{{ name }}</span>
