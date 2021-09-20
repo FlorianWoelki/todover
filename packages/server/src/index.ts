@@ -5,6 +5,7 @@ import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
 import express from 'express';
+import helmet from 'helmet';
 import cors, { CorsOptions } from 'cors';
 import { verify } from 'jsonwebtoken';
 import { MyContext } from './MyContext';
@@ -24,6 +25,7 @@ import { createSchema } from './utils/createSchema';
   const app = express();
   app.use(cors(corsOptions));
   app.use(cookieParser());
+  app.use(helmet());
 
   app.post('/refresh_token', async (req, res) => {
     const token = req.cookies.jid;
