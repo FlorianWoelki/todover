@@ -56,6 +56,11 @@ export const mutations: MutationTree<State> & Mutations = {
     if (filteredTodosWithId.length === 1) {
       const newTodo = { ...filteredTodosWithId[0], ...value };
       state.todos = [...state.todos.filter((todo) => todo.id !== id), newTodo];
+
+      const list = state.lists.find((list) => list.id === newTodo.listId);
+      if (newTodo.listId && list) {
+        list.todos = [...list.todos.filter((todo) => todo.id !== id), newTodo];
+      }
     }
   },
   [Mutation.CREATE_LIST](state: State, value) {
