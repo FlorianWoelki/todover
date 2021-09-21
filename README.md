@@ -10,7 +10,7 @@
     Your Open Source todo managing application
     <br />
     <br />
-    <a href="#">View Demo</a>
+    <a href="https://www.todover.com/">View Demo</a>
     ·
     <a href="https://github.com/FlorianWoelki/todover/issues/new?assignees=&labels=bug&template=bug_report.md&title=">Report Bug</a>
     ·
