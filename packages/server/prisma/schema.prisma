@@ -8,21 +8,22 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  email        String    @unique @db.VarChar(255)
-  password     String    @unique @db.VarChar(255)
-  tokenVersion Int       @default(0)
+  id           Int      @id @default(autoincrement())
+  email        String   @unique @db.VarChar(255)
+  password     String   @unique @db.VarChar(255)
+  tokenVersion Int      @default(0)
   todos        Todo[]
   lists        List[]
   settings     Setting?
 }
 
 model List {
-  id     String @id @default(uuid())
-  name   String @db.VarChar(255)
-  todos  Todo[]
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int
+  id       String @id @default(uuid())
+  name     String @db.VarChar(255)
+  position Int    @unique
+  todos    Todo[]
+  user     User   @relation(fields: [userId], references: [id])
+  userId   Int
 }
 
 model Todo {

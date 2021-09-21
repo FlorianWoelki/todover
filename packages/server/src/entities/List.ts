@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from 'type-graphql';
+import { Field, ID, Int, ObjectType } from 'type-graphql';
 import { Todo } from './Todo';
 import { User } from './User';
 
@@ -9,6 +9,9 @@ export class List {
 
   @Field()
   name: string;
+
+  @Field(() => Int)
+  position: number;
 
   @Field(() => User)
   user: User;

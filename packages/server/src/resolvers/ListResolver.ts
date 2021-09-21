@@ -2,6 +2,7 @@ import {
   Arg,
   Ctx,
   FieldResolver,
+  Int,
   Mutation,
   Query,
   Resolver,
@@ -23,13 +24,14 @@ export class ListResolver {
   @UseMiddleware(isAuth)
   createList(
     @Ctx() { prisma, payload }: MyContext,
-    @Arg('name') name: string
+    @Arg('name') name: string,
+    @Arg('position', () => Int) position: number
   ): Promise<PrismaList> | null {
     if (!payload) {
       throw new AuthenticationError('You are not logged in');
     }
 
-    return prisma.list.create({ data: { name, userId: payload.userId } });
+    return prisma.list.create({ data: { name, position, userId: payload.userId } });
   }
 
   @Mutation(() => List)

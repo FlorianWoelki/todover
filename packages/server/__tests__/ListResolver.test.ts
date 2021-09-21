@@ -15,10 +15,11 @@ let list: Partial<List> = {};
 let createdTodoInList: Partial<Todo> = {};
 
 const CREATE_LIST = gql`
-  mutation createList($name: String!) {
-    createList(name: $name) {
+  mutation createList($name: String!, $position: Int!) {
+    createList(name: $name, position: $position) {
       id
       name
+      position
       todos {
         name
       }
@@ -98,11 +99,13 @@ describe('Mutations', () => {
       mutation: CREATE_LIST,
       variables: {
         name: 'Test List',
+        position: 1,
       },
     });
 
     expect(res.errors).toBeUndefined();
     expect(res.data?.createList.name).toBe('Test List');
+    expect(res.data?.createList.position).toBe(1);
     expect(res.data?.createList.todos).toHaveLength(0);
     list = res.data?.createList;
   });
@@ -134,6 +137,7 @@ describe('Mutations', () => {
       mutation: CREATE_LIST,
       variables: {
         name: 'Delete list test',
+        position: 2,
       },
     });
     const list: List = createListRes.data?.createList;
