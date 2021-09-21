@@ -52,13 +52,19 @@ export const mutations: MutationTree<State> & Mutations = {
     }
   },
   [Mutation.UPDATE_TODO](state: State, { id, value }) {
-    const filteredTodosWithId = state.todos.filter((todo) => todo.id === id);
-    if (filteredTodosWithId.length === 1) {
-      const newTodo = { ...filteredTodosWithId[0], ...value };
+    const filteredTodo = state.todos.find((todo) => todo.id === id);
+    if (filteredTodo) {
+      const newTodo = { ...filteredTodo, ...value };
       state.todos = [...state.todos.filter((todo) => todo.id !== id), newTodo];
 
       const list = state.lists.find((list) => list.id === newTodo.listId);
-      if (newTodo.listId && list) {
+      const filteredList = state.lists.find((list) => list.id === filteredTodo.listId);
+
+      if (filteredList && filteredTodo.listId) {
+        filteredList.todos = [...filteredList.todos.filter((todo) => todo.id !== id)];
+      }
+
+      if (list && newTodo.listId) {
         list.todos = [...list.todos.filter((todo) => todo.id !== id), newTodo];
       }
     }
