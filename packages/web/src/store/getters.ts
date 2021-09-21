@@ -1,28 +1,15 @@
 import { GetterTree } from 'vuex';
-import { ListType, State, Todo } from './state';
+import { List, State, Todo } from './state';
 
 export type Getters = {
-  mappedLists(state: State): any;
+  sortedLists(state: State): any;
   mappedTodos(state: State): any;
 };
 
 export const getters: GetterTree<State, State> & Getters = {
-  mappedLists(state) {
-    const todos = state.todos as Todo[];
-    const listIds: string[] = state.lists.map((list) => list.id);
-    const lists: ListType = {};
-    listIds.forEach((list) => {
-      lists[list] = [];
-    });
-
-    todos
-      .filter((todo) => todo.listId)
-      .forEach((todo) => {
-        if (lists[todo.listId!]) {
-          lists[todo.listId!].push(todo);
-        }
-      });
-
+  sortedLists(state) {
+    const lists: List[] = [...state.lists];
+    lists.sort((a, b) => a.position - b.position);
     return lists;
   },
   mappedTodos(state) {

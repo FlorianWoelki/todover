@@ -127,19 +127,19 @@
       </p>
       <list-grid v-else class="w-full h-full">
         <list-column
-          v-for="(todos, listId, i) in lists"
+          v-for="(list, i) in lists"
           :key="i"
           :index="i"
-          :listId="listId"
+          :listId="list.id"
           :hide="i !== currentListItem && isSmallDevice"
           @end="updateListOfTodoItem"
-          @remove-list="removeList(listId)"
-          @update-list-title="updateListTitle($event, listId)"
+          @remove-list="removeList(list.id)"
+          @update-list-title="updateListTitle($event, list.id)"
           style="min-height: 300px"
         >
           <template #draggable>
             <todo-item
-              v-for="(todo, j) in todos"
+              v-for="(todo, j) in list.todos"
               :todo-id="todo.id"
               :key="j"
               :value="todo.name"
@@ -154,8 +154,8 @@
           <template #default="{ date }">
             <todo-item
               no-dbl-click
-              :loading="isNewTodoItemInserting(listId)"
-              @update-item="insertNewTodo($event, date, listId)"
+              :loading="isNewTodoItemInserting(list.id)"
+              @update-item="insertNewTodo($event, date, list.id)"
             ></todo-item>
           </template>
         </list-column>
@@ -209,7 +209,7 @@ import CalendarIcon from '../assets/icons/calendar.svg?component';
 import RefreshIcon from '../assets/icons/refresh.svg?component';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
-import { State, Todo } from '../store/state';
+import { List, State, Todo } from '../store/state';
 import { useMutation, useQuery } from '@vue/apollo-composable';
 import queries from '@/graphql/queries';
 import mutations from '../graphql/mutations';
@@ -529,19 +529,25 @@ export default defineComponent({
     };
 
     const createNewList = (): void => {
+      const listsLength = Object.entries(lists.value).length;
+      let position = 0;
+      if (listsLength !== 0) {
+        position = Object.values(lists.value)[Object.keys(lists.value).length - 1].position + 1;
+      }
+
       if (!store.state.me) {
-        store.commit(Mutation.CREATE_LIST, { id: `list-${Math.random()}`, name: 'Unnamed' });
+        store.commit(Mutation.CREATE_LIST, { id: `list-${position}`, name: 'Unnamed', position });
         return;
       }
 
-      createListMutation({ name: 'Unnamed' }).then((result) => {
+      createListMutation({ name: 'Unnamed', position }).then((result) => {
         if (result?.data) {
           store.commit(Mutation.CREATE_LIST, result.data.createList);
         }
       });
     };
 
-    const lists = computed(() => store.getters.mappedLists);
+    const lists = computed((): List[] => store.getters.sortedLists);
 
     const removeTodoItem = (id: string): void => {
       if (store.state.me) {
@@ -582,7 +588,21 @@ export default defineComponent({
     };
 
     watch(fetchedLists, () => {
-      store.commit(Mutation.SET_LISTS, fetchedLists.value.lists);
+      const newLists: List[] = fetchedLists.value.lists.map((list: List) => ({
+        ...list,
+        todos: [],
+      }));
+      const todos: Todo[] = fetchedTodos.value.todos;
+      todos
+        .filter((todo) => todo.listId)
+        .forEach((todo) => {
+          const list = newLists.find((list) => list.id === todo.listId);
+          if (list) {
+            list.todos.push(todo);
+          }
+        });
+
+      store.commit(Mutation.SET_LISTS, newLists);
     });
 
     watch(fetchedTodosLoading, () => {

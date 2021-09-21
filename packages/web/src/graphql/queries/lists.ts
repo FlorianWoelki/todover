@@ -5,6 +5,7 @@ export const lists = gql`
     lists {
       id
       name
+      position
     }
   }
 `;

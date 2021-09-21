@@ -1,10 +1,15 @@
 export interface ListType {
-  [key: string]: Todo[];
+  [key: string]: {
+    position: number;
+    todos: Todo[];
+  };
 }
 
 export interface List {
   id: string;
   name: string;
+  position: number;
+  todos: Todo[];
 }
 
 export type TodoRepetition = 'weekly' | 'daily';

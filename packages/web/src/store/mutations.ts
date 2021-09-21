@@ -37,6 +37,12 @@ export type Mutations<S = State> = {
 export const mutations: MutationTree<State> & Mutations = {
   [Mutation.ADD_TODO](state: State, { value }) {
     state.todos.push(value);
+    if (value.listId) {
+      const list = state.lists.find((list) => list.id === value.listId);
+      if (list) {
+        list.todos.push(value);
+      }
+    }
   },
   [Mutation.UPDATE_LIST_TITLE](state: State, { newValue, listId }) {
     const list = state.lists.find((list) => list.id === listId);
@@ -53,12 +59,22 @@ export const mutations: MutationTree<State> & Mutations = {
     }
   },
   [Mutation.CREATE_LIST](state: State, value) {
-    state.lists = state.lists.concat(value);
+    const newValue = { ...value, todos: [] };
+    state.lists = state.lists.concat(newValue);
   },
   [Mutation.REMOVE_TODO](state: State, { id }) {
     const index = state.todos.findIndex((todo) => todo.id === id);
     if (index > -1) {
+      const todo = state.todos[index];
+      const list = state.lists.find((list) => list.id === todo.listId);
       state.todos.splice(index, 1);
+
+      if (todo.listId && list) {
+        const indexInList = list.todos.findIndex((todo) => todo.id === id);
+        if (indexInList > -1) {
+          list.todos.splice(indexInList, 1);
+        }
+      }
     }
   },
   [Mutation.REMOVE_LIST](state: State, { id }): void {
