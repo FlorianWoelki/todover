@@ -7,13 +7,13 @@
       <refresh-icon v-if="repeated" class="w-4 h-4 mt-1 text-gray-400"></refresh-icon>
     </p>
     <p class="text-sm text-gray-600">
-      {{ description ? `Description: "${description}"` : 'No description.' }}
+      {{ trimmedDescription ? `Description: "${trimmedDescription}..."` : 'No description.' }}
     </p>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import RefreshIcon from '@/assets/icons/refresh.svg?component';
 
 export default defineComponent({
@@ -32,6 +32,15 @@ export default defineComponent({
       type: [Boolean, String],
       default: false,
     },
+  },
+  setup(props) {
+    const trimmedDescription = computed((): string | undefined =>
+      props.description?.substring(0, 48)
+    );
+
+    return {
+      trimmedDescription,
+    };
   },
 });
 </script>
