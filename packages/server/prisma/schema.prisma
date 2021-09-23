@@ -34,7 +34,7 @@ model Todo {
   userId      Int
   date        DateTime?
   repetition  String?
-  list        List?     @relation(fields: [listId], references: [id])
+  list        List?     @relation(fields: [listId], references: [id], onDelete: Cascade)
   listId      String?
   description String?
 }
