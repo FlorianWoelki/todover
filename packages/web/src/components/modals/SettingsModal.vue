@@ -91,6 +91,8 @@ export default defineComponent({
       }
       store.commit(Mutation.UPDATE_SETTINGS, { language: language.slug });
       dropdownHidden.value = true;
+
+      window.location.reload();
     };
 
     return {
