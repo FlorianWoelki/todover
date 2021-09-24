@@ -36,7 +36,11 @@ export type Mutations<S = State> = {
 
 export const mutations: MutationTree<State> & Mutations = {
   [Mutation.ADD_TODO](state: State, { value }) {
-    state.todos.push(value);
+    const newTodo: Todo = {
+      ...value,
+      createdAt: new Date(),
+    };
+    state.todos.push(newTodo);
     if (value.listId) {
       const list = state.lists.find((list) => list.id === value.listId);
       if (list) {
@@ -109,15 +113,19 @@ export const mutations: MutationTree<State> & Mutations = {
   [Mutation.SET_TODOS](state: State, value) {
     const newValue = value.map((todo) => {
       // need to parse string because date comes in the format of a string from the backend
+      let newTodo: Todo = {
+        ...todo,
+        createdAt: new Date(todo.createdAt),
+      };
       if (todo.date && typeof todo.date === 'string') {
-        const newTodo = {
-          ...todo,
+        newTodo = {
+          ...newTodo,
           date: new Date(todo.date),
         };
         return newTodo;
       }
 
-      return todo;
+      return newTodo;
     });
     state.todos = newValue;
   },

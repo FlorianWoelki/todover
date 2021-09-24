@@ -17,8 +17,9 @@ export type TodoRepetition = 'weekly' | 'daily';
 export interface Todo {
   id: string;
   name: string;
-  date?: Date;
   repetition: TodoRepetition | null;
+  createdAt: Date;
+  date?: Date;
   done?: boolean;
   listId?: string;
   description?: string;

@@ -6,6 +6,7 @@ export const todos = gql`
       id
       name
       done
+      createdAt
       date
       repetition
       listId
