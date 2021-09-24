@@ -2,12 +2,12 @@
   <div
     class="transition duration-100 ease-in-out rounded-md cursor-pointer sm:px-4 sm:py-2 hover:bg-gray-100"
   >
-    <div class="flex items-center justify-between">
-      <p class="flex items-start space-x-2 text-gray-900">
+    <div class="flex items-start justify-between">
+      <p class="flex items-start space-x-2 text-gray-900 break-all">
         <span :class="{ 'line-through text-gray-500': todo.done }">{{ todo.name }}</span>
         <refresh-icon v-if="todo.repetition" class="w-4 h-4 mt-1 text-gray-400"></refresh-icon>
       </p>
-      <p v-if="todo.date" class="text-xs text-gray-500">
+      <p v-if="todo.date" class="mt-1 text-xs text-gray-500">
         {{ `${todo.date.getDate()}.${todo.date.getMonth()}.${todo.date.getYear()}` }}
       </p>
     </div>
