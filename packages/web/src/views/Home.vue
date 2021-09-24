@@ -433,8 +433,9 @@ export default defineComponent({
       return days;
     });
 
-    const todosAtDate = (date: Date): Todo[] | undefined => {
-      return store.getters.mappedTodos[date.toDateString()];
+    const todosAtDate = (date: Date): Todo[] => {
+      console.log(store.state.todos.filter((todo) => todo.date?.toString() === date.toString()));
+      return store.state.todos.filter((todo) => todo.date?.toString() === date.toString());
     };
 
     const sizeOfLists = computed((): number => Object.keys(lists.value).length);

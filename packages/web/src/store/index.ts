@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-extra-semi */
 import { InjectionKey } from 'vue';
 import { createStore, Store as VuexStore, CommitOptions, DispatchOptions } from 'vuex';
 
