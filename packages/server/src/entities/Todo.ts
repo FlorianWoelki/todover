@@ -21,6 +21,9 @@ export class Todo {
   @Field({ defaultValue: false })
   done: boolean;
 
+  @Field()
+  createdAt: Date;
+
   @Field({ nullable: true })
   date?: Date;
 
