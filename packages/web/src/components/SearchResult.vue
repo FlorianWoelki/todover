@@ -2,10 +2,15 @@
   <div
     class="transition duration-100 ease-in-out rounded-md cursor-pointer sm:px-4 sm:py-2 hover:bg-gray-100"
   >
-    <p class="flex items-start space-x-2 text-gray-900">
-      <span>{{ name }}</span>
-      <refresh-icon v-if="repeated" class="w-4 h-4 mt-1 text-gray-400"></refresh-icon>
-    </p>
+    <div class="flex items-center justify-between">
+      <p class="flex items-start space-x-2 text-gray-900">
+        <span :class="{ 'line-through text-gray-500': todo.done }">{{ todo.name }}</span>
+        <refresh-icon v-if="todo.repetition" class="w-4 h-4 mt-1 text-gray-400"></refresh-icon>
+      </p>
+      <p v-if="todo.date" class="text-xs text-gray-500">
+        {{ `${todo.date.getDate()}.${todo.date.getMonth()}.${todo.date.getYear()}` }}
+      </p>
+    </div>
     <p class="text-sm text-gray-600">
       {{ trimmedDescription ? `Description: "${trimmedDescription}..."` : 'No description.' }}
     </p>
@@ -13,29 +18,23 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, PropType } from 'vue';
 import RefreshIcon from '@/assets/icons/refresh.svg?component';
+import { Todo } from '../store/state';
 
 export default defineComponent({
   components: {
     RefreshIcon,
   },
   props: {
-    name: {
-      type: String,
+    todo: {
+      type: Object as PropType<Todo>,
       required: true,
-    },
-    description: {
-      type: String,
-    },
-    repeated: {
-      type: [Boolean, String],
-      default: false,
     },
   },
   setup(props) {
     const trimmedDescription = computed((): string | undefined =>
-      props.description?.substring(0, 48)
+      props.todo.description?.substring(0, 48)
     );
 
     return {

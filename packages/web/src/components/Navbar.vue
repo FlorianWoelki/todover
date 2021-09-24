@@ -34,9 +34,7 @@
               <search-result
                 v-for="(searchResult, index) in searchbar.results"
                 :key="index"
-                :name="searchResult.name"
-                :description="searchResult.description"
-                :repeated="searchResult.repetition"
+                :todo="searchResult"
                 @click="setSelectedTodoItem(searchResult)"
               />
             </div>
@@ -235,7 +233,11 @@ export default defineComponent({
         const filteredByDescription = todos.filter((todo) =>
           todo.description?.toLowerCase().includes(searchbar.input.toLowerCase())
         );
-        searchbar.results = [...filteredByName, ...filteredByDescription];
+
+        const results = [...filteredByName, ...filteredByDescription].sort(
+          (a, b) => Number(a.done) - Number(b.done)
+        );
+        searchbar.results = results;
       }
     };
 
