@@ -25,13 +25,13 @@
 ### Built With
 
 todover is being built with the different technologies:
-* Vue.js 3 with Vue Router and Vuex
 * TypeScript
-* Prisma, Apollo and GraphQL
+* Frontend: TailwindCSS, Vue.js 3 and as a development server Vite
+* Backend: Express, Apollo, GraphQL, and as a ORM Prisma
 
 ## Creating your own version
 
-If you are scared of your data and because todover is an open source project, you can always create and install your own version of this application. Feel free to manipulate or redesign it.
+If you are scared of your data and because todover is an open source project, you can always create and install your own version of this application. Feel free to manipulate or redesign it. This project is based on the [MIT license](https://mit-license.org/).
 
 ### Installation
 
