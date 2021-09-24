@@ -134,10 +134,11 @@ $ cd /packages/web && yarn dev
 
 Understanding more than two languages can be challenging. Therefore, if you want to contribute by adding your tongue or fixing a translation issue, just follow this guide:
 
-1. If you want to [clone the project](https://github.com/FlorianWoelki/todover/blob/main/.github/CONTRIBUTING.md), clone and fork it now
-    1. Go to `packages/i18n/locales` and fix the translation issue in the corresponding file 
-    2. Go to `packages/i18n/locales` and add your language file of the type `json`
+1. If you want to [clone the project](https://github.com/FlorianWoelki/todover/blob/main/.github/CONTRIBUTING.md), clone and fork it now (you can also do it directly on GitHub)
+    1. Go to `packages/i18n/locales` and fix the translation issue in the corresponding file or
+    2. Go to `packages/i18n/locales` and add your language file of the type `json` (you can use the other files as a template)
 3. Commit and create a pull request for your translation
+4. See your translation live on the page!
 
 ## License
 
