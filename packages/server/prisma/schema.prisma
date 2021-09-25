@@ -33,6 +33,7 @@ model Todo {
   user        User      @relation(fields: [userId], references: [id])
   userId      Int
   createdAt   DateTime  @default(now())
+  priority    String    @default("normal")
   date        DateTime?
   repetition  String?
   list        List?     @relation(fields: [listId], references: [id], onDelete: Cascade)

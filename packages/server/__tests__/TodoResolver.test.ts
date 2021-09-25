@@ -19,6 +19,7 @@ const ADD_TODO_WITH_DATE = gql`
       name
       done
       date
+      priority
       repetition
       listId
       description
@@ -33,6 +34,7 @@ const UPDATE_TODO = gql`
       name
       done
       date
+      priority
       repetition
       listId
       description
@@ -101,6 +103,7 @@ describe('Mutations', () => {
     expect(res.data?.addTodoWithDate.done).toBe(false);
     expect(res.data?.addTodoWithDate.date).toBe(date.toISOString());
     expect(res.data?.addTodoWithDate.repetition).toBe(null);
+    expect(res.data?.addTodoWithDate.priority).toBe('normal');
     expect(res.data?.addTodoWithDate.listId).toBe(null);
     expect(res.data?.addTodoWithDate.description).toBe(null);
     todo = res.data?.addTodoWithDate;
@@ -128,6 +131,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.done).toBe(false);
     expect(res.data?.updateTodo.date).toBe(todo.date?.toISOString());
     expect(res.data?.updateTodo.repetition).toBe(null);
+    expect(res.data?.updateTodo.priority).toBe('normal');
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(null);
     todo.name = name;
@@ -153,6 +157,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.done).toBe(true);
     expect(res.data?.updateTodo.date).toBe(todo.date?.toISOString());
     expect(res.data?.updateTodo.repetition).toBe(null);
+    expect(res.data?.updateTodo.priority).toBe('normal');
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(null);
     todo.done = true;
@@ -179,6 +184,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.done).toBe(todo.done);
     expect(res.data?.updateTodo.date).toBe(date.toISOString());
     expect(res.data?.updateTodo.repetition).toBe(null);
+    expect(res.data?.updateTodo.priority).toBe('normal');
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(null);
     todo.date = date;
@@ -204,6 +210,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.done).toBe(todo.done);
     expect(res.data?.updateTodo.date).toBe(todo.date?.toISOString());
     expect(res.data?.updateTodo.repetition).toBe('weekly');
+    expect(res.data?.updateTodo.priority).toBe('normal');
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(null);
     todo.repetition = TodoRepetition.weekly;
@@ -230,6 +237,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.done).toBe(todo.done);
     expect(res.data?.updateTodo.date).toBe(todo.date?.toISOString());
     expect(res.data?.updateTodo.repetition).toBe(todo.repetition);
+    expect(res.data?.updateTodo.priority).toBe('normal');
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(description);
     todo.description = description;

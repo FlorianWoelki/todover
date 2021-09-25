@@ -1,6 +1,6 @@
 import { IsEnum } from 'class-validator';
 import { Field, InputType } from 'type-graphql';
-import { Todo, TodoRepetition } from '../../entities/Todo';
+import { Priority, Todo, TodoRepetition } from '../../entities/Todo';
 
 @InputType()
 export class UpdateTodoInput implements Partial<Todo> {
@@ -9,6 +9,10 @@ export class UpdateTodoInput implements Partial<Todo> {
 
   @Field({ nullable: true })
   date?: Date;
+
+  @Field({ nullable: true })
+  @IsEnum(Priority)
+  priorty?: Priority;
 
   @Field({ nullable: true })
   @IsEnum(TodoRepetition)

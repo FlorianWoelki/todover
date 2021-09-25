@@ -7,6 +7,12 @@ export enum TodoRepetition {
   daily = 'daily',
 }
 
+export enum Priority {
+  high = 'high',
+  normal = 'normal',
+  low = 'low',
+}
+
 @ObjectType()
 export class Todo {
   @Field(() => ID)
@@ -23,6 +29,9 @@ export class Todo {
 
   @Field()
   createdAt: Date;
+
+  @Field({ defaultValue: Priority.normal })
+  priority: Priority;
 
   @Field({ nullable: true })
   date?: Date;
