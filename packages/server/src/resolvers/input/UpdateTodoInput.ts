@@ -12,7 +12,7 @@ export class UpdateTodoInput implements Partial<Todo> {
 
   @Field({ nullable: true })
   @IsEnum(Priority)
-  priorty?: Priority;
+  priority?: Priority;
 
   @Field({ nullable: true })
   @IsEnum(TodoRepetition)

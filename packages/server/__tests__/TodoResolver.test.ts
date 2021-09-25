@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { createTestClient } from 'apollo-server-testing';
 import { Request } from 'express';
-import { Todo, TodoRepetition } from '../src/entities/Todo';
+import { Priority, Todo, TodoRepetition } from '../src/entities/Todo';
 import { constructTestServer } from './util/server';
 import { cleanupUser, createUser, login } from './util/user';
 
@@ -103,7 +103,7 @@ describe('Mutations', () => {
     expect(res.data?.addTodoWithDate.done).toBe(false);
     expect(res.data?.addTodoWithDate.date).toBe(date.toISOString());
     expect(res.data?.addTodoWithDate.repetition).toBe(null);
-    expect(res.data?.addTodoWithDate.priority).toBe('normal');
+    expect(res.data?.addTodoWithDate.priority).toBe(Priority.normal);
     expect(res.data?.addTodoWithDate.listId).toBe(null);
     expect(res.data?.addTodoWithDate.description).toBe(null);
     todo = res.data?.addTodoWithDate;
@@ -131,7 +131,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.done).toBe(false);
     expect(res.data?.updateTodo.date).toBe(todo.date?.toISOString());
     expect(res.data?.updateTodo.repetition).toBe(null);
-    expect(res.data?.updateTodo.priority).toBe('normal');
+    expect(res.data?.updateTodo.priority).toBe(Priority.normal);
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(null);
     todo.name = name;
@@ -157,7 +157,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.done).toBe(true);
     expect(res.data?.updateTodo.date).toBe(todo.date?.toISOString());
     expect(res.data?.updateTodo.repetition).toBe(null);
-    expect(res.data?.updateTodo.priority).toBe('normal');
+    expect(res.data?.updateTodo.priority).toBe(Priority.normal);
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(null);
     todo.done = true;
@@ -184,7 +184,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.done).toBe(todo.done);
     expect(res.data?.updateTodo.date).toBe(date.toISOString());
     expect(res.data?.updateTodo.repetition).toBe(null);
-    expect(res.data?.updateTodo.priority).toBe('normal');
+    expect(res.data?.updateTodo.priority).toBe(Priority.normal);
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(null);
     todo.date = date;
@@ -210,7 +210,7 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.done).toBe(todo.done);
     expect(res.data?.updateTodo.date).toBe(todo.date?.toISOString());
     expect(res.data?.updateTodo.repetition).toBe('weekly');
-    expect(res.data?.updateTodo.priority).toBe('normal');
+    expect(res.data?.updateTodo.priority).toBe(Priority.normal);
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(null);
     todo.repetition = TodoRepetition.weekly;
@@ -237,10 +237,37 @@ describe('Mutations', () => {
     expect(res.data?.updateTodo.done).toBe(todo.done);
     expect(res.data?.updateTodo.date).toBe(todo.date?.toISOString());
     expect(res.data?.updateTodo.repetition).toBe(todo.repetition);
-    expect(res.data?.updateTodo.priority).toBe('normal');
+    expect(res.data?.updateTodo.priority).toBe(Priority.normal);
     expect(res.data?.updateTodo.listId).toBe(null);
     expect(res.data?.updateTodo.description).toBe(description);
     todo.description = description;
+  });
+
+  it('updateTodo - change priority', async () => {
+    server = (await constructTestServer(prisma, request)).server;
+    const mutate = createTestClient(server).mutate;
+    const priority = Priority.high;
+
+    const res = await mutate({
+      mutation: UPDATE_TODO,
+      variables: {
+        id: todo.id,
+        data: {
+          priority,
+        },
+      },
+    });
+
+    expect(res.errors).toBeUndefined();
+    expect(res.data?.updateTodo.id).toBe(todo.id);
+    expect(res.data?.updateTodo.name).toBe(todo.name);
+    expect(res.data?.updateTodo.done).toBe(todo.done);
+    expect(res.data?.updateTodo.date).toBe(todo.date?.toISOString());
+    expect(res.data?.updateTodo.repetition).toBe(todo.repetition);
+    expect(res.data?.updateTodo.priority).toBe(priority);
+    expect(res.data?.updateTodo.listId).toBe(null);
+    expect(res.data?.updateTodo.description).toBe(todo.description);
+    todo.priority = priority;
   });
 
   it('removeTodo', async () => {
