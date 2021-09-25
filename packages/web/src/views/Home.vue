@@ -142,7 +142,7 @@
         >
           <template #draggable>
             <todo-item
-              v-for="(todo, j) in list.todos"
+              v-for="(todo, j) in getSortedTodos(list.todos)"
               :todo-id="todo.id"
               :key="j"
               :value="todo.name"
@@ -615,7 +615,10 @@ export default defineComponent({
         .forEach((todo) => {
           const list = newLists.find((list) => list.id === todo.listId);
           if (list) {
-            list.todos.push(todo);
+            list.todos.push({
+              ...todo,
+              createdAt: new Date(todo.createdAt),
+            });
           }
         });
 
@@ -679,8 +682,16 @@ export default defineComponent({
       });
     };
 
+    const getSortedTodos = (todos: Todo[]): Todo[] => {
+      const newTodos = [...todos];
+      return newTodos
+        .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+        .sort((a, b) => mapTodoPriorityToNumber(b.priority) - mapTodoPriorityToNumber(a.priority));
+    };
+
     return {
       showSettingsModal,
+      getSortedTodos,
       isNewTodoItemInserting,
       weeklyTodos,
       dailyTodos,
