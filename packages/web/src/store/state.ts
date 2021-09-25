@@ -15,6 +15,15 @@ export interface List {
 export type TodoRepetition = 'weekly' | 'daily';
 export type TodoPriority = 'high' | 'normal' | 'low';
 
+export const mapTodoPriorityToNumber = (priority: TodoPriority): number => {
+  if (priority === 'high') {
+    return 1;
+  } else if (priority === 'low') {
+    return -1;
+  }
+  return 0;
+};
+
 export interface Todo {
   id: string;
   name: string;

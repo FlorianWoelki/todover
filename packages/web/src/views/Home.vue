@@ -213,7 +213,7 @@ import CalendarIcon from '../assets/icons/calendar.svg?component';
 import RefreshIcon from '../assets/icons/refresh.svg?component';
 import { Mutation } from '../store';
 import { isSmallDevice, setupEventListener } from '../util/screen';
-import { List, State, Todo } from '../store/state';
+import { List, mapTodoPriorityToNumber, State, Todo } from '../store/state';
 import { useMutation, useQuery } from '@vue/apollo-composable';
 import queries from '@/graphql/queries';
 import mutations from '../graphql/mutations';
@@ -450,7 +450,8 @@ export default defineComponent({
     const todosAtDate = (date: Date): Todo[] => {
       return store.state.todos
         .filter((todo) => todo.date?.toString() === date.toString())
-        .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+        .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+        .sort((a, b) => mapTodoPriorityToNumber(b.priority) - mapTodoPriorityToNumber(a.priority));
     };
 
     const sizeOfLists = computed((): number => Object.keys(lists.value).length);
