@@ -9,12 +9,8 @@
     @mouseenter="disabled ? setHovered(true) : () => {}"
     @mouseleave="disabled ? setHovered(false) : () => {}"
   >
-    <div class="relative">
-      <div
-        class="absolute inset-y-0 left-0 -ml-5"
-        :class="{ 'text-gray-300': done }"
-        style="margin-top: 0.6rem"
-      >
+    <div class="flex items-center space-x-1">
+      <div v-if="priority !== 'normal'" :class="{ 'text-gray-300': done }">
         <arrow-up-icon v-if="priority === 'high'" class="w-3 h-3"></arrow-up-icon>
         <arrow-down-icon v-else-if="priority === 'low'" class="w-3 h-3"></arrow-down-icon>
       </div>
