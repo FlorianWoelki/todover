@@ -9,20 +9,31 @@
     @mouseenter="disabled ? setHovered(true) : () => {}"
     @mouseleave="disabled ? setHovered(false) : () => {}"
   >
-    <title-input
-      ref="inputField"
-      class="text-sm xl:text-base"
-      :class="{
-        'cursor-pointer': disabled,
-        'cursor-text': !disabled || noDblClick,
-        'line-through text-gray-300': done,
-      }"
-      @keydown.enter="blurInputField"
-      @blur="blurInputField"
-      :input-disabled="disabled"
-      :hovered="isHovered && !noDblClick"
-      v-bind="$attrs"
-    ></title-input>
+    <div class="relative">
+      <div
+        class="absolute inset-y-0 left-0 -ml-5"
+        :class="{ 'text-gray-300': done }"
+        style="margin-top: 0.6rem"
+      >
+        <arrow-up-icon v-if="priority === 'high'" class="w-3 h-3"></arrow-up-icon>
+        <arrow-down-icon v-else-if="priority === 'low'" class="w-3 h-3"></arrow-down-icon>
+      </div>
+
+      <title-input
+        ref="inputField"
+        class="text-sm xl:text-base"
+        :class="{
+          'cursor-pointer': disabled,
+          'cursor-text': !disabled || noDblClick,
+          'line-through text-gray-300': done,
+        }"
+        @keydown.enter="blurInputField"
+        @blur="blurInputField"
+        :input-disabled="disabled"
+        :hovered="isHovered && !noDblClick"
+        v-bind="$attrs"
+      ></title-input>
+    </div>
 
     <div v-if="loading" class="relative w-full -mt-4 -ml-4">
       <div class="absolute inset-y-0 mx-auto">
@@ -59,11 +70,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, ref } from '@vue/runtime-core';
+import { defineComponent, nextTick, PropType, ref } from '@vue/runtime-core';
 import { staticItemClass, dragAndDropDataId } from '@/util/constants';
 import { isSmallDevice } from '@/util/screen';
+import { TodoPriority } from '../store/state';
+import ArrowUpIcon from '../assets/icons/arrow-up.svg?component';
+import ArrowDownIcon from '../assets/icons/arrow-down.svg?component';
 
 export default defineComponent({
+  components: {
+    ArrowUpIcon,
+    ArrowDownIcon,
+  },
   emits: ['updateItem', 'click', 'removeItem', 'openMenu'],
   props: {
     todoId: {
@@ -77,6 +95,10 @@ export default defineComponent({
     done: {
       type: Boolean,
       default: false,
+    },
+    priority: {
+      type: String as PropType<TodoPriority>,
+      default: 'normal',
     },
     loading: {
       type: Boolean,

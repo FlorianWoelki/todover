@@ -8,6 +8,7 @@ export const todos = gql`
       done
       createdAt
       date
+      priority
       repetition
       listId
       description

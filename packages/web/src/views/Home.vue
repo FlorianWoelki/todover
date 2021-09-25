@@ -31,6 +31,7 @@
               :todo-id="todo.id"
               :key="j"
               :value="todo.name"
+              :priority="todo.priority"
               :done="todo.done"
               :placeholder="$t('emptyTodoPlaceholder')"
               @update-item="updateTodoItem(todo.id, { name: $event })"
@@ -42,6 +43,7 @@
               v-for="(todo, j) in dailyTodos(day)"
               :todo-id="todo.id"
               :key="j"
+              :priority="todo.priority"
               :value="todo.name"
               class="text-gray-400"
               no-dbl-click
@@ -53,6 +55,7 @@
               v-for="(todo, j) in weeklyTodos(day)"
               :todo-id="todo.id"
               :key="j"
+              :priority="todo.priority"
               :value="todo.name"
               class="text-gray-400"
               no-dbl-click
@@ -143,6 +146,7 @@
               :todo-id="todo.id"
               :key="j"
               :value="todo.name"
+              :priority="todo.priority"
               :done="todo.done"
               :placeholder="$t('emptyTodoPlaceholder')"
               @click="updateTodoItem(todo.id, { done: !todo.done })"
@@ -285,6 +289,16 @@ export default defineComponent({
       (newValue) => {
         if (newValue !== undefined && store.state.me) {
           updateTodoMutation({ id: selectedTodoItem.value?.id, data: { repetition: newValue } });
+        }
+      }
+    );
+
+    // watch selected todo item in modal and update priority if it was changed
+    watch(
+      () => selectedTodoItem.value?.priority,
+      (newValue) => {
+        if (newValue !== undefined && store.state.me) {
+          updateTodoMutation({ id: selectedTodoItem.value?.id, data: { priority: newValue } });
         }
       }
     );

@@ -4,6 +4,38 @@
       <title-input v-model="todoItem.name" class="text-xl"></title-input>
     </template>
 
+    <div class="flex-col items-center mb-4">
+      <label class="text-sm text-gray-400">ToDo Priority</label>
+      <div class="flex items-center mt-1 space-x-6">
+        <div class="flex items-center space-x-2">
+          <input
+            ref="highPriorityEl"
+            type="checkbox"
+            value="high"
+            :checked="todoItem.priority === 'high'"
+            @change="propagatePriorityChange('high')"
+            class="text-red-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0"
+          />
+          <label class="text-sm text-gray-500" @click="propagatePriorityChange('high', true)">
+            High
+          </label>
+        </div>
+        <div class="flex items-center space-x-2">
+          <input
+            ref="lowPriorityEl"
+            type="checkbox"
+            value="low"
+            :checked="todoItem.priority === 'low'"
+            @change="propagatePriorityChange('low')"
+            class="text-red-500 transition duration-100 ease-in-out border-gray-300 rounded shadow-sm focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0"
+          />
+          <label class="text-sm text-gray-500" @click="propagatePriorityChange('low', true)">
+            Low
+          </label>
+        </div>
+      </div>
+    </div>
+
     <div v-if="todoItem.date" class="flex-col items-center mb-4">
       <label class="text-sm text-gray-400">{{ $t('todoItemModal.repetition.label') }}</label>
       <div class="flex items-center mt-1 space-x-6">
@@ -51,7 +83,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@vue/runtime-core';
-import { Todo, TodoRepetition } from '../../store/state';
+import { Todo, TodoPriority, TodoRepetition } from '../../store/state';
 
 export default defineComponent({
   props: {
@@ -63,6 +95,9 @@ export default defineComponent({
   setup(props) {
     const dailyRepetitionEl = ref<HTMLInputElement | null>(null);
     const weeklyRepetitionEl = ref<HTMLInputElement | null>(null);
+
+    const highPriorityEl = ref<HTMLInputElement | null>(null);
+    const lowPriorityEl = ref<HTMLInputElement | null>(null);
 
     const propagateRepetitionChange = (type: TodoRepetition, invert = false): void => {
       if (!dailyRepetitionEl.value || !weeklyRepetitionEl.value) {
@@ -76,10 +111,25 @@ export default defineComponent({
       }
     };
 
+    const propagatePriorityChange = (type: TodoPriority, invert = false): void => {
+      if (!highPriorityEl.value || !lowPriorityEl.value) {
+        return;
+      }
+
+      if (type === 'high') {
+        props.todoItem.priority = highPriorityEl.value.checked !== invert ? 'high' : 'normal';
+      } else if (type === 'low') {
+        props.todoItem.priority = lowPriorityEl.value.checked !== invert ? 'low' : 'normal';
+      }
+    };
+
     return {
       weeklyRepetitionEl,
       dailyRepetitionEl,
+      highPriorityEl,
+      lowPriorityEl,
       propagateRepetitionChange,
+      propagatePriorityChange,
     };
   },
 });

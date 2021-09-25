@@ -13,11 +13,13 @@ export interface List {
 }
 
 export type TodoRepetition = 'weekly' | 'daily';
+export type TodoPriority = 'high' | 'normal' | 'low';
 
 export interface Todo {
   id: string;
   name: string;
   repetition: TodoRepetition | null;
+  priority: TodoPriority;
   createdAt: Date;
   date?: Date;
   done?: boolean;
