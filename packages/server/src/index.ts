@@ -9,6 +9,7 @@ import helmet from 'helmet';
 import cors, { CorsOptions } from 'cors';
 import { verify } from 'jsonwebtoken';
 import rateLimit from 'express-rate-limit';
+import depthLimit from 'graphql-depth-limit';
 import { MyContext } from './MyContext';
 import { createAccessToken, createRefreshToken } from './auth';
 import { clearRefreshToken, sendRefreshToken } from './sendRefreshToken';
@@ -67,6 +68,7 @@ import { createSchema } from './utils/createSchema';
     context: ({ req, res }): MyContext => ({ res, req, prisma }),
     introspection: !isProduction,
     playground: !isProduction,
+    validationRules: [depthLimit(10)],
   });
 
   const limitMiddleware = rateLimit({
