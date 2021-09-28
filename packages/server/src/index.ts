@@ -8,12 +8,15 @@ import express from 'express';
 import helmet from 'helmet';
 import cors, { CorsOptions } from 'cors';
 import { verify } from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
 import { MyContext } from './MyContext';
 import { createAccessToken, createRefreshToken } from './auth';
 import { clearRefreshToken, sendRefreshToken } from './sendRefreshToken';
 import { createSchema } from './utils/createSchema';
 
 (async () => {
+  const isProduction = process.env.NODE_ENV === 'production';
+
   const originHosts = process.env.ORIGINS!.replace(/\s/g, '').split(',');
   const corsOptions: CorsOptions = {
     origin: originHosts,
@@ -25,7 +28,10 @@ import { createSchema } from './utils/createSchema';
   const app = express();
   app.use(cors(corsOptions));
   app.use(cookieParser());
-  app.use(helmet());
+
+  if (isProduction) {
+    app.use(helmet());
+  }
 
   app.post('/refresh_token', async (req, res) => {
     const token = req.cookies.jid;
@@ -56,7 +62,6 @@ import { createSchema } from './utils/createSchema';
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   });
 
-  const isProduction = process.env.NODE_ENV === 'production';
   const apolloServer = new ApolloServer({
     schema: await createSchema(),
     context: ({ req, res }): MyContext => ({ res, req, prisma }),
@@ -64,6 +69,12 @@ import { createSchema } from './utils/createSchema';
     playground: !isProduction,
   });
 
+  const limitMiddleware = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 200,
+  });
+
+  app.use(limitMiddleware);
   apolloServer.applyMiddleware({ app, path: '/graphql', cors: corsOptions });
 
   const port = process.env.PORT;
