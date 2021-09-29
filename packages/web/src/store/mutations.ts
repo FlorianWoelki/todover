@@ -44,7 +44,7 @@ export const mutations: MutationTree<State> & Mutations = {
     if (value.listId) {
       const list = state.lists.find((list) => list.id === value.listId);
       if (list) {
-        list.todos.push(value);
+        list.todos.push(newTodo);
       }
     }
   },
