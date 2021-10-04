@@ -9,7 +9,7 @@
     @mouseenter="disabled ? setHovered(true) : () => {}"
     @mouseleave="disabled ? setHovered(false) : () => {}"
   >
-    <div class="flex items-center space-x-1">
+    <div class="flex items-center flex-grow space-x-1">
       <div v-if="priority !== 'normal'" :class="{ 'text-gray-300': done }">
         <arrow-up-icon v-if="priority === 'high'" class="w-3 h-3"></arrow-up-icon>
         <arrow-down-icon v-else-if="priority === 'low'" class="w-3 h-3"></arrow-down-icon>
@@ -31,8 +31,8 @@
       ></title-input>
     </div>
 
-    <div v-if="loading" class="relative w-full -mt-4 -ml-4">
-      <div class="absolute inset-y-0 mx-auto">
+    <div v-if="loading" class="relative w-full">
+      <div class="absolute inset-0 mt-2 ml-4">
         <svg
           class="w-4 h-4 text-red-400 animate-spin"
           xmlns="http://www.w3.org/2000/svg"
